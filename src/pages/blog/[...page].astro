@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+// import ListLayout from "@/layouts/ListLayout.astro";
+import { ITEMS_PER_PAGE } from "@/consts";
+import { sortBlogPosts, excludeDrafts } from "@/functions";
+import ListWithTagsLayout from "@/layouts/ListWithTagsLayout.astro";
+import type { Page, PaginateFunction } from "astro";
+import { useTranslations } from "@/i18n";
+
+export const prerender = true;
+
+const t = useTranslations();
+
+interface Props {
+  page: Page;
+}
+
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
+  const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
+  return paginate(posts, { 
+    pageSize: ITEMS_PER_PAGE,
+    data: posts
+  });
+}
+
+const { page } = Astro.props;
+let titleTemplate = "";
+let robots;
+
+if (page?.currentPage > 1) {
+  titleTemplate = t("seo.pagination.page", { page: `${page.currentPage}` });
+  robots = "noindex, follow";
+}
+---
+
+<!-- <ListLayout title={t('pages.blog.title')} description={t('pages.blog.description')} page={page} {robots} {titleTemplate}/> -->
+<ListWithTagsLayout
+  title={t('pages.blog.title')}
+  description={t('pages.blog.description')}
+  page={page}
+  {robots}
+  {titleTemplate}
+/>

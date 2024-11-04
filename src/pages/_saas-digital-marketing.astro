@@ -1,0 +1,38 @@
+---
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+
+const t = useTranslations();
+
+---
+<style>
+  p {
+    padding-bottom: 0.5em
+  }
+  h2 {
+    font-size: 1.5rem /* 24px */;
+    line-height: 2rem /* 32px */;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+      }
+</style>
+
+<RootLayout
+  title="How To Build a SaaS Digital Marketing Plan + 5 Strategies"
+  description="Get started with one of the top rated GTM teams!"
+>
+  <div class="divide-y divide-gray-200 dark:divide-gray-700">
+    <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
+
+      <Breadcrumbs text="SaaS Digital Marketing Guide" />
+
+      <h1
+        class="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+        How To Build a SaaS Digital Marketing Plan <span class="text-orange-600 dark:text-orange-500"> + 5 Strategies</span>
+      </h1>
+      
+      
+    </div>
+  </div>
+</RootLayout>

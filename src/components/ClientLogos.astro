@@ -1,0 +1,59 @@
+---
+interface Logo {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+}
+
+// Move logos data to a separate array for better maintainability
+const logos: Logo[] = [
+    {
+        src: "https://tailwindui.com/plus/img/logos/158x48/transistor-logo-gray-900.svg",
+        alt: "Transistor",
+        width: 158,
+        height: 48
+    },
+    {
+        src: "https://tailwindui.com/plus/img/logos/158x48/transistor-logo-gray-900.svg",
+        alt: "Transistor",
+        width: 158,
+        height: 48
+    },  
+    {
+        src: "https://tailwindui.com/plus/img/logos/158x48/transistor-logo-gray-900.svg",
+        alt: "Transistor",
+        width: 158,
+        height: 48
+    },  
+    {
+        src: "https://tailwindui.com/plus/img/logos/158x48/transistor-logo-gray-900.svg",
+        alt: "Transistor",
+        width: 158,
+        height: 48
+    },    
+];
+---
+
+<section class="py-2 sm:py-4" aria-labelledby="client-logos-heading">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <h2 
+            id="client-logos-heading" 
+            class="text-center text-lg font-semibold leading-8 text-gray-900 dark:text-white"
+        >
+            Trusted by the world's most innovative teams
+        </h2>
+        <div class="mx-auto mt-10 flex justify-center gap-x-8 overflow-x-auto lg:gap-x-12 dark:invert">
+            {logos.map((logo) => (
+                <img 
+                    class="max-h-12 w-full object-contain" 
+                    src={logo.src} 
+                    alt={logo.alt}
+                    width={logo.width} 
+                    height={logo.height}
+                    loading="lazy"
+                />
+            ))}
+        </div>
+    </div>
+</section>

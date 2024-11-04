@@ -1,0 +1,83 @@
+---
+import { getCollection } from "astro:content";
+import { ITEMS_PER_PAGE } from "@/consts";
+import RootLayout from "@/layouts/RootLayout.astro";
+import Link from "@/components/Link.astro";
+import ListPostCover from "@/components/ListPostCover.astro";
+import Tag from "@/components/Tag.astro";
+import { excludeDrafts, sortBlogPosts } from "@/functions";
+import { useTranslations } from "@/i18n";
+import Announcement from "@/components/Announcement.astro";
+import ClientLogos from "@/components/ClientLogos.astro"
+import HeroSection from "@/components/HeroSection.astro";
+import { SITE_METADATA } from '@/consts.ts'; 
+import type { CollectionEntry } from "astro:content";
+
+const t = useTranslations();
+
+const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
+---
+
+<RootLayout
+  title={t("siteMetadata.title")}
+  description={t("siteMetadata.description")}
+>
+  <div class="divide-y divide-gray-200 dark:divide-gray-700">
+   
+    <HeroSection/>
+
+    <div class="space-y-2 pb-8 pt-6 md:space-y-5 relative z-10">
+      <h2 class="text-lg font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl md:leading-14">
+        {t("pages.home.latestPosts")}
+      </h2>
+      <p class="text-lg leading-7 text-gray-600 dark:text-gray-400">
+        {t("siteMetadata.description")}
+      </p>
+    </div>
+
+    <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+      {!posts.length && t("pages.home.noPosts")}
+      {posts.slice(0, ITEMS_PER_PAGE).map((post: CollectionEntry<'blog'>) => (
+        <li class="py-12">
+          <article class="space-y-2 xl:grid xl:grid-cols-4 xl:gap-x-4 xl:space-y-0 xl:items-stretch">
+            <ListPostCover {post} class="xl:col-span-1" />
+            <div class="space-y-5 xl:col-span-3">
+              <div class="space-y-6">
+                <div>
+                  <h2 class="text-2xl font-bold leading-8 tracking-tight">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      class="text-gray-900 dark:text-gray-100"
+                    >
+                      {post.data.title}
+                    </Link>
+                  </h2>
+                  <div class="flex flex-wrap">
+                    {post.data.tags.map(({ slug }: { slug: string }) => (
+                      <Tag slug={slug} />
+                    ))}
+                  </div>
+                </div>
+                <div class="prose max-w-none text-gray-600 dark:text-gray-400">
+                  {post.data.summary}
+                </div>
+              </div>
+              <div class="text-base font-medium leading-6">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                  aria-label={t('pages.home.readMoreAbout', {title: post.data.title})}
+                >
+                  {t('pages.home.readMore')} &rarr;
+                </Link>
+              </div>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+    <ClientLogos />
+
+</RootLayout>

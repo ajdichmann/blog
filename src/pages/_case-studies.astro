@@ -1,0 +1,61 @@
+---
+import Card from "@/components/Card.astro";
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+const t = useTranslations();
+
+const caseStudies = [
+  {
+    title: "Agency Landing Page",
+    description: "Flowbite helps you connect with friends, family and communities of people who share your interests.",
+    imageUrl: "/images/agency-landing-page.png", // Replace with your actual image path
+    tag: "Figma design",
+    caseStudyLink: "/case-studies/agency-landing-page",
+    livePreviewLink: "#"
+  },
+  {
+    title: "Analytics Tool",
+    description: "Flowbite helps you connect with friends, family and communities of people who share your interests.",
+    imageUrl: "/images/analytics-tool.png", // Replace with your actual image path
+    tag: "Front-end",
+    caseStudyLink: "/case-studies/analytics-tool",
+    livePreviewLink: "#"
+  },
+  {
+    title: "Task Management System",
+    description: "Flowbite helps you connect with friends, family and communities of people who share your interests.",
+    imageUrl: "/images/task-management-system.png", // Replace with your actual image path
+    tag: "Back-end",
+    caseStudyLink: "/case-studies/task-management-system",
+    livePreviewLink: "#"
+  }
+];
+---
+
+<RootLayout
+  title={t("pages.projects.title")}
+  description={t("pages.projects.description")}>
+
+  <div class="max-w-7xl mx-auto py-12">
+    <h1 class="text-4xl font-bold text-center mb-4">Custom Works</h1>
+    <p class="text-lg text-gray-600 text-center mb-8">Flowbite helps you connect with friends, family and communities of people who share your interests.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      {caseStudies.map((caseStudy) => (
+        <div class="bg-white shadow-md rounded-lg p-6">
+          <img src={caseStudy.imageUrl} alt={caseStudy.title} class="w-full rounded-lg mb-4" />
+          <div class="flex items-center mb-2">
+            <span class={`text-xs font-medium px-2 py-1 rounded-full text-white ${caseStudy.tag === 'Figma design' ? 'bg-blue-600' : caseStudy.tag === 'Front-end' ? 'bg-green-600' : caseStudy.tag === 'Back-end' ? 'bg-purple-600' : 'bg-yellow-600'}`}>
+              {caseStudy.tag}
+            </span>
+          </div>
+          <h2 class="text-xl font-semibold mb-2">{caseStudy.title}</h2>
+          <p class="text-gray-600 mb-4">{caseStudy.description}</p>
+          <div class="flex space-x-4">
+            <a href={caseStudy.caseStudyLink} class="bg-blue-600 text-white font-medium py-2 px-4 rounded hover:bg-blue-700 transition-colors duration-200">Case study</a>
+            <a href={caseStudy.livePreviewLink} class="bg-gray-100 text-gray-800 font-medium py-2 px-4 rounded hover:bg-gray-200 transition-colors duration-200">Live preview</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</RootLayout>
