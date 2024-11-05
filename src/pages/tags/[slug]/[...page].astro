@@ -29,8 +29,7 @@ export async function getStaticPaths({ paginate }: { paginate: PaginateFunction 
     return paginate(tagPosts, {
       pageSize: ITEMS_PER_PAGE,
       params: { slug: entry.slug },
-      props: { entry },
-      data: tagPosts
+      props: { entry }
     });
   });
 }

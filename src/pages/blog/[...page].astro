@@ -18,8 +18,7 @@ interface Props {
 export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
   const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
   return paginate(posts, { 
-    pageSize: ITEMS_PER_PAGE,
-    data: posts
+    pageSize: ITEMS_PER_PAGE
   });
 }
 
