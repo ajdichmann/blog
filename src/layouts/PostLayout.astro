@@ -215,7 +215,7 @@ const { Content, headings } = await post.render();
                     </h2>
                     <div class="flex flex-wrap">
                       {tags.map((tag) => (
-                        <Tag tag={tag} />
+                        <Tag tag={tag} slug={tag.slug} />
                       ))}
                     </div>
                   </div>
