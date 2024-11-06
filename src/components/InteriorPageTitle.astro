@@ -1,0 +1,16 @@
+---
+export interface Props {
+  title: string;
+  highlight: string;
+}
+
+const { title, highlight } = Astro.props as Props;
+---
+
+<h1
+  class="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14"
+  aria-label={`${title} ${highlight}`}
+>
+  <span class="text-current">{title}</span>
+  <span class="text-orange-600 dark:text-orange-500 transition-colors duration-200">{highlight}</span>
+</h1> 

@@ -2,6 +2,7 @@
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
 
 const t = useTranslations();
 
@@ -27,10 +28,11 @@ const t = useTranslations();
 
       <Breadcrumbs text="Google Tag Manager Consulting" />
 
-      <h1
-        class="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-        Google Tag Manager <span class="text-orange-600 dark:text-orange-500">Consultant</span>
-      </h1>
+      <InteriorPageTitle 
+        title="Google Tag Manager"
+        highlight="Consultant"
+      />
+
       <p>Get started tracking all of the most important data on your website!</p>
       <p>Do you need help setting up Google Tag Manager to capture ALL of the data from your website – then I am here to help. I have been working with GTM for more than 8 years and can help you tracking any data on the web! My team specializes in helping marketing teams collect data and load it into various marketing tools like Google Analytics, Google Ads, Facebook Ads, Adobe Analytics and other popular platforms.</p>
       <h2>Google Tag Manager Setup & Configuration</h2>

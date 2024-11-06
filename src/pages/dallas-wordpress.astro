@@ -3,6 +3,7 @@ import Card from "@/components/Card.astro";
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
 
 const t = useTranslations();
 
@@ -28,12 +29,12 @@ const t = useTranslations();
     <!-- breadcrumbs -->
     <Breadcrumbs text="Dallas Wordpress Dev Agency" />
     <!-- end breadcrumbs -->
-      <h1
-        class="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-        Dallas Wordpress <span class="text-orange-600 dark:text-orange-500">Dev & Consulting</span>
-      </h1>
-  
-        <p>Struggling with WordPress and need the help from an Expert Dallas WordPress developer? I am here to help! My team based in North Texas has countless years of building, fixing and maintaining WordPress websites under our belt.</p>
+      <InteriorPageTitle 
+        title="Dallas Wordpress"
+        highlight="Dev & Consulting"
+      />
+      
+      <p>Struggling with WordPress and need the help from an Expert Dallas WordPress developer? I am here to help! My team based in North Texas has countless years of building, fixing and maintaining WordPress websites under our belt.</p>
         
         <p >My team of WordPress devs is the right choice when it comes to getting your website back up in running in no time. Whether you are looking for Dallas WordPress development servicing or Dallas WordPress support, we are here for you at all times!</p>
         

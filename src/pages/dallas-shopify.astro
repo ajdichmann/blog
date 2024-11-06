@@ -3,6 +3,7 @@ import Card from "@/components/Card.astro";
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
 
 const t = useTranslations();
 
@@ -13,7 +14,7 @@ const schema = {
   "provider": {
     "@type": "LocalBusiness",
     "name": "AJ Dichmann",
-    "areaServed": "Dallas-Fort Worth Metroplex"
+    "areaServed": "Texas"
   },
   "serviceType": "Shopify Development"
 };
@@ -40,10 +41,10 @@ const schema = {
 <!-- breadcrumbs -->
 <Breadcrumbs text="Dallas Shopify Dev Agency" />
 <!-- end breadcrumbs -->
-      <h1
-        class="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-        Dallas Shopify <span class="text-orange-600 dark:text-orange-500">Dev & Consulting</span>
-      </h1>
+      <InteriorPageTitle 
+        title="Dallas Shopify"
+        highlight="Dev & Consulting"
+      />
 
       <p><strong>Get started development and SEO with the top Ecommerce team in Dallas</strong></p>
 <p>Do you need help with your Shopify store? My team is based in DFW and specializes in working with Shopify. Here are some of the services we provide to eCommerce clients who use Shopify and Shopify Plus.</p>

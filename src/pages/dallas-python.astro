@@ -3,6 +3,7 @@ import Card from "@/components/Card.astro";
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
 
 const t = useTranslations();
 
@@ -26,10 +27,9 @@ const t = useTranslations();
     <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
 
       <Breadcrumbs text="Dallas Python Development" />
-      <h1
-        class="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-        Dallas Python <span class="text-orange-600 dark:text-orange-500">Dev & Consulting</span>
-      </h1>
+
+      <InteriorPageTitle title="Dallas Python" highlight="Dev & Consulting" />
+      
       <p>Get started with the top rated Python development agency in Texas</p>
       <p>Looking for a python development agency in Dallas, Texas? Look no further! Our team of expert consultants can help you with all your python development needs. We specialize in python software development, and we can help you create a custom solution that meets your specific requirements or maintain your existing software.</p>
       <p><strong>Want to see some of our recent Python projects? Ask for Github access!</strong></p>

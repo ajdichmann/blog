@@ -53,8 +53,8 @@ const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
                     </Link>
                   </h2>
                   <div class="flex flex-wrap">
-                    {post.data.tags.map((tag) => (
-                      <Tag slug={tag.slug as any} />
+                    {post.data.tags.map((tag: { slug: string }) => (
+                      <Tag slug={tag.slug} />
                     ))}
                   </div>
                 </div>

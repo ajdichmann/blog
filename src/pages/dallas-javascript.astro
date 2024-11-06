@@ -3,6 +3,7 @@ import Card from "@/components/Card.astro";
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
 
 const t = useTranslations();
 
@@ -27,10 +28,11 @@ const t = useTranslations();
 
       <Breadcrumbs text="Dallas Javascript Development" />
 
-      <h1
-        class="text-3xl font-extrabold leading-9 tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-       Dallas <span class="text-orange-600 dark:text-orange-500">Javascript Development</span>
-      </h1>
+      <InteriorPageTitle 
+        title="Dallas"
+        highlight="Javascript Development Services"
+      />
+
       <p><strong>Get started building with the top JavaScript team in Dallas</strong></p>
       <p>Are you looking for local help for a website or app built with Javascript – then you have come to the right place! </p>
       <p>My Dallas based development agency has more than 10 years of experience working with Javascript and is ready to start on your next project. We can work on adding additional features and functionality to existing projects – or launching your next website or app.</p>

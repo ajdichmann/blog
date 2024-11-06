@@ -2,6 +2,7 @@
 import Card from "@/components/Card.astro";
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
+import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
 
 ---
 
@@ -11,10 +12,7 @@ import RootLayout from "@/layouts/RootLayout.astro";
 >
   <div class="divide-y divide-gray-200 dark:divide-gray-700">
     <div class="space-y-2 pb-8 pt-6 md:space-y-5">
-      <h1
-        class="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14"      >
-        Resume
-      </h1>
+      <InteriorPageTitle title="Resume" highlight="" />
       <h3>EDUCATION</h3>
       <p>Texas Tech University – Lubbock, Texas</p>
       <ul>
