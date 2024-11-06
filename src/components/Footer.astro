@@ -1,44 +1,40 @@
 ---
+import Link from "./Link.astro";
+import { useTranslations } from '@/i18n';
+// Uncomment if you plan to use social icons later
 // import SocialIcon from '@/components/social-icons/index.astro'
-import {SITE_METADATA} from '@/consts'
+import { SITE_METADATA } from '@/consts';
 
 const t = useTranslations();
 
-import Link from "./Link.astro";
-import { useTranslations } from '@/i18n';
+const links = [
+  { href: "/dallas-wordpress", text: "Wordpress" },
+  { href: "/dallas-shopify", text: "Shopify" }, 
+  { href: "#", text: "Python" },
+  { href: "#", text: "GTM" },
+  { href: "#", text: "Javascript" }
+];
 ---
 
-<footer>
-    <div class="mt-16 flex flex-col items-center">
-        <!--<div class="mb-3 flex space-x-4">-->
-        <!--    <SocialIcon kind="mail" href={`mailto:${SITE_METADATA.email}`} size={6}/>-->
-        <!--    <SocialIcon kind="github" href={SITE_METADATA.github} size={6}/>-->
-        <!--    <SocialIcon kind="facebook" href={SITE_METADATA.facebook} size={6}/>-->
-        <!--    <SocialIcon kind="youtube" href={SITE_METADATA.youtube} size={6}/>-->
-        <!--    <SocialIcon kind="linkedin" href={SITE_METADATA.linkedin} size={6}/>-->
-        <!--    <SocialIcon kind="twitter" href={SITE_METADATA.twitter} size={6}/>-->
-        <!--</div>-->
-        <div class="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
-            <!--<Link href="/about">{SITE_METADATA.title}</Link>
-            <div>{` • `}</div>
-            <div>{`© ${new Date().getFullYear()}`}</div>
-            <div>{` • `}</div>
-            <Link href="/">{t('siteMetadata.title')}</Link>
-        </div>
-        <div class="mb-8 text-sm text-gray-500 dark:text-gray-400">
-            <Link href={SITE_METADATA.siteRepo}>
-                {t('siteMetadata.title')} {` is open source. `}
-                {` View `}
-                <span class="underline">the source</span>
-                {` code on `}
-                <span class="underline">GitHub</span>
-                {` and `}
-                <span class="underline">give it a star</span>
-                {` if you like it.`}
-            </Link> -->
-            <p class="mb-2 flex space-x-2 text-sm text-gray-500 dark:text-gray-400 text-center">
-                <Link href="/dallas-wordpress">Wordpress</Link> | <Link href="/dallas-wordpress">Shopify</Link> | Python | GTM | Javascript
-            </p>
-        </div>
+<footer class="mt-16" role="contentinfo">
+  <div class="flex flex-col items-center">
+    <!-- Social icons section (commented for future use)
+    <div class="mb-3 flex space-x-4">
+      {Object.entries(SITE_METADATA.social).map(([platform, url]) => (
+        <SocialIcon kind={platform} href={url} size={6} />
+      ))}
     </div>
+    -->
+    
+    <nav aria-label="Footer Navigation" class="mb-8">
+      <ul class="flex flex-wrap justify-center gap-x-2 text-sm text-gray-500 dark:text-gray-400">
+        {links.map((link, index) => (
+          <li>
+            <Link href={link.href}>{link.text}</Link>
+            {index < links.length - 1 && <span class="ml-2">|</span>}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
 </footer>

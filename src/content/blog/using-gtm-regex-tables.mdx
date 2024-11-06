@@ -15,9 +15,57 @@ import OrangeAlert from '@/components/OrangeAlert.astro';
 
 Regex tables in GTM are one of my favorite features to create detail rich - but consolidated tagging. 
 
-<OrangeAlert title="Be Warned" message="Something not ideal might be happening."/>
+Instead of creating a new tag for each individual item, you can use a regex table to match and tag all items that match a certain pattern. This is especially useful for things passing a large list of items or variables based on a URL or other variable pattern.
 
+In this guide I'll show you how to use regex tables (with screenshots) to tag all items in a list that match a certain URL pattern so that you can consolidate your tags and reduce the amount of work you need to do to keep your tags up to date.
 
-<Figure src={figureExample} alt="">This is a Figure component with caption</Figure>
+## Common Use Cases
+The most common use case for regex tables is to tag all items in a list that match a certain URL pattern. 
 
+For example, if you have a list of URLs and you want to tag all the items that match a certain pattern, you can use a regex table to do this and return a single variable.
+
+Other use cases I have encountered include:
+- Tagging all items in a list that match a certain email pattern
+- Tagging all items in a list that match a certain user agent pattern
+- Tagging all items in a list that match a cookie
+- Tagging all items in a list that match a hostname
+
+The possibilities are endless when you start combinging GTM variables and regex tables!
+
+## Prerequisites
+There are a few prerequisites you need to meet before you can use regex tables in GTM.
+
+The most important thing is that you have GTM installed and you have Edit access to the GTM account.
+
+After you are logged into GTM, you will need an input variable that has a list of items you want to tag and a tag that you want to apply to each item.
+
+## Setting up the Regex Table
+Setting up the regex table is the most time consuming part of this process.
+
+Start by creating a new regex table variable. 
+
+Next, you will want to select the input variable that has the list of items you want to tag. This is often a `Page URL`, `Path Path`, `Click URL` or other data layer variable. This regex variable will be used to match the items in the input variable that you want to tag.
+
+After adding all the items you want to tag, you will want to add some default values and formatting options. I recommend adding a default value, and setting a formatting option to return a consistent format to make it easier to work with the output variable.
+
+### Regex Table Naming Structure
+When naming your regex table, I recommend using a naming structure that makes it easy to identify the purpose of the regex table.
+
+For example, if you are tagging all items in a list that match a certain URL pattern, you might name your regex table `Table - Click URL - Match Pattern`.
+
+## Importing Variables to Tags
+Once you have your regex table set up, you can import the variable into a tag.
+
+The new variable can be used just like any other variable in GTM - and added to *most* triggers, variables, and tags just like any other variable.
+
+Also, you can use the regex table variable in a lookup table to consolidate multiple variables into a single variable.
+
+## Testing Your Regex Table
+In order to test your regex table, you will need to and add the regex table variable to a tag and trigger.
+
+Once you have done this, you can test your tag by doing something that should trigger the tag.
+
+For example, if you are tagging all items in a list that match a certain URL pattern, you would want to do something that would trigger the tag. This could be a click on a link, a page view, or other trigger.
+
+Once you have done this, you can check the tag to see if it was triggered correctly in GTM preview mode. If it was not triggered correctly, you can click on the event in Preview Mode and see what data was passed to the tag to see what might be wrong.
 

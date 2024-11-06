@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import { sortBlogPosts } from "../functions";
+import { ITEMS_PER_PAGE } from "../consts";
+import Link from "./Link.astro";
+import { useTranslations } from "@/i18n";
+
+// Define proper types
+interface BlogPost {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  authorSlug: string;
+}
+
+const { authorSlug } = Astro.props;
+const t = useTranslations();
+
+// Extract post fetching logic to a separate async function
+async function getAuthorPosts(authorSlug: string): Promise<BlogPost[]> {
+  try {
+    const posts = await getCollection(
+      "blog",
+      ({ data: { authors, draft } }) => 
+        !draft && authors.some((author: { slug: string }) => author.slug === authorSlug)
+    );
+    
+    return sortBlogPosts(posts)
+      .slice(0, ITEMS_PER_PAGE)
+      .map((post) => ({
+        title: post.data.title,
+        slug: post.slug
+      }));
+  } catch (error) {
+    console.error(`Failed to fetch posts for author ${authorSlug}:`, error);
+    return [];
+  }
+}
+
+const authorPosts = await getAuthorPosts(authorSlug);
+---
+
+{authorPosts.length > 0 ? (
+  <div class="pt-8">
+    <h2 class="text-2xl font-bold leading-8 tracking-tight">
+      {t("layouts.authorLayout.latestPosts")}
+    </h2>
+    <ul class="space-y-4 mt-4">
+      {authorPosts.map(({ slug, title }) => (
+        <li class="transition-colors hover:text-primary-500">
+          <Link href={`/blog/${slug}`}>{title}</Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+) : null} 

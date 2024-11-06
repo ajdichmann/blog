@@ -3,20 +3,29 @@ import Link from "./Link.astro";
 import { type CollectionEntry, getEntry } from "astro:content";
 
 interface Props {
+  slug: string;
   tag?: CollectionEntry<"tags">;
-  slug?: CollectionEntry<"tags">["slug"];
 }
-let TagProp = Astro.props.tag;
 
-if (!TagProp && Astro.props.slug) {
-  TagProp = await getEntry("tags", Astro.props.slug);
-}
-const { slug, data } = TagProp!;
+// Use destructuring for cleaner props access
+const { tag: providedTag, slug: propSlug } = Astro.props;
+
+// Rename variable to be more descriptive and use const
+const tag = (providedTag ?? await getEntry("tags", propSlug))!;
+const { slug, data } = tag;
 ---
 
 <Link
   href={`/tags/${slug}`}
-  class="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+  class:list={[
+    "mr-3",
+    "text-sm",
+    "font-medium",
+    "uppercase",
+    "text-primary-500",
+    "hover:text-primary-600",
+    "dark:hover:text-primary-400"
+  ]}
 >
   {data.name}
 </Link>
