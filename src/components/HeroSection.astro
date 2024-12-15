@@ -1,6 +1,8 @@
 ---
 import Announcement from './Announcement.astro';
 import { SITE_METADATA } from '../consts';
+import { getCollection } from "astro:content";
+import { excludeDrafts, sortBlogPosts } from "@/functions";
 
 // Add props for better component reusability
 interface Props {
@@ -8,13 +10,28 @@ interface Props {
   subtitle?: string;
   showAnnouncement?: boolean;
   calendly?: string;
+  blogPost?: {
+    title: string;
+    url: string;
+    ctatext: string;
+  };
 }
+
+// Get the latest blog post
+const latestPost = await getCollection("blog", excludeDrafts)
+  .then(sortBlogPosts)
+  .then(posts => posts[0]);
 
 const { 
   title = "AJ Dichmann",
   subtitle = "Digital Marketing and SEO Consulting in Texas with Globe Runner",
   showAnnouncement = true,
-  calendly = SITE_METADATA.calendly
+  calendly = SITE_METADATA.calendly,
+  blogPost = latestPost ? {
+    title: "Read my newest blog post!",
+    url: `/blog/${latestPost.slug}`,
+    ctatext: "Read blog"
+  } : undefined
 } = Astro.props;
 ---
 
@@ -26,11 +43,11 @@ const {
         </div>
         
         <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-24">
-            {showAnnouncement && 
+            {showAnnouncement && blogPost && 
                 <Announcement 
-                    blogTitle="Read my newest blog post!" 
-                    url="/blog/next-round-of-funding" 
-                    ctatext="Read blog"
+                    blogTitle={blogPost.title}
+                    url={blogPost.url}
+                    ctatext={blogPost.ctatext}
                 />
             }
             
