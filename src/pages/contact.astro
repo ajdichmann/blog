@@ -142,7 +142,7 @@ const schema = {
             ></textarea>
           </div>
           
-          <button type="submit">Send Message</button>
+          <button type="submit" id="contact-form">Send Message</button>
         </form>
       </div>
     </div>
@@ -150,7 +150,7 @@ const schema = {
 </RootLayout>
 
 <script>
-  function handleSubmit(event) {
+  function handleSubmit(event: Event) {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
