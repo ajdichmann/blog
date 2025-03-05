@@ -16,7 +16,19 @@ export default defineConfig({
 
   integrations: [
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes("/_"),
+      changefreq: "weekly",
+      lastmod: new Date(),
+      serialize(item) {
+        // Add any custom logic for sitemap entries
+        return {
+          ...item,
+          // Add priority based on URL structure
+          priority: item.url.includes("/blog/") ? 0.9 : 0.7,
+        };
+      },
+    }),
     tailwind(),
     solidJs(),
     metaTags(),
