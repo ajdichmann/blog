@@ -12,8 +12,8 @@ import cloudflare from "@astrojs/cloudflare";
 // https://astro.build/config
 export default defineConfig({
   prefetch: true,
+  trailingSlash: "never",
   site: SITE_METADATA.siteUrl,
-
   integrations: [
     mdx(),
     sitemap(),

@@ -20,7 +20,7 @@ interface Props {
 // Get the latest blog post
 const latestPost = await getCollection("blog", excludeDrafts)
   .then(sortBlogPosts)
-  .then(posts => posts[0]);
+  .then((posts: any[]) => posts[0]);
 
 const { 
   title = "AJ Dichmann",
