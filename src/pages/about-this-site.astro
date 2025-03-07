@@ -8,15 +8,12 @@ const t = useTranslations();
 
 ---
 <style>
-  p {
-    padding-bottom: 0.5em
-  }
   h2 {
     font-size: 1.5rem /* 24px */;
     line-height: 2rem /* 32px */;
     font-weight: 700;
     letter-spacing: -0.025em;
-      }
+  }
 </style>
 
 <RootLayout
@@ -33,14 +30,16 @@ const t = useTranslations();
         highlight="Site"
       />
 
-      <p class="font-bold">Want to know more about this site?</p>
-      <p>This website is build with:</p>
-      <ul>
-        <li>Astro.js</li>
-        <li>Tailwinds</li>
-        <li>Cloudflare</li>
-        <li>Partytown</li>
-      </ul>
+      <div class="prose dark:prose-invert max-w-none">
+        <p class="font-bold">Want to know more about this site?</p>
+        <p>This website is build with:</p>
+        <ul>
+          <li>Astro.js</li>
+          <li>Tailwinds</li>
+          <li>Cloudflare</li>
+          <li>Partytown</li>
+        </ul>
+      </div>
     </div>
   </div>
 </RootLayout>

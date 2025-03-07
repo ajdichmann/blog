@@ -1,0 +1,65 @@
+---
+title:  Automating Local Business Schema Generation with AI and Python
+summary: Learn how to use AI and Python to generate local schema markup for businesses with a large number of locations.
+postLayout: column
+date: '2025-03-06'
+cover: '@/assets/og-image.png'
+draft: false
+tags: 
+- seo
+---
+import Figure from "@/components/Figure.astro"
+import figureExample from "@/assets/og-image.png"
+import OrangeAlert from '@/components/OrangeAlert.astro';
+
+In this post, I'll walk you through how I used AI and Python to efficiently generate the local business schema for QCKinetics. By leveraging tools like Screaming Frog, Python scripting, and AI-assisted code generation, we can simplify what would otherwise be a complex and time-consuming process.
+
+Step 1: Extracting Location Data with Screaming Frog
+
+The first step was to gather all current business locations from the QCKinetics website. To enhance this data, I used Screaming Frog’s extractors alongside an INDEX MATCH formula to pull the WordPress page ID for each location.
+
+Here's how it works:
+
+Screaming Frog extracts location URLs and other relevant metadata.
+
+An INDEX MATCH formula cross-references this data to retrieve the WordPress page ID.
+
+This page ID is crucial for later steps when structuring the schema data.
+
+Step 2: Using AI to Generate a Python Script
+
+Next, I used Cursor AI to help generate a Python script that automates the schema generation process. I started with an example schema for one clinic, then prompted the AI to:
+
+Take a CSV file (locations.csv) as input.
+
+Append a new schema column to each row.
+
+Format the schema data in the appropriate Local Business Schema format.
+
+By iterating through a few prompts, we were able to generate a fully functional script that dynamically builds schema markup for all locations.
+
+Step 3: Running the Python Script
+
+Once the script was ready, I ran it using:
+
+python generate_schema.py
+
+This processed the CSV file and added the schema markup to each row. The advantage of using Python over a traditional concatenate function in Excel is that it makes the process much more maintainable, especially when changes or updates are needed.
+
+Step 4: Uploading the Updated CSV
+
+With our newly generated schema data, the final step was to:
+
+Open Google Sheets.
+
+Navigate to Sheet 2.
+
+Use the Import Upload feature to drag and replace the sheet with the updated CSV.
+
+Now, the full dataset—including WordPress page IDs and schema markup—is ready for implementation.
+
+Conclusion
+
+This method showcases how AI and Python can work together to automate repetitive tasks, making schema generation faster and more scalable. Instead of manually constructing schema markup, we can generate it programmatically with just a click of a button.
+
+Hopefully, this guide gives you some ideas on how to leverage AI and Python for similar tasks in your own projects. Happy coding!
