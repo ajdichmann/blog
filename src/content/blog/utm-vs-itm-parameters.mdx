@@ -14,22 +14,41 @@ import figureExample from "@/assets/og-image.png"
 import OrangeAlert from '@/components/OrangeAlert.astro';
 import Year from "@/components/Year.astro"
 
+UTM and ITM are two types of URL parameters used to track the performance of a marketing campaign, both have their own unique use cases and benefits - but they are not interchangeable! Using the wrong parameter can lead to inaccurate tracking and problems with attribution problems with analytics platforms.
+
+In this guide I'll explain the difference between UTM and ITM parameters and how to use them to track your marketing campaigns.
+
 
 ## What Are URL Parameters?
 
-URL parameters are a way to add additional information to a URL. They are used to track the performance of a marketing campaign.
+URL parameters are a way to add additional information by adding information to the end of a URL. They are used to track performanc and attribution of marketing campaigns.
 
 There are two types of URL parameters: UTM and ITM.
 
 ## UTM vs ITM Parameters
 
+UTM and ITM are both used to track the performance of a marketing campaigns - but are used for different purposes.
+
+Both types of parameters are appending to the end of a URL using a `?` and then the parameter name and value separated by an `=` sign.
 
 ### UTM URL Parameters
 
-UTM URL parameters are used to track the performance of a marketing campaign. They are used to track the performance of a marketing campaign.
+UTM parameters are used to track the performance of inbound marketing campaigns. They provide useful information about the source, medium, campaign name, and content of a campaign.
 
 ### ITM URL Parameters
 
-ITM URL parameters are used to track the performance of a marketing campaign. They are used to track the performance of a marketing campaign.
+ITM parameters are used to track performance of internal marketing campaigns. ITM parameters are often used to tag content that is used internally by a business like CTA clicks, Blog posts, and other content.
 
 ## Which One Should You Use?
+
+The answer to this question depends on the type of marketing campaign you are running.
+
+If you are running an inbound marketing campaign, then you should use UTM parameters.
+
+If you are running an internal marketing campaign, then you should use ITM parameters.
+
+## Problems with Wrong Parameters
+
+Using the wrong parameter can lead to inaccurate tracking and problems with attribution problems with analytics platforms.
+
+For example, if you are using UTM parameters for an internal campaign, the analytics platform will not be able to attribute the campaign to the correct source. This can leads to tools like Google Analytics not being able to attribute the correct source to a campaign.

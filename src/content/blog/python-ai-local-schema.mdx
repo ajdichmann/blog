@@ -1,6 +1,6 @@
 ---
-title:  Automating Local Business Schema Generation with AI and Python
-summary: Learn how to use AI and Python to generate local schema markup for businesses with a large number of locations.
+title:  Automating Local Business Schema Creation with AI and Python
+summary: Learn how to use AI and Python to generate local schema for a large number of locations.
 postLayout: column
 date: '2025-03-06'
 cover: '@/assets/og-image.png'
@@ -12,54 +12,100 @@ import Figure from "@/components/Figure.astro"
 import figureExample from "@/assets/og-image.png"
 import OrangeAlert from '@/components/OrangeAlert.astro';
 
-In this post, I'll walk you through how I used AI and Python to efficiently generate the local business schema for QCKinetics. By leveraging tools like Screaming Frog, Python scripting, and AI-assisted code generation, we can simplify what would otherwise be a complex and time-consuming process.
+In this guide I'll walk you through how I used AI and Python to generate Local Business JSON-LD Schema for one of my enterprise clients with more than 100 franchise locations. 
 
-Step 1: Extracting Location Data with Screaming Frog
+By using tools like Screaming Frog, Python scripting, and AI-assisted code creation, we can simplify what would otherwise be a complex and time-consuming process to create then upload the schema to each location page.
 
-The first step was to gather all current business locations from the QCKinetics website. To enhance this data, I used Screaming Frog’s extractors alongside an INDEX MATCH formula to pull the WordPress page ID for each location.
+## The Challenge
 
-Here's how it works:
+The client had a WordPress website with a page for each of their franchise locations. They wanted to add local business schema to each location page to improve their search engine visibility and provide more information to users.
 
-Screaming Frog extracts location URLs and other relevant metadata.
+Unfortunately, the client's website was built with a dated page builder and had multiple page templates for the location pages. This made it difficult to extract the location data in a structured format that would allow for easy insertion of schema markup. 
 
-An INDEX MATCH formula cross-references this data to retrieve the WordPress page ID.
+This meant that I would have to manually add the schema to each location page, which would take a significant amount of time.
 
-This page ID is crucial for later steps when structuring the schema data.
+## The Solution
 
-Step 2: Using AI to Generate a Python Script
+I decided to use Screaming Frog, AI and Python to automate the process of generating and uploading the schema.
 
-Next, I used Cursor AI to help generate a Python script that automates the schema generation process. I started with an example schema for one clinic, then prompted the AI to:
+### Step 1: Extracting Location Data with Screaming Frog
 
-Take a CSV file (locations.csv) as input.
+The first step was to gather all current business location information from the client's website. 
 
-Append a new schema column to each row.
+To do this I used Screaming Frog's SEO Spider to extract the location URLs, local business name, address, phone number, and other relevant metadata used for Local Business Schema.
 
-Format the schema data in the appropriate Local Business Schema format.
+To prepare this data for a later bulk upload I also extracted the WordPress Post ID for each location.
 
-By iterating through a few prompts, we were able to generate a fully functional script that dynamically builds schema markup for all locations.
+The end result was a CSV file with the following columns:
 
-Step 3: Running the Python Script
+- Location URL
+- Local Business Name
+- Address
+- Phone Number
+- WordPress Post ID
+- Additional metadata for the schema like hours of operation
+
+### Step 2: Using AI to Generate a Python Script
+
+Next, I used Cursor AI to help generate a Python script that automates the schema generation process. I started with an example schema for one location, then prompted the AI to:
+
+1. Take a CSV file (locations.csv) as input.
+2. Append a new schema column to each row.
+3. Format the schema data based on the Local Business Schema example.
+
+By iterating through a few prompts, I was able to generate a fully functional script that dynamically builds schema markup for all locations.
+
+### Step 3: Running the Python Script
 
 Once the script was ready, I ran it using:
 
+```python
 python generate_schema.py
+```
 
 This processed the CSV file and added the schema markup to each row. The advantage of using Python over a traditional concatenate function in Excel is that it makes the process much more maintainable, especially when changes or updates are needed.
 
-Step 4: Uploading the Updated CSV
+### Step 4: Uploading the Schema to Wordpress
 
-With our newly generated schema data, the final step was to:
+With our newly generated CSV the final step was to upload the schema to each location page.
 
-Open Google Sheets.
+To do this I used WP All Import, a plugin that allows you to import data from a CSV file to a new custom field created with ACF called local_schema.
 
-Navigate to Sheet 2.
+1. Create a new custom field called local_schema in ACF.
+2. Create a new import profile in WP All Import and map the schema column to the local_schema custom field, using the WordPress Post ID as the reference.
+3. Import the CSV file.
 
-Use the Import Upload feature to drag and replace the sheet with the updated CSV.
+Now the schema is uploaded to each location page.
 
-Now, the full dataset—including WordPress page IDs and schema markup—is ready for implementation.
 
-Conclusion
+### Step 5: Adding Schema to the Frontend
+Now that the schema is uploaded to each location page custom field, we need to add the schema to the frontend of the page.
+
+To do this I used a WP function to add a PHP snippet to the head of the page. The function checks if the current page is a location page and if the local_schema custom field is not empty. If both conditions are met, the function adds the schema to the head.
+
+```php
+function add_local_schema () {
+    if (is_page() && function_exists('get_field')) {
+        $local_schema = get_field('local_schema');
+        if (!empty($local_schema)) {
+            echo $local_schema;
+        }
+    }
+}
+add_action( 'wp_head', 'add_local_schema' );
+```
+
+## Alternative Approaches
+
+I did consider a few alternative approaches to this problem.
+
+- Schema plugin like Rankmath - This would have been a much simpler solution, but the client was using a dated page builder that didn't allow for easy insertion of schema markup.
+- Use Google Sheets and a concatenate function - This would have been a more manual process and concatenating 5+ fields that use schema markup would have been a nightmare.
+- Use AI to generate the schema inside the LLM interface - This would have been a an effetive approach, but prone to hallucinations and difficult to maintain.
+- Use AI to generate the schema inside Google Sheets - Google Sheets AI plugins are great, but will struggle with the same problems as concatenating and LLM interface approaches.
+
+## Conclusion
 
 This method showcases how AI and Python can work together to automate repetitive tasks, making schema generation faster and more scalable. Instead of manually constructing schema markup, we can generate it programmatically with just a click of a button.
 
-Hopefully, this guide gives you some ideas on how to leverage AI and Python for similar tasks in your own projects. Happy coding!
+This guide should give you some ideas on how to leverage AI and Python for similar tasks in your own projects.
