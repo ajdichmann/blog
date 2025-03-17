@@ -55,6 +55,186 @@ Next, I used Cursor AI to help generate a Python script that automates the schem
 
 By iterating through a few prompts, I was able to generate a fully functional script that dynamically builds schema markup for all locations.
 
+The end results was a Python script that looks like this (with client info removed):
+```python
+import csv
+import json
+import os
+
+
+def create_schema(row):
+    """Create a schema.org JSON-LD structure for a clinic based on row data."""
+
+    # Extract values from the row (assuming these columns exist)
+    # You'll need to adjust these based on your actual CSV structure
+    name = row.get("name", "")
+    url = row.get("website", "")
+    image = row.get(
+        "Image",
+        "https://clientdomain.com/image.jpg",
+    )
+    logo = row.get(
+        "Logo",
+        "https://clientdomain.com/image.jpg",
+    )
+    phone = row.get("phone", "")
+    description = row.get("description", "")
+
+    # Try different possible column names for address fields
+    street = row.get("Street Address", row.get("StreetAddress", row.get("address", "")))
+    city = row.get("city", row.get("Locality", ""))
+    state = row.get("state", row.get("Region", ""))
+    zip_code = row.get(
+        "Zip", row.get("postcode", row.get("postcode", row.get("postcode", "")))
+    )
+
+    # Print the row keys to help debug
+    print(f"Available columns in CSV: {list(row.keys())}")
+    print(
+        f"Address values found - Street: '{street}', City: '{city}', State: '{state}', Zip: '{zip_code}'"
+    )
+
+    # Format phone number with brackets
+    formatted_phone = f"{phone}" if phone else ""
+
+    # Create the schema structure
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "MedicalClinic",
+        "medicalSpecialty": "Musculoskeletal",
+        "name": name,
+        "url": url,
+        "image": image,
+        "logo": logo,
+        "telephone": formatted_phone,
+        "priceRange": "$$",
+        "description": description,
+        "knowsAbout": [
+            "orthopedics",
+            "sports medicine",
+            "Pain management",
+            "Pain control",
+            "Regenerative medicine",
+        ],
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": street,
+            "addressLocality": city,
+            "addressRegion": state,
+            "postalCode": zip_code,
+            "addressCountry": "US",
+        },
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "08:00",
+                "closes": "21:00",
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Saturday",
+                "opens": "09:00",
+                "closes": "20:00",
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Sunday",
+                "opens": "09:00",
+                "closes": "17:00",
+            },
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "telephone": formatted_phone,
+            "availableLanguage": ["English", "Spanish", "ASL"],
+            "email": "contact@client.com",
+        },
+        "sameAs": [
+            f"https://www.facebook.com/",
+            f"https://www.instagram.com",
+            f"https://www.trustindex.io/",
+        ],
+    }
+
+    # Format as a script tag with JSON-LD
+    script_tag = f"""<script type="application/ld+json">
+    {json.dumps(schema, indent=4)}
+  </script>"""
+
+    return script_tag
+
+
+def process_csv():
+    """Process the locations.csv file and add schema to each row."""
+    input_file = "locations.csv"
+    output_file = "locations_with_schema.csv"
+
+    if not os.path.exists(input_file):
+        print(f"Error: {input_file} not found.")
+        return
+
+    # Read the CSV file
+    with open(input_file, "r", newline="", encoding="utf-8") as csvfile:
+        # Print the raw content of the first few lines to see the format
+        print("First 5 lines of the CSV file:")
+        for i, line in enumerate(csvfile):
+            if i < 5:
+                print(f"Line {i+1}: {line.strip()}")
+            else:
+                break
+        csvfile.seek(0)  # Reset file pointer to beginning
+
+        # Try to read as CSV
+        reader = csv.DictReader(csvfile)
+        print(f"CSV headers detected: {reader.fieldnames}")
+
+        fieldnames = reader.fieldnames
+        if not fieldnames:
+            print("ERROR: No fieldnames detected in CSV. Check file format.")
+            return
+
+        # Make sure we have a Schema column
+        if "Schema" not in fieldnames:
+            fieldnames.append("Schema")
+
+        # Process each row and write to a new file
+        with open(output_file, "w", newline="", encoding="utf-8") as outfile:
+            writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+            writer.writeheader()
+
+            row_count = 0
+            for row in reader:
+                row_count += 1
+                print(f"\nProcessing row {row_count}:")
+                print(f"Row data: {row}")
+
+                # Generate schema for this location
+                schema = create_schema(row)
+
+                # Add schema to the row
+                row["Schema"] = schema
+
+                # Write the updated row
+                writer.writerow(row)
+
+                # Print a sample of the schema (first 100 chars)
+                schema_preview = schema[:100] + "..." if len(schema) > 100 else schema
+                print(f"Schema generated (preview): {schema_preview}")
+
+    print(
+        f"\nProcessing complete. Processed {row_count} rows. Output saved to {output_file}"
+    )
+
+
+if __name__ == "__main__":
+    process_csv()
+
+
+```
+
+
 ### Step 3: Running the Python Script
 
 Once the script was ready, I ran it using:
