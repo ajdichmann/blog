@@ -7,15 +7,16 @@ cover: '@/assets/og-image.png'
 draft: false
 tags: 
 - javascript
+- python
 ---
 import Figure from "@/components/Figure.astro"
 import figureExample from "@/assets/og-image.png"
 import OrangeAlert from '@/components/OrangeAlert.astro';
 
 
-If you are into automation and want to stay ahead of online giveaways on Reddit, using a Cloudflare Worker to track Reddit posts and Discord webhooks for notifications is a great (free)solution. 
+If you are into automation and want to stay ahead of online giveaways on Reddit, using a Cloudflare Worker to track Reddit posts and Discord webhooks for notifications is a great (free) solution. 
 
-In this post I will show you how to set up a Cloudflare Worker that scans a subreddit for giveaway-related keywords and **sends alerts to a Discord channel**—all without running a dedicated server or monthly fees.
+In this post I will show you how to set up a Cloudflare Worker that scans a subreddit for giveaway-related keywords and **sends alerts to a Discord channel**—all without running a dedicated server or monthly fees so baseball card lovesr like me never miss a Reddit giveaway.
 
 ## Why Use a Cloudflare Worker?
 Cloudflare Workers provide a lightweight, **low-latency**, and **cost-effective** way to run scripts on the edge. Instead of constantly polling Reddit with a traditional server setup, a worker can be triggered **on demand** (with a cron job in this case), fetching data efficiently.
@@ -23,12 +24,12 @@ Cloudflare Workers provide a lightweight, **low-latency**, and **cost-effective*
 Plus, Cloudflare Workers are free, easy to set up and manage - plus they run on Javascript so the code is easy to write
 
 ## What We’re Building
-Our worker will:
+We are going to build a Cloudflare Worker that:
 
 1. Fetch the latest posts from a subreddit using the .new.json endpoint.
 2. Scan for keywords like `"giveaway"`, `"give away"`, and `"contest"`.
 3. Send a Discord notification when a match is found, tagging a specific user.
-4. Deliver the title and link of the giveaway post in an embedded format.
+4. Add the title and link of the giveaway post in an embedded format.
 
 ---
 
@@ -41,7 +42,7 @@ Reddit provides a JSON API that lets us fetch recent posts from any subreddit. H
 https://www.reddit.com/r/baseballcards/new.json?limit=50
 ```
 
-Later in the code we will loop through these posts using a for() loop and check if the title contains any of the keywords we are looking for.
+Later in the code we will loop through these posts using a `for()` loop and check if the title contains any of the keywords we are looking for.
 
 ## Step 2: Match Giveaway Keywords
 We use regular expressions to identify posts containing "giveaway", "give away", or "contest" in their title or body.
@@ -64,7 +65,7 @@ export default {
     const SUBREDDIT_NAME = "baseballcards"; // Change to your subreddit
     const SEARCH_PATTERNS = [/giveaway/i, /give away/i, /contest/i]; 
     const REDDIT_URL = `https://www.reddit.com/r/${SUBREDDIT_NAME}/new.json?limit=50`;
-    const DISCORD_WEBHOOK_URL = "add your webhook url here!";
+    const DISCORD_WEBHOOK_URL = "add your webhook url here!"; // Add your Discord webhook URL here
 
     try {
       const response = await fetch(REDDIT_URL, {
@@ -121,6 +122,7 @@ export default {
 1. Log into Cloudflare and navigate to Workers & Pages.
 2. Click Create a Service and select HTTP Handler.
 3. Paste the script into the Cloudflare Workers Editor.
+4. Set the execution frequency to "Every 30 minutes"
 ### Step 2: Set Up the Discord Webhook
 1. In Discord, go to Server Settings > Integrations > Webhooks.
 2. Click New Webhook, give it a name, and copy the Webhook URL.
@@ -129,9 +131,9 @@ export default {
 1. Click Save and Deploy.
 
 ## How It Works
-🚀 Every time the worker runs, it fetches new Reddit posts
-🔍 It searches for giveaways using keyword matching
-📢 When a match is found, a Discord alert is sent
+- 🚀 Every time the worker runs, it fetches new Reddit posts
+- 🔍 It searches for giveaways using keyword matching
+- 📢 When a match is found, a Discord alert is sent
 
 Example Discord Notification:
 ```
