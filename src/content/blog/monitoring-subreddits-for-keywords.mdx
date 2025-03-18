@@ -1,0 +1,144 @@
+---
+title: How to Monitor Subreddits for Keywords with Cloudflare Workers
+summary: Learn how to use monitor Reddit for posts containing target keywords
+postLayout: column
+date: '2025-03-16'
+cover: '@/assets/og-image.png'
+draft: false
+tags: 
+- javascript
+---
+import Figure from "@/components/Figure.astro"
+import figureExample from "@/assets/og-image.png"
+import OrangeAlert from '@/components/OrangeAlert.astro';
+
+
+If you are into automation and want to stay ahead of online giveaways on Reddit, using a Cloudflare Worker to track Reddit posts and Discord webhooks for notifications is a great (free)solution. 
+
+In this post I will show you how to set up a Cloudflare Worker that scans a subreddit for giveaway-related keywords and **sends alerts to a Discord channel**—all without running a dedicated server or monthly fees.
+
+## Why Use a Cloudflare Worker?
+Cloudflare Workers provide a lightweight, **low-latency**, and **cost-effective** way to run scripts on the edge. Instead of constantly polling Reddit with a traditional server setup, a worker can be triggered **on demand** (with a cron job in this case), fetching data efficiently.
+
+Plus, Cloudflare Workers are free, easy to set up and manage - plus they run on Javascript so the code is easy to write
+
+## What We’re Building
+Our worker will:
+
+1. Fetch the latest posts from a subreddit using the .new.json endpoint.
+2. Scan for keywords like `"giveaway"`, `"give away"`, and `"contest"`.
+3. Send a Discord notification when a match is found, tagging a specific user.
+4. Deliver the title and link of the giveaway post in an embedded format.
+
+---
+
+## Writing the Cloudflare Worker Script
+
+### Step 1: Fetch Subreddit Posts
+Reddit provides a JSON API that lets us fetch recent posts from any subreddit. Here’s the API endpoint for the 50 latest posts in `r/baseballcards`:
+
+```
+https://www.reddit.com/r/baseballcards/new.json?limit=50
+```
+
+Later in the code we will loop through these posts using a for() loop and check if the title contains any of the keywords we are looking for.
+
+## Step 2: Match Giveaway Keywords
+We use regular expressions to identify posts containing "giveaway", "give away", or "contest" in their title or body.
+
+```javascript
+const SEARCH_PATTERNS = [/giveaway/i, /give away/i, /contest/i]; 
+```
+
+## Step 3: Send Notifications to Discord
+If a post matches, we send a webhook message to Discord. The webhook will:
+
+- Tag @ajd to notify a specific user (note: this must be a userid, not the username).
+- Include an embedded message with the giveaway details.
+
+Here’s the full script:
+
+```javascript
+export default {
+  async fetch(request) {
+    const SUBREDDIT_NAME = "baseballcards"; // Change to your subreddit
+    const SEARCH_PATTERNS = [/giveaway/i, /give away/i, /contest/i]; 
+    const REDDIT_URL = `https://www.reddit.com/r/${SUBREDDIT_NAME}/new.json?limit=50`;
+    const DISCORD_WEBHOOK_URL = "add your webhook url here!";
+
+    try {
+      const response = await fetch(REDDIT_URL, {
+        headers: { "User-Agent": "CloudflareWorker/1.0" }
+      });
+
+      if (!response.ok) {
+        return new Response(`Error fetching subreddit data: ${response.statusText}`, { status: 500 });
+      }
+
+      const data = await response.json();
+      const posts = data.data.children;
+      let foundPosts = [];
+
+      for (let post of posts) {
+        const title = post.data.title.toLowerCase();
+        const selfText = post.data.selftext.toLowerCase();
+
+        if (SEARCH_PATTERNS.some(pattern => pattern.test(title)) || SEARCH_PATTERNS.some(pattern => pattern.test(selfText))) {
+          const postUrl = `https://www.reddit.com${post.data.permalink}`;
+          foundPosts.push({ title: post.data.title, url: postUrl });
+
+          // Send notification to Discord tagging @ajd
+          await fetch(DISCORD_WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              content: "<@ajd> 🎉 Giveaway Alert!",
+              username: "Reddit Giveaway Bot",
+              avatar_url: "https://www.redditinc.com/assets/images/site/reddit-logo.png",
+              embeds: [{
+                title: `🎁 Giveaway Alert in r/${SUBREDDIT_NAME}!`,
+                description: `**${post.data.title}**\n[View Post](${postUrl})`,
+                color: 16776960 
+              }]
+            })
+          });
+        }
+      }
+
+      return new Response(JSON.stringify(
+        foundPosts.length > 0 ? { found: true, posts: foundPosts } : { found: false, message: "No matching posts found" },
+        null, 2
+      ), { headers: { "Content-Type": "application/json" } });
+
+    } catch (error) {
+      return new Response(`Error: ${error.message}`, { status: 500 });
+    }
+  }
+};
+```
+## Deploying to Cloudflare
+### Step 1: Create a New Worker
+1. Log into Cloudflare and navigate to Workers & Pages.
+2. Click Create a Service and select HTTP Handler.
+3. Paste the script into the Cloudflare Workers Editor.
+### Step 2: Set Up the Discord Webhook
+1. In Discord, go to Server Settings > Integrations > Webhooks.
+2. Click New Webhook, give it a name, and copy the Webhook URL.
+3. Replace DISCORD_WEBHOOK_URL in the script with your copied webhook.
+### Step 3: Deploy
+1. Click Save and Deploy.
+
+## How It Works
+🚀 Every time the worker runs, it fetches new Reddit posts
+🔍 It searches for giveaways using keyword matching
+📢 When a match is found, a Discord alert is sent
+
+Example Discord Notification:
+```
+@ajd 🎉 Giveaway Alert!
+🎁 Giveaway Alert in r/baseballcards!
+🚀 "Win a free baseball card!"
+🔗 [View Post](https://www.reddit.com/r/baseballcards/comments/xyz123)
+
+```
+This setup is a FREE, low-maintenance way to monitor Reddit for giveaways and get instant alerts on Discord. It’s serverless, real-time, and scalable.
