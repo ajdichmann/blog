@@ -12,6 +12,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   prefetch: true,
   site: SITE_METADATA.siteUrl,
+  trailingSlash: "never",
   integrations: [
     mdx(),
     sitemap(),
@@ -23,4 +24,5 @@ export default defineConfig({
 
   output: "server",
   adapter: cloudflare(),
+  middleware: "./src/middleware.ts",
 });
