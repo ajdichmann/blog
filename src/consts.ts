@@ -58,7 +58,7 @@ interface NavigationItem {
 
 export const SITE_METADATA: SiteMetadata = {
   theme: "system",
-  siteUrl: "https://www.ajdichmann.com/",
+  siteUrl: "https://www.ajdichmann.com",
   siteRepo: "https://github.com/wanoo21/tailwind-astro-starting-blog",
   title: "AJ's Blog",
   calendly: "https://calendly.com/aj-globerunner/60min",

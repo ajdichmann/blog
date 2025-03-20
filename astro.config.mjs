@@ -4,7 +4,6 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import solidJs from "@astrojs/solid-js";
 import { SITE_METADATA } from "./src/consts.ts";
-import metaTags from "astro-meta-tags";
 import robotsTxt from "astro-robots-txt";
 import partytown from "@astrojs/partytown";
 import cloudflare from "@astrojs/cloudflare";
@@ -19,7 +18,6 @@ export default defineConfig({
     sitemap(),
     tailwind(),
     solidJs(),
-    metaTags(),
     robotsTxt(),
     partytown(),
   ],
