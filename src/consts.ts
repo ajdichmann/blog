@@ -103,7 +103,7 @@ export const ITEMS_PER_PAGE = 5;
  */
 export const NAVIGATION: NavigationItem[] = [
   { href: "/", title: "nav.home" },
-  { href: "/blog", title: "nav.blog" },
+  { href: "/blog/", title: "nav.blog" },
   { href: SITE_METADATA.calendly, title: "nav.call" },
 ];
 

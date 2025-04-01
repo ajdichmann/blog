@@ -81,6 +81,7 @@ const isProduction = import.meta.env.PROD;
     nofollow={robots.includes("nofollow")}
     noindex={robots.includes("noindex")}
     charset="utf-8"
+    canonical={Astro.url.href.endsWith('/') ? Astro.url.href : `${Astro.url.href}/`}
     extend={{
       meta: [
         {

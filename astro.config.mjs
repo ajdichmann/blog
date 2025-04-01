@@ -12,7 +12,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   prefetch: true,
   site: SITE_METADATA.siteUrl,
-  trailingSlash: "never",
+  trailingSlash: "always",
   integrations: [
     mdx(),
     sitemap(),

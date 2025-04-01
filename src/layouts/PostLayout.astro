@@ -230,7 +230,7 @@ const { Content, headings } = await post.render();
                           {t('layouts.postLayout.previousPost')}
                         </h2>
                         <div class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${prev.slug}`}>
+                          <Link href={`/blog/${prev.slug}/`}>
                             {prev.data.title}
                           </Link>
                         </div>
@@ -242,7 +242,7 @@ const { Content, headings } = await post.render();
                           {t('layouts.postLayout.nextPost')}
                         </h2>
                         <div class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${next.slug}`}>
+                          <Link href={`/blog/${next.slug}/`}>
                             {next.data.title}
                           </Link>
                         </div>
@@ -260,7 +260,7 @@ const { Content, headings } = await post.render();
                     <ul class="flex flex-wrap gap-2 xl:space-x-0 xl:space-y-0">
                       {related.map((post) => (
                         <li class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${post.slug}`}>
+                          <Link href={`/blog/${post.slug}/`}>
                             {post.data.title}
                           </Link>
                         </li>
@@ -272,7 +272,7 @@ const { Content, headings } = await post.render();
             </div>
             <div class="pt-4 xl:pt-8">
               <Link
-                href="/blog"
+                href="/blog/"
                 class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                 aria-label={t('layouts.postLayout.backToBlog')}
               >

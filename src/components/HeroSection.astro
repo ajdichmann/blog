@@ -29,7 +29,7 @@ const {
   calendly = SITE_METADATA.calendly,
   blogPost = latestPost ? {
     title: "Read my newest blog post!",
-    url: `/blog/${latestPost.slug}`,
+    url: `/blog/${latestPost.slug}/`,
     ctatext: "Read blog"
   } : undefined
 } = Astro.props;

@@ -13,10 +13,15 @@ const { pathname } = Astro.url;
 const isActive = href === pathname || 
   href === pathname.replace(/\/$/, '') ||
   (href !== '/' && pathname.startsWith(href));
+
+// Add trailing slash to internal links that don't have one
+const processedHref = !href.startsWith('http') && !href.startsWith('#') && !href.endsWith('/') 
+  ? `${href}/` 
+  : href;
 ---
 
 <a 
-  href={href} 
+  href={processedHref} 
   class:list={[className, { active: isActive }]} 
   aria-current={isActive ? 'page' : undefined}
   {...props}

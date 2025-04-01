@@ -1,6 +1,10 @@
 import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  // Temporarily disabled middleware
+  return next();
+  
+  /*
   const url = new URL(context.request.url);
   
   // If URL has a trailing slash and it's not the root path
@@ -18,4 +22,5 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
   
   return next();
+  */
 }); 
