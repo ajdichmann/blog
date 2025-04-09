@@ -1,0 +1,11 @@
+---
+import RootLayout from '../layouts/RootLayout.astro';
+---
+
+<RootLayout title="Schedule a Call" description="Schedule a 60-minute call with AJ">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Schedule a Call</h1>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/aj-globerunner/60min" style="min-width:320px;height:100vh;overflow:hidden;"></div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  </div>
+</RootLayout> 

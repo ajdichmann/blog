@@ -3,9 +3,9 @@ import {POST_METADATA} from "@/consts.ts";
 
 const authors = defineCollection({
   type: 'content',
-  schema: z.object({
+  schema: ({image}) => z.object({
     name: z.string(),
-    avatar: z.string().optional(),
+    avatar: image().optional(),
     occupation: z.string().optional(),
     shortBio: z.string(),
     company: z.string().optional(),

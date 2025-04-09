@@ -98,10 +98,11 @@ const { Content, headings } = await post.render();
                         {data.avatar && (
                           <Image
                             src={data.avatar}
-                            width={38}
-                            height={38}
+                            width={40}
+                            height={40}
                             alt="avatar"
-                            class="h-10 w-10 rounded-full"
+                            class="h-10 w-10 rounded-full object-cover object-[center_top]"
+                            quality={100}
                           />
                         )}
                         <dl class="whitespace-nowrap text-sm font-medium leading-5">
