@@ -15,6 +15,7 @@ import cloudflareXmlSitemapChecker from "@/assets/cloudflare-xml-sitemap-checker
 import cloudflareXmlChronTrigger from "@/assets/cloudflare-xml-sitemap-chron-trigger.png"
 import cloudflareXmlDiscord from "@/assets/cloudflare-xml-sitemap-discord.png"
 import cloudflareXmlKv from "@/assets/cloudflare-xml-sitemap-kv.png"
+import cloudflareXmlSuccess from "@/assets/cloudflare-xml-sitemap-success.png"
 import OrangeAlert from '@/components/OrangeAlert.astro';
 import Year from "@/components/Year.astro"
 
@@ -72,41 +73,53 @@ To set up the Worker and KV storage to monitor an XML sitemap for changes follow
 
 ``` javascript
 export default {
+  // Scheduled handler (runs via cron)
+  async scheduled(event, env, ctx) {
+    await runSitemapCheck(env);
+  },
+
+  // Optional fetch handler for browser/HTTP testing
   async fetch(request, env, ctx) {
-    const urlsToCheck = [
-      "https://www.ajdichmann.com/sitemap-0.xml", // Add your sitemap(s) here
-    ];
-
-    let allNewEntries = [];
-
-    for (const url of urlsToCheck) {
-      const response = await fetch(url);
-      if (!response.ok) {
-        return new Response(`Failed to fetch sitemap: ${url}`, { status: 500 });
-      }
-
-      const xmlText = await response.text();
-      const currentUrls = parseUrlsFromSitemap(xmlText);
-
-      const cacheKey = `sitemap:${new URL(url).hostname}`;
-      const cached = await env.SITEMAP_KV.get(cacheKey);
-      const previousUrls = cached ? JSON.parse(cached) : [];
-
-      const newEntries = currentUrls.filter((u) => !previousUrls.includes(u));
-      if (newEntries.length > 0) {
-        allNewEntries.push(...newEntries);
-        await env.SITEMAP_KV.put(cacheKey, JSON.stringify(currentUrls));
-      }
-    }
-
-    if (allNewEntries.length > 0) {
-      await sendDiscordNotification(allNewEntries, env.DISCORD_WEBHOOK_URL);
-      return new Response(`Notified Discord of ${allNewEntries.length} new entries.`, { status: 200 });
-    }
-
-    return new Response("No new entries found.", { status: 200 });
+    await runSitemapCheck(env);
+    return new Response("Sitemap check completed (manual trigger)", { status: 200 });
   },
 };
+
+async function runSitemapCheck(env) {
+  const urlsToCheck = [
+    "https://www.ajdichmann.com/sitemap-0.xml", // Replace with actual sitemap URL(s)
+  ];
+
+  let allNewEntries = [];
+
+  for (const url of urlsToCheck) {
+    const response = await fetch(url);
+    if (!response.ok) {
+      console.error(`Failed to fetch sitemap: ${url}`);
+      continue;
+    }
+
+    const xmlText = await response.text();
+    const currentUrls = parseUrlsFromSitemap(xmlText);
+
+    const cacheKey = `sitemap:${new URL(url).hostname}`;
+    const cached = await env.SITEMAP_KV.get(cacheKey);
+    const previousUrls = cached ? JSON.parse(cached) : [];
+
+    const newEntries = currentUrls.filter((u) => !previousUrls.includes(u));
+    if (newEntries.length > 0) {
+      allNewEntries.push(...newEntries);
+      await env.SITEMAP_KV.put(cacheKey, JSON.stringify(currentUrls));
+    }
+  }
+
+  if (allNewEntries.length > 0) {
+    await sendDiscordNotification(allNewEntries, env.DISCORD_WEBHOOK_URL);
+    console.log(`✅ New entries sent to Discord: ${allNewEntries.length}`);
+  } else {
+    console.log("🔍 No new sitemap entries found.");
+  }
+}
 
 function parseUrlsFromSitemap(xmlText) {
   const urls = [];
@@ -123,8 +136,8 @@ async function sendDiscordNotification(urls, webhookUrl) {
   const msgContent = urls.join("\n").slice(0, MAX_MSG_LENGTH);
 
   const body = {
-    username: "Cloudflare XML Sitemap Monitor",
-    content: `🧨 **New Sitemap Entries Detected**:\n${msgContent}`,
+    username: "Sitemap Watchdog 🐾",
+    content: `🔔 **New URLs Detected:**\n${msgContent}`,
   };
 
   await fetch(webhookUrl, {
@@ -133,6 +146,7 @@ async function sendDiscordNotification(urls, webhookUrl) {
     body: JSON.stringify(body),
   });
 }
+
 
 ```
 
@@ -144,6 +158,9 @@ async function sendDiscordNotification(urls, webhookUrl) {
 
 4. Add a Trigger to run the script once every 30 minutes with this expression `*/30 * * * *`
 <Figure src={cloudflareXmlChronTrigger} alt="">Chron job trigger</Figure>
+
+If the script is successful and find new pages you should see a message like this:
+<Figure src={cloudflareXmlSuccess} alt="">Successfully finding new blog posts</Figure>
 
 **TL;DR:**  
 This tiny tool saves us time, prevents SEO blind spots, and keeps our workflows tight. And the best part? It's free.
