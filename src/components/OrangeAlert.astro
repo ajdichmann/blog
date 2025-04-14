@@ -8,10 +8,10 @@ const { title, message } = Astro.props;
 ---
 
 <div
-  class="bg-primary-100 dark:bg-primary-900 border-l-4 border-primary-500 text-primary-700 dark:text-primary-200 px-6 py-5"
+  class="bg-primary-100 dark:bg-primary-900 border-l-4 border-primary-500 text-primary-700 dark:text-primary-200 px-6 py-0.5"
   role="alert"
   aria-labelledby="alert-title"
 >
-  <h2 id="alert-title" class="font-bold mb-1.5">{title}</h2>
-  <p class="text-primary-600 dark:text-primary-300">{message}</p>
+  <h2 id="alert-title" class="font-bold leading-none mt-[30px] mb-0">{title}</h2>
+  <p class="text-primary-600 dark:text-primary-300 leading-normal">{message}</p>
 </div>

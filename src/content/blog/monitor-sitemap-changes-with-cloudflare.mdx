@@ -1,0 +1,149 @@
+---
+title:  How to Use Cloudflare Worker to Instantly Detect New Pages on Client Sites
+summary: Tired of manually checking for new pages, check out this handy Cloudflare Worker!
+postLayout: column
+date: '2025-04-13'
+cover: '@/assets/og-image.png'
+draft: false
+tags: 
+- seo
+- javascript
+---
+import Figure from "@/components/Figure.astro"
+import figureExample from "@/assets/og-image.png"
+import cloudflareXmlSitemapChecker from "@/assets/cloudflare-xml-sitemap-checker.png"
+import cloudflareXmlChronTrigger from "@/assets/cloudflare-xml-sitemap-chron-trigger.png"
+import cloudflareXmlDiscord from "@/assets/cloudflare-xml-sitemap-discord.png"
+import cloudflareXmlKv from "@/assets/cloudflare-xml-sitemap-kv.png"
+import OrangeAlert from '@/components/OrangeAlert.astro';
+import Year from "@/components/Year.astro"
+
+Ever had a client quietly publish a blog post or service page... and you don't find out until your monthly report? Yeah, us too—until we built a simple Cloudflare Worker to instantly detect new pages and notify our team in real time.
+
+Here's how it works (and how you can steal the idea) or [skip right ahead to the code](#cloudflare-worker-code-and-kv-setup).
+
+<Figure src={cloudflareXmlSitemapChecker} alt="">Quick example of the script we are building</Figure>
+
+## Why Detecting New Pages Matters for SEO
+
+Search engines don't always crawl new content right away, especially if the page has no internal links or backlinks. That delay can cost your client rankings, conversions, and visibility.
+
+By catching new URLs right as they go live, we can:
+
+- Make sure the content is optimized and meets brand standards
+- Submit the page to Google Search Console immediately
+- Promote it on social or via ads that same day
+- Start building internal links and tracking performance
+- Let the content team know it's live so they can update Asana
+
+## How Our Worker Script Works
+
+I wrote a Cloudflare Worker that checks client XML sitemaps on a schedule (hourly, daily—your call). It pulls the list of `<loc>` URLs, compares them to the last cached version, then sends a notification when anything new is detected.
+
+Right now I gets alerts in **Discord**, but we're also syncing notifications to **Asana** so we can drop new pages directly into the content or SEO queue.
+
+## Common Sitemap File Names to Watch
+
+If your client is using WordPress with popular SEO plugins, their sitemaps probably live at one of these paths:
+
+- `/sitemap_index.xml` (Rank Math and Yoast)
+- `/sitemap.xml` (Shopify and others)
+- `/page-sitemap.xml`, `/post-sitemap.xml`, `/category-sitemap.xml` (various plugins)
+
+We built in support to scan multiple sitemaps if needed, or you can just feed it the main index file and let it handle the rest (including child sitemaps).
+
+## Why This Beats Paid SEO Tools (and It's Free)
+
+Tools like Ahrefs, Screaming Frog, and Sitebulb are awesome — but none of them notify you when a client silently publishes new content unless you're constantly crawling their site.
+
+This Cloudflare Worker runs **for free** at the edge. No server. No subscriptions. Just fast, private alerts when new content drops.
+
+## Want This Set Up for Your Agency or Clients?
+
+I have rolled this out for all retainer SEO clients and it's a game-changer. No more "surprise pages" and no more lag on content promotion or technical QA.
+
+Need help installing or customizing it for your agency? [Let's chat](#). We'll hook you up.
+
+### Cloudflare Worker Code and KV Setup
+
+To set up the Worker and KV storage to monitor an XML sitemap for changes follow these steps:
+
+1. Add the below JS as a Cloudflare Worker and update the urlsToCheck variable to add your XML sitemaps.
+
+``` javascript
+export default {
+  async fetch(request, env, ctx) {
+    const urlsToCheck = [
+      "https://www.ajdichmann.com/sitemap-0.xml", // Add your sitemap(s) here
+    ];
+
+    let allNewEntries = [];
+
+    for (const url of urlsToCheck) {
+      const response = await fetch(url);
+      if (!response.ok) {
+        return new Response(`Failed to fetch sitemap: ${url}`, { status: 500 });
+      }
+
+      const xmlText = await response.text();
+      const currentUrls = parseUrlsFromSitemap(xmlText);
+
+      const cacheKey = `sitemap:${new URL(url).hostname}`;
+      const cached = await env.SITEMAP_KV.get(cacheKey);
+      const previousUrls = cached ? JSON.parse(cached) : [];
+
+      const newEntries = currentUrls.filter((u) => !previousUrls.includes(u));
+      if (newEntries.length > 0) {
+        allNewEntries.push(...newEntries);
+        await env.SITEMAP_KV.put(cacheKey, JSON.stringify(currentUrls));
+      }
+    }
+
+    if (allNewEntries.length > 0) {
+      await sendDiscordNotification(allNewEntries, env.DISCORD_WEBHOOK_URL);
+      return new Response(`Notified Discord of ${allNewEntries.length} new entries.`, { status: 200 });
+    }
+
+    return new Response("No new entries found.", { status: 200 });
+  },
+};
+
+function parseUrlsFromSitemap(xmlText) {
+  const urls = [];
+  const regex = /<loc>(.*?)<\/loc>/g;
+  let match;
+  while ((match = regex.exec(xmlText)) !== null) {
+    urls.push(match[1]);
+  }
+  return urls;
+}
+
+async function sendDiscordNotification(urls, webhookUrl) {
+  const MAX_MSG_LENGTH = 1900;
+  const msgContent = urls.join("\n").slice(0, MAX_MSG_LENGTH);
+
+  const body = {
+    username: "Cloudflare XML Sitemap Monitor",
+    content: `🧨 **New Sitemap Entries Detected**:\n${msgContent}`,
+  };
+
+  await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+}
+
+```
+
+2. Attach a KV Storage with the name SITEMAP_KV
+<Figure src={cloudflareXmlKv} alt="">Binding a KV storage to the Worker</Figure>
+
+3. Add a Environment variable name DISCORD_WEBHOOK_URL with your Discord webhook for notifications
+<Figure src={cloudflareXmlDiscord} alt="">Discord webhook URL as a Secret</Figure>
+
+4. Add a Trigger to run the script once every 30 minutes with this expression `*/30 * * * *`
+<Figure src={cloudflareXmlChronTrigger} alt="">Chron job trigger</Figure>
+
+**TL;DR:**  
+This tiny tool saves us time, prevents SEO blind spots, and keeps our workflows tight. And the best part? It's free.
