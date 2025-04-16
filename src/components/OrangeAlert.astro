@@ -14,10 +14,10 @@ const { title, message } = Astro.props;
 </style>
 
 <div
-  class="bg-primary-100 dark:bg-primary-900 border-l-4 border-primary-500 p-6 text-primary-800 dark:text-primary-100"
+  class="bg-primary-100 dark:bg-primary-900/80 border-l-4 border-primary-500 dark:border-primary-400 p-6 text-primary-800 dark:text-primary-50"
   role="alert"
   aria-labelledby="alert-title"
 >
   <h2 id="alert-title" class="font-extrabold text-2xl leading-tight mb-3">{title}</h2>
-  <p class="text-primary-600/90 dark:text-primary-300/90 leading-normal">{message}</p>
+  <p class="text-primary-600/90 dark:text-primary-200/90 leading-normal">{message}</p>
 </div>
