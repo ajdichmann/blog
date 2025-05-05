@@ -1,5 +1,7 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { Image } from 'astro:assets';
+import wordpressImage from '@/assets/wordpress-orange.png';
 
 interface Props {
   title: string;
@@ -32,7 +34,13 @@ const { title, description } = Astro.props;
     <div class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
       <div class="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
         <div class="p-2 lg:-m-4 lg:p-4">
-          <img src="/src/assets/wordpress-orange.png" alt="WordPress Development Services" width="300" height="200" class="w-[400px] rounded-md shadow-2xl">
+          <Image 
+            src={wordpressImage} 
+            alt="WordPress Development Services" 
+            width={400} 
+            height={267} 
+            class="w-[400px] rounded-md shadow-2xl"
+          />
         </div>
       </div>
     </div>
