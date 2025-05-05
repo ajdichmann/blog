@@ -3,24 +3,23 @@ interface Props {
   blogTitle: string;
   url: string;
   ctatext: string;
+  className?: string;
 }
 
-const { blogTitle, url, ctatext } = Astro.props;
+const { blogTitle, url, ctatext, className = "" } = Astro.props;
 ---
 
 <div class="hidden sm:mb-8 sm:flex sm:justify-center">
-  <div 
-    class="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 
-    dark:text-gray-300 dark:ring-gray-700 dark:hover:ring-gray-500"
+  <a 
+    href={url}
+    class={`relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-inset ring-gray-900/10
+    dark:text-gray-400 dark:ring-primary-600/10 ${className}`}
     role="alert"
   >
     {blogTitle} 
-    <a 
-      href={url} 
-      class="font-semibold text-primary-600 dark:text-primary-400 italic inline-flex items-center"
-    >
+    <span class="font-semibold text-primary-600 dark:text-primary-400 italic inline-flex items-center">
       {ctatext}
       <span class="ml-1" aria-hidden="true">&rarr;</span>
-    </a>
-  </div>
+    </span>
+  </a>
 </div>

@@ -1,9 +1,8 @@
 ---
-import Card from "@/components/Card.astro";
+
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
-import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
 
 const t = useTranslations();
 
@@ -25,17 +24,15 @@ const schema = {
   description="Get started with the top rated Wordpress experts in Dallas for SEO and Web Development"
 >
 <schema item={schema} />
-  <div class="divide-y divide-gray-200 dark:divide-gray-700">
-    <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
-      <Breadcrumbs text="Dallas Wordpress Dev Agency" />
-      <InteriorPageTitle 
-        title="Dallas Wordpress"
-        highlight="Dev & Consulting"
-      />
-      
-      <!-- Content section with prose -->
-      <div class="prose dark:prose-invert max-w-none">
-        <p><strong>Get started with the top rated WordPress team in Dallas</strong></p>
+<ServicesHero 
+  title="Dallas Wordpress Development & Consulting"
+  description="Get started with the top rated WordPress team in Dallas. Our team based in North Texas has countless years of building, fixing and maintaining WordPress websites under our belt."
+/>
+
+  <!-- Rest of the content -->
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+      <div class="prose dark:prose-invert max-w-none relative z-10">
+        <h2>Local DFW Wordpress Experts</h2>
         <p>Struggling with WordPress and need the help from an Expert Dallas WordPress developer? I am here to help! My team based in North Texas has countless years of building, fixing and maintaining WordPress websites under our belt.</p>
         
         <p>My team of WordPress devs is the right choice when it comes to getting your website back up in running in no time. Whether you are looking for Dallas WordPress development servicing or Dallas WordPress support, we are here for you at all times!</p>
