@@ -1,14 +1,24 @@
 ---
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import { Image } from 'astro:assets';
-import wordpressImage from '@/assets/wordpress-orange.png';
 
 interface Props {
   title: string;
   description: string;
+  blogLink?: {
+    text: string;
+    url: string;
+  };
+  image?: {
+    src: ImageMetadata;
+    alt: string;
+    width?: number;
+    height?: number;
+  };
+  breadcrumbsText: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, blogLink, image, breadcrumbsText } = Astro.props;
 ---
 
 <div class="relative isolate">
@@ -19,12 +29,14 @@ const { title, description } = Astro.props;
   
   <div class="mx-auto max-w-7xl px-0 py-5 lg:flex lg:px-0 lg:py-5 relative z-10">
     <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-      <Breadcrumbs text="Dallas Wordpress Agency" />
-      <div class="mt-16 sm:mt-24 lg:mt-16">
-        <a href="/blog/" class="inline-flex space-x-6">
-          <span class="rounded-full bg-primary-600/10 px-3 py-1 text-sm font-semibold leading-6 text-primary-600 dark:text-primary-400 ring-1 ring-inset ring-primary-600/10">What's new</span>
-        </a>
-      </div>
+      <Breadcrumbs text={breadcrumbsText} />
+      {blogLink && (
+        <div class="mt-16 sm:mt-24 lg:mt-16">
+          <a href={blogLink.url} class="inline-flex space-x-6">
+            <span class="rounded-full bg-primary-600/10 px-3 py-1 text-sm font-semibold leading-6 text-primary-600 dark:text-primary-400 ring-1 ring-inset ring-primary-600/10">{blogLink.text}</span>
+          </a>
+        </div>
+      )}
       <h1 class="mt-10 text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl">{title}</h1>
       <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">{description}</p>
       <div class="mt-10 flex items-center gap-x-6">
@@ -34,13 +46,15 @@ const { title, description } = Astro.props;
     <div class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
       <div class="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
         <div class="p-2 lg:-m-4 lg:p-4">
-          <Image 
-            src={wordpressImage} 
-            alt="WordPress Development Services" 
-            width={400} 
-            height={267} 
-            class="w-[400px] rounded-md shadow-2xl"
-          />
+          {image && (
+            <Image 
+              src={image.src} 
+              alt={image.alt} 
+              width={image.width || 400} 
+              height={image.height || 267} 
+              class="w-[400px] rounded-md"
+            />
+          )}
         </div>
       </div>
     </div>

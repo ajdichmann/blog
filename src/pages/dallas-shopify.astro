@@ -4,6 +4,8 @@ import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from '@/assets/shopify-orange.png';
 
 const t = useTranslations();
 
@@ -19,32 +21,31 @@ const schema = {
   "serviceType": "Shopify Development"
 };
 ---
-<style>
-  p {
-    padding-bottom: 0.5em
-  }
-  h2 {
-    font-size: 1.5rem /* 24px */;
-    line-height: 2rem /* 32px */;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-      }
-</style>
+
 <RootLayout
   title="Dallas Shopify Development Service & Consulting | AJ Dichmann"
   description="Get started with the top rated Shopify experts in Dallas for SEO and Web Development"
 >
   <schema item={schema} />
+  <ServicesHero 
+    title="Dallas Shopify Development & Consulting"
+    description="Get started with the top rated Shopify team in Dallas. Our team based in North Texas has helped grow several Dallas area Shopify stores to over $100,000 per month."
+    blogLink={{
+      text: "What's new in Shopify",
+      url: "/blog/"
+    }}
+    image={{
+      src: featuredImage,
+      alt: "Dallas Shopify Development Services"
+    }}
+    breadcrumbsText="Dallas Shopify Agency"
+  />
   <div class="divide-y divide-gray-200 dark:divide-gray-700">
     <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
-      <Breadcrumbs text="Dallas Shopify Dev Agency" />
-      <InteriorPageTitle 
-        title="Dallas Shopify"
-        highlight="Dev & Consulting"
-      />
       
       <!-- Content section with prose -->
       <div class="prose dark:prose-invert max-w-none">
+        <h2>Local DFW Shopify Experts</h2>
         <p><strong>Get started development and SEO with the top Ecommerce team in Dallas</strong></p>
         <p>Do you need help with your Shopify store? My team is based in DFW and specializes in working with Shopify. Here are some of the services we provide to eCommerce clients who use Shopify and Shopify Plus.</p>
         <p>We are Dallas Shopify Expert and Dallas Digital Marketing agency. We have helped grow several Dallas area shopify stores to over $100,000 per month. Our Dallas based team works on your store exclusively for you, so you have peace of mind that one expert is looking after everything related to your digital marketing and organic growth.</p>

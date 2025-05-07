@@ -3,6 +3,7 @@
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from '@/assets/wordpress-orange.png';
 
 const t = useTranslations();
 
@@ -27,6 +28,15 @@ const schema = {
 <ServicesHero 
   title="Dallas Wordpress Development & Consulting"
   description="Get started with the top rated WordPress team in Dallas. Our team based in North Texas has countless years of building, fixing and maintaining WordPress websites under our belt."
+  blogLink={{
+    text: "What's new in WordPress",
+    url: "/tags/wordpress/"
+  }}
+  image={{
+    src: featuredImage,
+    alt: "Dallas WordPress Development Services"
+  }}
+  breadcrumbsText="Dallas Wordpress Agency"
 />
 
   <!-- Rest of the content -->
