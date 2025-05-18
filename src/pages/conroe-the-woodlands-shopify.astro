@@ -4,6 +4,8 @@ import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from '@/assets/shopify-orange.png';
 
 const t = useTranslations();
 
@@ -37,16 +39,25 @@ const schema = {
   description="Get started with the top rated Shopify experts in South Texas for SEO and Web Development"
 >
   <schema item={schema} />
-  <div class="divide-y divide-gray-200 dark:divide-gray-700">
+  <ServicesHero 
+    title="Conroe & The Woodlands Shopify Development & Consulting"
+    description="Get started with the top rated Shopify team in Conroe and The Woodlands. Our team based in South Texas has countless years of building, fixing and maintaining Shopify websites under our belt."
+    blogLink={{
+      text: "What's new in Shopify",
+      url: "/tags/shopify/"
+    }}
+    image={{
+      src: featuredImage,
+      alt: "Conroe & The Woodlands Shopify Development Services"
+    }}
+    breadcrumbsText="Conroe & The Woodlands Shopify Agency"
+  />
+
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
     <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
-      <Breadcrumbs text="Conroe & The Woodlands Shopify Development" />
-      <InteriorPageTitle 
-        title="Conroe & The Woodlands Shopify"
-        highlight="Dev & Consulting"
-      />
-      
-      <!-- Content section with prose -->
-      <div class="prose dark:prose-invert max-w-none">
+            <!-- Content section with prose -->
+      <div class="prose dark:prose-invert max-w-none relative z-10">
+        <h2>Local Shopify Experts</h2>
         <p><strong>Get started with development and SEO with the top Shopify expert team in Conroe and The Woodlands</strong></p>
         <p>If you are looking for a shopify expert in the Conroe, Texas area, you have come to the right place! Our team of experienced developers can help you take your business to the next level with a custom shopify website that is perfect for your needs. We specialize in SEO and digital marketing, so you can be sure that your website will be seen by the right people and generate traffic that converts into sales.</p>
         <p>I am an expert Shopify designer and developer. We've helped several Conroe and The Woodlands Shopify companies reach over $100,000 per month in revenue. Our Texas-based staff works exclusively for you, so you don't have to worry about anything related to your digital marketing or organic growth while we design and build your store.</p>
