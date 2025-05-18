@@ -1,0 +1,163 @@
+---
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from '@/assets/wordpress-orange.png';
+import OrangeAlert from "@/components/OrangeAlert.astro";
+import FAQ from "@/components/FAQ.astro";
+const t = useTranslations();
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Wordpress Maintenance Plans",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "AJ Dichmann",
+    "areaServed": "Texas"
+  },
+  "serviceType": "Wordpress Maintenance Plans"
+};
+
+---
+<RootLayout
+  title="Wordpress Maintenance Plans & Services | AJ Dichmann"
+  description="Protect your Wordpress website from downtime and security threats with our comprehensive maintenance plans. We offer regular updates, backups, and support to keep your site running smoothly."
+>
+<schema item={schema} />
+<ServicesHero 
+    title="Wordpress Maintenance Plans & Services"
+  description="Protect your Wordpress website from downtime and security threats with our comprehensive maintenance plans. We offer regular updates, backups, and support to keep your site running smoothly with no downtime and dedicated support."
+  blogLink={{
+    text: "What's new in WordPress",
+    url: "/tags/wordpress/"
+  }}
+  image={{
+    src: featuredImage,
+    alt: "WordPress Maintenance Plans & Services",
+    width: 400,
+    height: 534
+  }}
+  breadcrumbsText="Wordpress Maintenance Plans"
+/>
+
+  <!-- Rest of the content -->
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+      <div class="prose dark:prose-invert max-w-none relative z-10">
+        <h2>Why You Need a WordPress Maintenance Plan</h2>
+        <p>Your WordPress website is an essential part of your business. Without regular maintenance, it can fall victim to outdated plugins, broken themes, security vulnerabilities, and slow performance. Our comprehensive maintenance plans are designed to keep your site running smoothly—so you can focus on growing your business.</p>
+        
+        <OrangeAlert 
+          title="WP Pro Tip" 
+          message="A strong WordPress maintenance plan should always include plugin updates, security monitoring, and regular theme checks. These services protect your uptime and search rankings while ensuring peak site performance."
+        />
+        
+        <h2>What's Included in Our Maintenance Plans</h2>
+        <ul>
+          <li><strong>Plugin Updates</strong> – We keep your plugins up-to-date and fully functional to reduce security risks and compatibility issues.</li>
+          <li><strong>Theme Updates</strong> – Ensure your design stays sharp and bug-free with ongoing theme maintenance.</li>
+          <li><strong>WordPress Core Updates</strong> – Stay protected with the latest WordPress core releases and patches.</li>
+          <li><strong>Security Monitoring</strong> – We actively monitor your site for vulnerabilities, malware, and suspicious activity.</li>
+          <li><strong>Uptime Monitoring</strong> – Get alerted if your site goes down, and let us fix issues before your customers even notice.</li>
+          <li><strong>Backups & Recovery</strong> – We set up regular backups so you can quickly recover from errors or outages.</li>
+          <li><strong>WordPress Hosting Support</strong> – We work with your host or provide high-performance hosting tailored to WordPress.</li>
+          <li><strong>Custom Web Design Edits</strong> – Need tweaks or updates? Our developers handle small design changes as part of your plan.</li>
+        </ul>
+        
+        <h2>How It Works: Simple 3-Step Maintenance Process</h2>
+        <ol>
+          <li><strong>Initial Audit:</strong> We scan your site, identify issues, and recommend the right maintenance plan.</li>
+          <li><strong>Monthly Service:</strong> We handle plugin updates, core updates, security scans, uptime monitoring, and more—automatically.</li>
+          <li><strong>Ongoing Support:</strong> You get direct access to our team for any quick fixes, web design edits, or questions.</li>
+        </ol>
+
+        <!-- Why Host With Us Section -->
+        <section class="mb-8 bg-orange-50 dark:bg-orange-900/40 border-2 border-orange-500 dark:border-orange-400 rounded-2xl shadow-lg py-5 px-2 md:px-6">
+          <h2 class="text-2xl font-bold text-center mb-2 text-orange-600 dark:text-orange-400 !mt-0">Why Host With Us?</h2>
+          <p class="text-center text-orange-900 dark:text-orange-100 mb-4 max-w-2xl mx-auto text-base">We're trusted by businesses and nationwide to deliver reliable, secure, and high-performance WordPress hosting and maintenance. Here's why so many choose us:</p>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-3 text-center">
+            <div class="flex flex-col items-center py-4 md:py-3">
+              <span class="text-3xl md:text-2xl font-extrabold text-orange-700 dark:text-orange-300 leading-tight">100+</span>
+              <span class="mt-1 text-base md:text-xs font-medium text-orange-800 dark:text-orange-200 text-center leading-snug">WP Sites Hosted</span>
+            </div>
+            <div class="flex flex-col items-center py-4 md:py-3">
+              <span class="text-3xl md:text-2xl font-extrabold text-orange-700 dark:text-orange-300 leading-tight">1,000,000+</span>
+              <span class="mt-1 text-base md:text-xs font-medium text-orange-800 dark:text-orange-200 text-center leading-snug">of Visitors</span>
+            </div>
+            <div class="flex flex-col items-center py-4 md:py-3">
+              <span class="text-3xl md:text-2xl font-extrabold text-orange-700 dark:text-orange-300 leading-tight">99.99%</span>
+              <span class="mt-1 text-base md:text-xs font-medium text-orange-800 dark:text-orange-200 text-center leading-snug">Uptime Guarantee</span>
+            </div>
+            <div class="flex flex-col items-center py-4 md:py-3">
+              <span class="text-3xl md:text-2xl font-extrabold text-orange-700 dark:text-orange-300 leading-tight">0</span>
+              <span class="mt-1 text-base md:text-xs font-medium text-orange-800 dark:text-orange-200 text-center leading-snug">Headaches or Hassles</span>
+            </div>
+          </div>
+        </section>
+        
+        <h2>WooCommerce Maintenance Services</h2>
+        <p>Your WooCommerce store needs more than just updates—it needs expert support. We specialize in maintaining WooCommerce websites to ensure your online store runs fast, stays secure, and delivers a seamless shopping experience for your customers.</p>
+
+        <p>From managing plugin and theme updates to monitoring checkout functionality, payment gateways, and performance optimization, we handle it all. Whether you sell a handful of products or manage a large ecommerce catalog, our team ensures your WooCommerce site stays up to date and fully operational.</p>
+        
+        <h3>Uptime Tracking Instant Down Time Alerts</h3>
+        <p>Website outages cost you traffic, trust, and revenue. That's why our maintenance plans include 24/7 uptime monitoring. If your site ever goes down—even for a few minutes—we're notified immediately so we can step in and resolve the issue before it impacts your visitors or customers.</p>
+        
+        <h3>Regular Backups to Protect Your Data</h3>
+        <p>We take regular backups of your site to protect your data. If something happens to your site, we can restore it quickly and keep you running smoothly.</p>
+
+        <h3>Security Monitoring to Keep Your Site Safe</h3>
+        <p>We actively monitor your site for vulnerabilities, malware, and suspicious activity. If we find anything, we'll fix it immediately.</p>    
+
+        <h2>Already Have a WordPress Website?</h2>
+        <p>No problem. We'll plug in our maintenance plan without disrupting your existing setup. From Elementor and Divi to Gutenberg and custom themes, we work with all setups. Whether you're hosting with WP Engine, SiteGround, or GoDaddy or another host we'll make it better.</p>
+
+        <h2>Custom WordPress Functionality & Ongoing Support</h2>
+        <p>Have a custom-built WordPress site with unique features or integrations? We've got you covered. Our team works with advanced WordPress setups that go beyond standard themes and plugins.</p>
+        <p>Whether it's a booking engine, membership system, custom API integration, or dynamic content module our team we maintain, troubleshoot, and improve custom functionality to ensure your site stays reliable and scalable.</p>
+
+        
+        <h2>Let's Talk About Your Maintenance Needs</h2>
+        <p>Ready to protect your investment? Whether you're a small local business or a large ecommerce site, our WordPress maintenance plans are built to grow with you. Keep your site secure, your plugins updated, and your customers happy.</p>
+        <p>Call us at (972) 538-0260 or <a href="/schedule/">schedule a call</a> to get started today.</p>      
+       
+      </div>
+    </div>
+  </div>
+  <FAQ
+    title="WordPress Maintenance Plan FAQs"
+    faqs={[
+      {
+        question: "What is included in a WordPress maintenance plan?",
+        answer:
+          "A typical WordPress maintenance plan includes plugin updates, theme updates, WordPress core updates, uptime monitoring, security checks, regular backups, and minor website edits or fixes.",
+      },
+      {
+        question: "Why are plugin and theme updates important?",
+        answer:
+          "Outdated plugins and themes can introduce security vulnerabilities, slow down your site, or cause functionality issues. Regular updates keep your site stable and secure.",
+      },
+      {
+        question: "Will maintenance affect my live website?",
+        answer:
+          "We take every precaution to ensure zero downtime. Most updates are tested in a staging environment first, then applied to your live site with minimal risk.",
+      },
+      {
+        question: "Do you offer WooCommerce maintenance and support?",
+        answer:
+          "Yes, we specialize in WooCommerce sites. Our plans cover order flow testing, payment gateway checks, plugin compatibility, and performance optimization for ecommerce stores.",
+      },
+      {
+        question: "How often do you perform maintenance tasks?",
+        answer:
+          "Most maintenance tasks are performed weekly, with security monitoring and uptime checks running 24/7. Critical updates are applied immediately when needed.",
+      },
+      {
+        question: "Do you provide hosting as part of the maintenance plan?",
+        answer:
+          "We work with your existing host or can migrate you to a high-performance WordPress hosting provider for better speed, security, and support.",
+      },
+    ]}    
+  />
+</RootLayout>
+
