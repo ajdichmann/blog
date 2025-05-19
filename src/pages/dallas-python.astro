@@ -1,78 +1,88 @@
 ---
-import Card from "@/components/Card.astro";
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
-import Breadcrumbs from "@/components/Breadcrumbs.astro";
-import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from '@/assets/wordpress-orange.png';
 
 const t = useTranslations();
 
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Dallas Python Development & Consulting",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "AJ Dichmann",
+    "areaServed": "Texas"
+  },
+  "serviceType": "Python Development"
+};
+
 ---
-<style>
-  p {
-    padding-bottom: 0.5em
-  }
-  h2 {
-    font-size: 1.5rem /* 24px */;
-    line-height: 2rem /* 32px */;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-      }
-</style>
 <RootLayout
   title="Dallas Python Development Service & Consulting | AJ Dichmann"
   description="Get started with the top rated Python experts in Dallas"
 >
-  <div class="divide-y divide-gray-200 dark:divide-gray-700">
-    <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
-      <!-- Header section -->
-      <Breadcrumbs text="Dallas Python Development" />
-      <InteriorPageTitle title="Dallas Python" highlight="Dev & Consulting" />
-      
-      <!-- Content section with prose -->
-      <div class="prose dark:prose-invert max-w-none">
-        <p><strong>Get started with the top rated Python development agency in Texas</strong></p>
-        <p>Looking for a python development agency in Dallas, Texas? Look no further! Our team of expert consultants can help you with all your python development needs. We specialize in python software development, and we can help you create a custom solution that meets your specific requirements or maintain your existing software.</p>
-        <p><strong>Want to see some of our recent Python projects? Ask for Github access!</strong></p>
-        <h2>TEXAS PYTHON DEVELOPMENT AGENCY</h2>
-        <p>Our team has been working with Python for over 15 years, and we are one of the most experienced Python development agencies in Texas. We have a proven track record of delivering quality python development services to our clients. Contact us today to learn more about our services or to get a free consultation.</p>
-        <p>Our Python Services</p>
-        <ul>
-        <li>Python Software Development</li>
-        <li>Custom Solutions</li>
-        <li>Projects of all sizes (scripts and applications)</li>
-        <li>Maintenance, Updates and Upgrades</li>
-        </ul>
-        <h2>DJANGO AND FLASK DEVELOPMENT IN DALLAS</h2>
-        <p>Django and Flask are two of the most popular web development frameworks for Python. If you're looking for a Dallas python development agency that specializes in these frameworks, we can help! We have extensive experience working with Django and Flask, and we can help you create a custom solution that meets your specific requirements.</p>
-        <h2>DALLAS PYTHON SOFTWARE DEVELOPMENT AND SCRIPTING</h2>
-        <p>Our team also specializes in Python software development and scripting. We can help you automate tasks, create custom tools, or develop a custom solution for your business. If you need assistance with anything Python related, we're here to help!</p>
-        <p><strong>Our team of local python experts can build new applications or take of existing ones. We offer a wide range of development services, including:</strong></p>
-        <ul>
-        <li>Python software development</li>
-        <li>Django and Flask development</li>
-        <li>Web application development</li>
-        <li>Custom software solutions</li>
-        <li>Python Software maintenance and support</li>
-        </ul>
-        <p>If you're looking for a Dallas python development agency, contact us today! We'd be happy to discuss your specific python needs!</p>
-        <h2>PYTHON WEBSITES, WEB APPLICATIONS, AND APIS</h2>
-        <p>Python can be used for a wide range of web development projects, including websites, web applications, and APIs. If you're looking for a Dallas python development agency that specializes in these types of projects, we can help! Our team can build website and web applications or create APIs and scripts that solve specific business problems!</p>
-        <p>Other Common Tools and Libraries We Work With:</p>
-        <ul>
-        <li>Google Cloud – App Engine, Firebase, BigQuery and more</li>
-        <li>TensorFlow – Open source platform for machine learning</li>
-        <li>PyTorch – Open source deep learning platform</li>
-        <li>Keras – High-level neural networks</li>
-        <li>Pandas – Open source data analysis and manipulation tool</li>
-        <li>NLTK – Natural language processing toolkit</li>
-        <li>NumPy – Scientific computing librarySciPy and open source software for mathematics, science, and engineering</li>
-        <li>Scrapy – Open source web scraping framework</li>
-        <li>Requests – Python library for making network requests</li>
-        <li>Selenium – Open source web automation tool</li>
-        </ul>
-        <p>If you're looking for a Dallas python development agency that specializes in these types of projects, we can help! Our team of expert python developers can help you with all your python development needs. Contact us today to learn more about our services or to discuss your specific Python project requirements!</p>
-      </div>
+<schema item={schema} />
+<ServicesHero 
+  title="Dallas Python Development & Consulting"
+  description="Get started with the top rated Python experts in Dallas. Our team of expert consultants can help you with all your Python development needs, from custom solutions to maintaining existing software."
+  blogLink={{
+    text: "What's new in Python",
+    url: "/tags/python/"
+  }}
+  image={{
+    src: featuredImage,
+    alt: "Dallas Python Development Services",
+    width: 400,
+    height: 534
+  }}
+  breadcrumbsText="Dallas Python Agency"
+/>
+
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+    <div class="prose dark:prose-invert max-w-none relative z-10">
+      <p><strong>Get started with the top rated Python development agency in Texas</strong></p>
+      <p>Looking for a python development agency in Dallas, Texas? Look no further! Our team of expert consultants can help you with all your python development needs. We specialize in python software development, and we can help you create a custom solution that meets your specific requirements or maintain your existing software.</p>
+      <p><strong>Want to see some of our recent Python projects? Ask for Github access!</strong></p>
+      <h2>TEXAS PYTHON DEVELOPMENT AGENCY</h2>
+      <p>Our team has been working with Python for over 15 years, and we are one of the most experienced Python development agencies in Texas. We have a proven track record of delivering quality python development services to our clients. Contact us today to learn more about our services or to get a free consultation.</p>
+      <p>Our Python Services</p>
+      <ul>
+      <li>Python Software Development</li>
+      <li>Custom Solutions</li>
+      <li>Projects of all sizes (scripts and applications)</li>
+      <li>Maintenance, Updates and Upgrades</li>
+      </ul>
+      <h2>DJANGO AND FLASK DEVELOPMENT IN DALLAS</h2>
+      <p>Django and Flask are two of the most popular web development frameworks for Python. If you're looking for a Dallas python development agency that specializes in these frameworks, we can help! We have extensive experience working with Django and Flask, and we can help you create a custom solution that meets your specific requirements.</p>
+      <h2>DALLAS PYTHON SOFTWARE DEVELOPMENT AND SCRIPTING</h2>
+      <p>Our team also specializes in Python software development and scripting. We can help you automate tasks, create custom tools, or develop a custom solution for your business. If you need assistance with anything Python related, we're here to help!</p>
+      <p><strong>Our team of local python experts can build new applications or take of existing ones. We offer a wide range of development services, including:</strong></p>
+      <ul>
+      <li>Python software development</li>
+      <li>Django and Flask development</li>
+      <li>Web application development</li>
+      <li>Custom software solutions</li>
+      <li>Python Software maintenance and support</li>
+      </ul>
+      <p>If you're looking for a Dallas python development agency, contact us today! We'd be happy to discuss your specific python needs!</p>
+      <h2>PYTHON WEBSITES, WEB APPLICATIONS, AND APIS</h2>
+      <p>Python can be used for a wide range of web development projects, including websites, web applications, and APIs. If you're looking for a Dallas python development agency that specializes in these types of projects, we can help! Our team can build website and web applications or create APIs and scripts that solve specific business problems!</p>
+      <p>Other Common Tools and Libraries We Work With:</p>
+      <ul>
+      <li>Google Cloud – App Engine, Firebase, BigQuery and more</li>
+      <li>TensorFlow – Open source platform for machine learning</li>
+      <li>PyTorch – Open source deep learning platform</li>
+      <li>Keras – High-level neural networks</li>
+      <li>Pandas – Open source data analysis and manipulation tool</li>
+      <li>NLTK – Natural language processing toolkit</li>
+      <li>NumPy – Scientific computing librarySciPy and open source software for mathematics, science, and engineering</li>
+      <li>Scrapy – Open source web scraping framework</li>
+      <li>Requests – Python library for making network requests</li>
+      <li>Selenium – Open source web automation tool</li>
+      </ul>
+      <p>If you're looking for a Dallas python development agency that specializes in these types of projects, we can help! Our team of expert python developers can help you with all your python development needs. Contact us today to learn more about our services or to discuss your specific Python project requirements!</p>
     </div>
   </div>
 </RootLayout>

@@ -1,8 +1,8 @@
 ---
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
-import Breadcrumbs from '@/components/Breadcrumbs.astro';
-import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from '@/assets/wordpress-orange.png';
 
 const t = useTranslations();
 
@@ -25,64 +25,71 @@ const schema = {
   description="Get started with one of the top rated GTM teams!"
 >
   <schema item={schema} />
-  <div class="divide-y divide-gray-200 dark:divide-gray-700">
-    <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
-      <Breadcrumbs text="Google Tag Manager Consulting" />
-      <InteriorPageTitle 
-        title="Google Tag Manager"
-        highlight="Consultant"
-      />
+  <ServicesHero 
+    title="Google Tag Manager Consulting Services"
+    description="Get started tracking all of the most important data on your website! Do you need help setting up Google Tag Manager to capture ALL of the data from your website – then I am here to help. I have been working with GTM for more than 8 years and can help you tracking any data on the web!"
+    blogLink={{
+      text: "What's new in GTM",
+      url: "/tags/gtm/"
+    }}
+    image={{
+      src: featuredImage,
+      alt: "Google Tag Manager Consulting Services",
+      width: 400,
+      height: 534
+    }}
+    breadcrumbsText="Google Tag Manager Consulting"
+  />
+
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+    <div class="prose dark:prose-invert max-w-none relative z-10">
+      <p><strong>Get started tracking all of the most important data on your website!</strong></p>
+      <p>Do you need help setting up Google Tag Manager to capture ALL of the data from your website – then I am here to help. I have been working with GTM for more than 8 years and can help you tracking any data on the web! My team specializes in helping marketing teams collect data and load it into various marketing tools like Google Analytics, Google Ads, Facebook Ads, Adobe Analytics and other popular platforms.</p>
       
-      <!-- Content section with prose -->
-      <div class="prose dark:prose-invert max-w-none">
-        <p><strong>Get started tracking all of the most important data on your website!</strong></p>
-        <p>Do you need help setting up Google Tag Manager to capture ALL of the data from your website – then I am here to help. I have been working with GTM for more than 8 years and can help you tracking any data on the web! My team specializes in helping marketing teams collect data and load it into various marketing tools like Google Analytics, Google Ads, Facebook Ads, Adobe Analytics and other popular platforms.</p>
-        
-        <h2>Google Tag Manager Setup & Configuration</h2>
-        <p>Google Tag Manager (GTM) is a tag management system that allows you to manage your website tags through a single interface. GTM makes it easy to add and manage tags on your website – including Google Analytics, Facebook Pixel, and more.</p>
-        <p>One of the main benefits of using GTM is that it can help you capture all of the data from your website. With GTM, you can easily load tracking code onto your website and collect data on everything from pageviews to conversion events.</p>
-        <p>If you're looking for help setting up GTM on your website, I'm here to help. My team has extensive experience setting up GTM for both small and large websites on WordPress and other platforms, and can help you get up and running quickly to start tracking all of your most important metrics.</p>
-        
-        <h2>GA4 & Tag Manager Audits</h2>
-        <p>Have a website and GTM account but not sure if you're collecting all of the data? My team can perform a full audit and help you configure your account for success. During the audit, we'll review how you are using GTM on your website today, why you should be using it, help you define the metrics that matter most to your organization, implement tags on each page of your site with our recommended settings, set up any custom tracking code required by your platform or application, and provide ongoing support for tagging new pages as they go live on your site.</p>
-        
-        <p>Our Audits Include:</p>
-        <ul>
-          <li>Review current GTM configuration and installation</li>
-          <li>Review Google Analytics implementation</li>
-          <li>Review conversion tracking</li>
-          <li>Review event tracking</li>
-          <li>Review custom dimensions and metrics</li>
-          <li>Review tag firing rules and triggers</li>
-        </ul>
-        
-        <h2>EVENT AND GOAL TRACKING</h2>
-        <p>Google Tag Manager can also be used to track event data and goal conversions. If you're looking to track events – like clicks on a button or links, downloads, or form submissions – GTM makes it easy to do so. You can simply create a tag to fire when the event occurs, and then use the data collected to measure its impact on your business.</p>
-        <p>This same principle can be applied to goal conversions. If you have a specific goal that you'd like to track – like signing up for a newsletter, making a purchase, or filling out a contact form – GTM makes it easy to set up a tag that will fire when the goal is completed. This will allow you to measure the impact of your marketing campaigns and digital ad spend.</p>
-        <p>We help businesses track events and goals using GTM and Google Analytics. We've worked with companies of all types and sizes to help them set up event tracking, and can also help you track your conversion funnels and build custom audiences in Google Analytics.</p>
-        
-        <p><strong>Working With Existing Tags and Tag Sequences</strong></p>
-        <p>Google Tag Manager makes it easy for you to work with existing tags on your website – saving you time and resources when trying to make changes. If you have any tags currently running on your site (including Facebook Pixel or Google Analytics) we can import those into our system, which will allow us to control the analytics codes without needing access to your website.</p>
-        
-        <h2>MARKETING INTEGRATIONS</h2>
-        <p>We work with customers in a variety of sectors to assist them in integrating their data into a variety of marketing tools. We can help you set up GTM using an existing integration or tag or create a bespoke integration (such as one between your current CMS and Google Analytics or your sales CRM).</p>
-        
-        <h2>GTM AND ENHANCED ECOMMERCE</h2>
-        <p>Enhanced Ecommerce provides valuable data about your website visitors, allowing you to track revenue and conversion rates all the way through the sales funnel. GTM can be used to easily implement on-site Ecommerce tracking without minimal coding or complicated implementations.</p>
-        
-        <p>GTM allows you to track and measure specific events and activities on your site. These include:</p>
-        <ul>
-          <li>Transactions</li>
-          <li>Revenue</li>
-          <li>Coupons</li>
-          <li>Returns</li>
-          <li>Marketing campaigns</li>
-        </ul>
-        
-        <p>We work with companies of all sizes to help them use Google Tag Manager to collect and analyze all of their marketing data in one place and take actionable steps towards improving revenue and ROI. If you're looking for help setting up GTM on your website for enhanced ecommerce tracking – we'd love to hear from you!</p>
-        
-        <p>We've helped businesses track their marketing campaigns and metrics – give us a call now at (972) 538-0260 to discuss further!</p>
-      </div>
+      <h2>Google Tag Manager Setup & Configuration</h2>
+      <p>Google Tag Manager (GTM) is a tag management system that allows you to manage your website tags through a single interface. GTM makes it easy to add and manage tags on your website – including Google Analytics, Facebook Pixel, and more.</p>
+      <p>One of the main benefits of using GTM is that it can help you capture all of the data from your website. With GTM, you can easily load tracking code onto your website and collect data on everything from pageviews to conversion events.</p>
+      <p>If you're looking for help setting up GTM on your website, I'm here to help. My team has extensive experience setting up GTM for both small and large websites on WordPress and other platforms, and can help you get up and running quickly to start tracking all of your most important metrics.</p>
+      
+      <h2>GA4 & Tag Manager Audits</h2>
+      <p>Have a website and GTM account but not sure if you're collecting all of the data? My team can perform a full audit and help you configure your account for success. During the audit, we'll review how you are using GTM on your website today, why you should be using it, help you define the metrics that matter most to your organization, implement tags on each page of your site with our recommended settings, set up any custom tracking code required by your platform or application, and provide ongoing support for tagging new pages as they go live on your site.</p>
+      
+      <p>Our Audits Include:</p>
+      <ul>
+        <li>Review current GTM configuration and installation</li>
+        <li>Review Google Analytics implementation</li>
+        <li>Review conversion tracking</li>
+        <li>Review event tracking</li>
+        <li>Review custom dimensions and metrics</li>
+        <li>Review tag firing rules and triggers</li>
+      </ul>
+      
+      <h2>EVENT AND GOAL TRACKING</h2>
+      <p>Google Tag Manager can also be used to track event data and goal conversions. If you're looking to track events – like clicks on a button or links, downloads, or form submissions – GTM makes it easy to do so. You can simply create a tag to fire when the event occurs, and then use the data collected to measure its impact on your business.</p>
+      <p>This same principle can be applied to goal conversions. If you have a specific goal that you'd like to track – like signing up for a newsletter, making a purchase, or filling out a contact form – GTM makes it easy to set up a tag that will fire when the goal is completed. This will allow you to measure the impact of your marketing campaigns and digital ad spend.</p>
+      <p>We help businesses track events and goals using GTM and Google Analytics. We've worked with companies of all types and sizes to help them set up event tracking, and can also help you track your conversion funnels and build custom audiences in Google Analytics.</p>
+      
+      <p><strong>Working With Existing Tags and Tag Sequences</strong></p>
+      <p>Google Tag Manager makes it easy for you to work with existing tags on your website – saving you time and resources when trying to make changes. If you have any tags currently running on your site (including Facebook Pixel or Google Analytics) we can import those into our system, which will allow us to control the analytics codes without needing access to your website.</p>
+      
+      <h2>MARKETING INTEGRATIONS</h2>
+      <p>We work with customers in a variety of sectors to assist them in integrating their data into a variety of marketing tools. We can help you set up GTM using an existing integration or tag or create a bespoke integration (such as one between your current CMS and Google Analytics or your sales CRM).</p>
+      
+      <h2>GTM AND ENHANCED ECOMMERCE</h2>
+      <p>Enhanced Ecommerce provides valuable data about your website visitors, allowing you to track revenue and conversion rates all the way through the sales funnel. GTM can be used to easily implement on-site Ecommerce tracking without minimal coding or complicated implementations.</p>
+      
+      <p>GTM allows you to track and measure specific events and activities on your site. These include:</p>
+      <ul>
+        <li>Transactions</li>
+        <li>Revenue</li>
+        <li>Coupons</li>
+        <li>Returns</li>
+        <li>Marketing campaigns</li>
+      </ul>
+      
+      <p>We work with companies of all sizes to help them use Google Tag Manager to collect and analyze all of their marketing data in one place and take actionable steps towards improving revenue and ROI. If you're looking for help setting up GTM on your website for enhanced ecommerce tracking – we'd love to hear from you!</p>
+      
+      <p>We've helped businesses track their marketing campaigns and metrics – give us a call now at (972) 538-0260 to discuss further!</p>
     </div>
   </div>
 </RootLayout>
