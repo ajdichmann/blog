@@ -65,3 +65,4 @@ const byTitle = sortBlogPosts(posts, 'desc', 'title');
 
 // Filter drafts in development
 const publishedPosts = posts.filter(post => excludeDrafts(post, false));
+
