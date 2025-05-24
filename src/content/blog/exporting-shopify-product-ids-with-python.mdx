@@ -1,0 +1,153 @@
+---
+title:  Exporting Shopify Product IDs with Python
+summary: Learn how to use Python to export Shopify Product IDs (or other attributes)
+postLayout: column
+date: '2025-05-23'
+cover: '@/assets/og-image.png'
+draft: false
+tags: 
+- shopify
+- python
+---
+import Figure from "@/components/Figure.astro"
+import figureExample from "@/assets/og-image.png"
+import OrangeAlert from '@/components/OrangeAlert.astro';
+
+If you’ve ever tried to connect your Shopify store to a third-party inventory, fulfillment, or accounting system, you’ve probably hit the same roadblock I did: Shopify’s default CSV export doesn’t include the product ID in the CSV.
+
+That’s a problem—especially when product IDs are the key field for syncing with outside systems.
+
+## The Problem with Shopify’s Built-In Export
+
+Shopify’s admin panel makes it easy to export your product catalog—but it leaves out one crucial piece of data: the `product_id`.
+
+Without this ID, your external tools (like your warehouse’s inventory system, fulfillment systems or your accounting software) have no reliable way to identify and match products.
+
+For anyone managing operations or backend integrations on a large ecommerce store this missing piece creates problems linking different systems.
+
+While there are other options like prebuilt Shopify Apps, most of them have limited free plans and can be quite expensive for large stores that need occasional CSV exports.
+
+## The Solution: A Custom Python Export Script
+
+To fix this I created a Python script that pulls all product data including product IDs using the Shopify Admin API.
+
+It outputs a clean CSV file with:
+- Product ID  
+- Title  
+- Handle  
+- Vendor  
+- Created Date  
+
+Perfect for syncing with your ERP, 3PL, or financial system - and it is easy to add other product attributes!
+
+## How to Set It Up
+
+### Step 1: Create a Shopify Custom App
+
+1. In Shopify Admin, go to **Apps > Develop apps**.
+2. Click **Create an app**, name it something like `Product Export`.
+3. Under **Configuration**, enable **Read access** for Products.
+4. Click **Install App**.
+5. Copy your **Admin API Access Token**.
+6. Note your **Shopify store URL** (e.g. `your-store-name.myshopify.com`).
+
+---
+
+### Step 2: Install Python + Requests
+
+Make sure Python 3 is installed on your machine. Then install the required package:
+
+```bash
+pip install requests
+```
+### Step 3: Run the Script
+
+Save this script as shopify_export.py. Replace the placeholder values for your store name and token.
+
+```python
+import requests
+import csv
+
+# === CONFIGURATION ===
+SHOP_NAME = 'your-store-name'  # Replace with your store's subdomain
+ACCESS_TOKEN = 'your-admin-api-access-token'  # From your Shopify app
+API_VERSION = '2024-04'
+OUTPUT_FILE = 'shopify_products.csv'
+
+# === FETCH ALL PRODUCTS ===
+def get_all_products():
+    headers = {
+        "X-Shopify-Access-Token": ACCESS_TOKEN,
+        "Content-Type": "application/json"
+    }
+    products = []
+    base_url = f"https://{SHOP_NAME}.myshopify.com/admin/api/{API_VERSION}/products.json"
+    params = {"limit": 250}
+
+    while True:
+        response = requests.get(base_url, headers=headers, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        batch = data.get("products", [])
+        products.extend(batch)
+
+        link = response.headers.get("Link")
+        if link and 'rel="next"' in link:
+            base_url = link.split(";")[0].strip("<> ")
+            params = {}
+        else:
+            break
+
+    return products
+
+# === EXPORT TO CSV ===
+def export_products(products):
+    with open(OUTPUT_FILE, mode="w", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Product ID", "Title", "Handle", "Vendor", "Created At"])
+
+        for p in products:
+            writer.writerow([
+                p.get("id"),
+                p.get("title"),
+                p.get("handle"),
+                p.get("vendor"),
+                p.get("created_at")
+            ])
+
+# === MAIN EXECUTION ===
+if __name__ == "__main__":
+    print("Fetching all products...")
+    all_products = get_all_products()
+    print(f"Total products fetched: {len(all_products)}")
+
+    print(f"Exporting to {OUTPUT_FILE}...")
+    export_products(all_products)
+    print("Done.")
+```
+
+Then run it from the terminal:
+
+```bash
+python shopify_export.py
+```
+
+### Why It Matters
+
+By adding this one field—product_id—you unlock smoother integrations, fewer errors, and less manual cleanup across your backend systems.
+
+Whether you're syncing with a fulfillment partner or managing inventory in QuickBooks or NetSuite, this gives you control and clarity that Shopify’s default export doesn’t.
+
+### Want to Customize Additional fields?
+
+You can expand the script to include:
+
+- Product tags
+- Images
+- Inventory quantities
+- Even metafields (with a second API call)
+
+## Need Help with Custom Shopify Development?
+
+If your store needs custom features, API integrations, or automation like this one, I can help. Whether you're connecting to a fulfillment partner, syncing with accounting software, or building something completely unique - [schedule a call](https://www.ajdichmann.com/schedule/) with me expert Shopify support.
