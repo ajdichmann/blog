@@ -65,66 +65,79 @@ No flicker. No scripts. Just a consistent, smooth experience for your visitors.
 Add this function to your `functions.php` file or your site’s custom plugin:
 
 ```php
-// A/B test shortcode for Gravity Forms using [gf_ab_test formid='1|5']
-
-if (!function_exists('gf_ab_test_set_cookie')) {
-    function gf_ab_test_set_cookie() {
-        if (is_admin()) return; // Don't run in admin
-
-        // Only run on the front end
-        if (!isset($_COOKIE['gf_ab_variant']) && isset($_GET['gf_ab_test_ids'])) {
-            $form_ids = explode('|', sanitize_text_field($_GET['gf_ab_test_ids']));
-            $form_ids = array_filter(array_map('trim', $form_ids));
-            $variant_count = count($form_ids);
-            if ($variant_count > 0) {
-                $user_variant = mt_rand(0, $variant_count - 1);
-                setcookie(
-                    'gf_ab_variant',
-                    $user_variant,
-                    time() + (30 * DAY_IN_SECONDS),
-                    COOKIEPATH,
-                    COOKIE_DOMAIN,
-                    is_ssl(),
-                    true
-                );
-                $_COOKIE['gf_ab_variant'] = $user_variant;
-            }
-        }
-    }
-    add_action('init', 'gf_ab_test_set_cookie');
-}
-
-if (!function_exists('gf_ab_test_shortcode')) {
-    function gf_ab_test_shortcode($atts) {
-        $atts = shortcode_atts(array(
-            'formid' => '',
-        ), $atts);
-
-        $form_ids = array_filter(array_map('trim', explode('|', $atts['formid'])));
-        if (count($form_ids) < 1) {
+/**
+ * Shortcode: [gf_ab_test formid="1|5"]
+ * - Splits "1|5|9" into an array of form-IDs.
+ * - Pre-renders each Gravity Form via do_shortcode().
+ * - On the client, picks (and stores) a variant index in localStorage.
+ * - Injects only the chosen form’s HTML into the page.
+ */
+if ( ! function_exists( 'gf_ab_test_shortcode' ) ) {
+    function gf_ab_test_shortcode( $atts ) {
+        // Parse “formid” attribute, e.g. formid="1|5|9"
+        $atts    = shortcode_atts( array( 'formid' => '' ), $atts );
+        $ids     = array_filter( array_map( 'trim', explode( '|', $atts['formid'] ) ) );
+        $count   = count( $ids );
+        if ( $count < 1 ) {
             return '';
         }
 
-        // Pass form IDs to the cookie setter via a query var
-        if (!isset($_COOKIE['gf_ab_variant'])) {
-            // Add a query var to trigger cookie set on next page load
-            $url = add_query_arg('gf_ab_test_ids', implode('|', $form_ids));
-            // Redirect to set the cookie
-            wp_redirect($url);
-            exit;
+        // Pre-render each Gravity Form into an array, preserving the same index order as $ids
+        $forms = array();
+        foreach ( $ids as $id ) {
+            $forms[] = do_shortcode( "[gravityform id=\"{$id}\" title=\"false\" description=\"false\"]" );
         }
 
-        $variant_count = count($form_ids);
-        $user_variant = isset($_COOKIE['gf_ab_variant']) ? intval($_COOKIE['gf_ab_variant']) : 0;
-        if ($user_variant >= $variant_count) {
-            $user_variant = 0;
-        }
+        // JSON-encode arrays for inline script
+        $ids_json   = wp_json_encode( $ids );
+        $forms_json = wp_json_encode( $forms );
 
-        $selected_id = esc_attr($form_ids[$user_variant]);
-        return do_shortcode("[gravityform id=\"$selected_id\" title=\"false\"]");
-    }
-    add_shortcode('gf_ab_test', 'gf_ab_test_shortcode');
-}
+        // Build a unique wrapper ID so multiple shortcode instances can coexist
+        static $instance = 0;
+        $instance++;
+        $wrapper_id = "gf_ab_test_wrapper_{$instance}";
+
+        ob_start();
+        ?>
+        <div id="<?php echo esc_attr( $wrapper_id ); ?>"></div>
+        <script type="text/javascript">
+        (function(){
+            // Array of form IDs (strings) and corresponding pre-rendered HTML snippets
+            var ids   = <?php echo $ids_json; ?>;   // e.g. ["1","5","9"]
+            var forms = <?php echo $forms_json; ?>; // e.g. ["<form id='gform_1'…>…</form>", ...]
+
+            // The localStorage key includes the exact "formid" string to avoid collisions:
+            var storageKey = 'gf_ab_chosen_<?php echo esc_js( $atts['formid'] ); ?>';
+            var storedId   = localStorage.getItem(storageKey);
+            var chosenIndex = -1;
+
+            // If storedId matches one of our IDs, use its index
+            if (storedId && ids.indexOf(storedId) !== -1) {
+                chosenIndex = ids.indexOf(storedId);
+            }
+
+            // Otherwise, pick a random index, store its actual ID, and set chosenIndex
+            if (chosenIndex === -1) {
+                chosenIndex = Math.floor(Math.random() * ids.length);
+                try {
+                    localStorage.setItem(storageKey, ids[chosenIndex]);
+                } catch(e) {
+                    // Fail silently if localStorage is not available
+                }
+            }
+
+            // Now inject the chosen form HTML and rename the wrapper div to include the form ID
+            var wrapper = document.getElementById('<?php echo esc_js( $wrapper_id ); ?>');
+            if (wrapper) {
+                var formId = ids[chosenIndex];
+                var newId  = 'gf_ab_test_container_' + formId;
+                wrapper.id = newId;
+                wrapper.innerHTML = forms[chosenIndex];
+            }
+        })();
+        </script>
+        <?php
+        return ob_get_clean();
 ```
 Now use this shortcode wherever you want the test to run:
 
