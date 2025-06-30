@@ -43,16 +43,16 @@ const { title, description, blogLink, image, breadcrumbsText } = Astro.props;
         <a href="/schedule/" class="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">Schedule Call</a>
       </div>
     </div>
-    <div class="mx-auto mt-16 flex w-full sm:max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
-      <div class="w-full flex-none lg:max-w-none">
-        <div class="p-2 lg:-m-4 lg:p-4">
+    <div class="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
+      <div class="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none w-full flex justify-center lg:block">
+        <div class="p-2 lg:-m-4 lg:p-4 w-full">
           {image && (
             <Image 
               src={image.src} 
               alt={image.alt} 
               width={image.width || 400} 
               height={image.height || 267} 
-              class="w-full rounded-md"
+              class="w-full max-w-[400px] rounded-md"
             />
           )}
         </div>
