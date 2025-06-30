@@ -36,7 +36,7 @@ We are going to build a Cloudflare Worker that:
 ## Writing the Cloudflare Worker Script
 
 ### Step 1: Fetch Subreddit Posts
-Reddit provides a JSON API that lets us fetch recent posts from any subreddit. Here’s the API endpoint for the 50 latest posts in `r/baseballcards`:
+Reddit provides a JSON API that lets us fetch recent posts from any subreddit. Here's the API endpoint for the 50 latest posts in `r/baseballcards`:
 
 ```
 https://www.reddit.com/r/baseballcards/new.json?limit=50
@@ -57,7 +57,7 @@ If a post matches, we send a webhook message to Discord. The webhook will:
 - Tag @ajd to notify a specific user (note: this must be a userid, not the username).
 - Include an embedded message with the giveaway details.
 
-Here’s the full script:
+Here's the full script:
 
 ```javascript
 export default {
@@ -143,4 +143,4 @@ Example Discord Notification:
 🔗 [View Post](https://www.reddit.com/r/baseballcards/comments/xyz123)
 
 ```
-This setup is a FREE, low-maintenance way to monitor Reddit for giveaways and get instant alerts on Discord. It’s serverless, real-time, and scalable.
+This setup is a FREE, low-maintenance way to monitor Reddit for giveaways and get instant alerts on Discord. It's serverless, real-time, and scalable.
