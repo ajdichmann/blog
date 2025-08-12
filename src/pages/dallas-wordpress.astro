@@ -1,103 +1,216 @@
 ---
-
 import { useTranslations } from "@/i18n";
 import RootLayout from "@/layouts/RootLayout.astro";
 import ServicesHero from "@/components/ServicesHero.astro";
-import featuredImage from '@/assets/wordpress-orange.png';
+import featuredImage from "@/assets/wordpress-orange.png";
 
 const t = useTranslations();
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Dallas Wordpress Development & Consulting",
-  "provider": {
+  name: "Dallas Wordpress Development & Consulting",
+  provider: {
     "@type": "LocalBusiness",
-    "name": "AJ Dichmann",
-    "areaServed": "Texas"
+    name: "AJ Dichmann",
+    areaServed: "Texas",
   },
-  "serviceType": "Wordpress Development"
+  serviceType: "Wordpress Development",
 };
-
 ---
+
 <RootLayout
   title="Dallas Wordpress Development Service & Consulting | AJ Dichmann"
   description="Get started with the top rated Wordpress experts in Dallas for SEO and Web Development"
 >
-<schema item={schema} />
-<ServicesHero 
-  title="Dallas Wordpress Development & Consulting"
-  description="Get started with the top rated WordPress team in Dallas. Our team based in North Texas has countless years of building, fixing and maintaining WordPress websites under our belt."
-  blogLink={{
-    text: "What's new in WordPress",
-    url: "/tags/wordpress/"
-  }}
-  image={{
-    src: featuredImage,
-    alt: "Dallas WordPress Development Services",
-    width: 400,
-    height: 534
-  }}
-  breadcrumbsText="Dallas Wordpress Agency"
-/>
+  <schema item={schema}></schema>
+  <ServicesHero
+    title="Dallas Wordpress Development & Consulting"
+    description="Get started with the top rated WordPress team in Dallas. Our team based in North Texas has countless years of building, fixing and maintaining WordPress websites under our belt."
+    blogLink={{
+      text: "What's new in WordPress",
+      url: "/tags/wordpress/",
+    }}
+    image={{
+      src: featuredImage,
+      alt: "Dallas WordPress Development Services",
+      width: 400,
+      height: 534,
+    }}
+    breadcrumbsText="Dallas Wordpress Agency"
+  />
 
   <!-- Rest of the content -->
   <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
-      <div class="prose dark:prose-invert max-w-none relative z-10">
-        <h2>Local DFW Wordpress Experts</h2>
-        <p>Struggling with WordPress and need the help from an Expert Dallas WordPress developer? I am here to help! My team based in North Texas has countless years of building, fixing and maintaining WordPress websites under our belt.</p>
-        
-        <p>My team of WordPress devs is the right choice when it comes to getting your website back up in running in no time. Whether you are looking for Dallas WordPress development servicing or Dallas WordPress support, we are here for you at all times!</p>
-        
-        <p>A Dallas WordPress developer company that helps you get your site's problems fixed immediately may be just what you need. We care about all of our clients and strive to get them the help they need with their websites.</p>
-        
-        <p>Our Dallas WordPress developers have been working online since 2000, so they definitely have enough experience behind them to know how an efficient website should look like and operate. If you want a Dallas WordPress development service company who truly cares about its customers, then you've come to the right place.</p>
-        
-        <h2>WORDPRESS THEME DESIGN AND DEVELOPMENT</h2>
-        
-        <p>If you need a custom WordPress theme than do not hesitate and our team of developers today. Our Dallas-based team will take care of your WordPress website's front and backend.</p>
-        
-        <p>We have experience building responsive websites utilizing HTML5/CSS3/Javascript on the frontend and PHP and MySQL on backend customization.</p>
-        
-        <p>Having a custom theme designed and developed for your website will give you a fresh, unique look that matches your brand. We also focus on building an SEO optimized theme in order to get you ranked in search engines quickly.</p>
-        
-        <p>My Dallas-based Dallas WordPress development team has extensive experience handling any customizations or modifications needed for your WordPress website. We use tools like Advanced Custom Fields, Gutenberg and Tailwinds to build state of the art websites with perfect pagespeed scores.</p>
-        
-        <p>When working on your project, I will always work closely with you. You'll always know what is going on every step of the way so there are no surprises along the way – from designs to the final website going live!</p>
-        
-        <h2>CUSTOM WORDPRESS DEVELOPMENT</h2>
-        
-        <p>Not every business can fit into a pre-built WordPress theme. Sometimes a client needs a specific design or layout that is not going to be quick and easy to find. In these cases I offer custom WordPress development services tailored for your business!</p>
-        
-        <p>Our Dallas WordPress developers will work closely with you to build a website that fits your brand and style while also being SEO optimized and including all of the functionality your business needs to succeed online.</p>
-        
-        <h2>WORDPRESS MIGRATIONS</h2>
-        
-        <p>Migrating your website to WordPress? We know how to make it happen for any type or size of website!</p>
-        
-        <p>We help you get your site's problems fixed immediately may be just what you need. We care about all of our clients and strive to get them the help they need with their websites.</p>
-        
-        <p>Our Dallas WordPress developers have been working online since 2000, so they definitely have enough experience behind them to know how an efficient website should look like and operate. If you want a Dallas WordPress development service company who truly cares about its customers, then you've come to the right place!</p>
-        
-        <h2>WORDPRESS THEME DESIGN AND DEVELOPMENT</h2>
-        
-        <p>If you need a custom WordPress theme than do not hesitate and our team of developers today! A successful site starts with design and development. We create stunning, responsive WordPress themes that will grab your visitors' attention and keep them on your site longer.</p>
-        
-        <p>Our Dallas-based team will take care of your WordPress website's frontend and backend. Once you have a handle on how the content is going to be displayed, we'll make it look good with a professional theme design.</p>
-        
-        <h2>GUTENBERG AND OTHER PAGE BUILDERS</h2>
-        
-        <p>We specialize in working with Gutenberg and other page builders like Elementor, Visual Composer and Divi. Gutenberg provides a fresh, new take on how you handle your content – and is our preferred choice for building full custom websites – but we can work with almost any plugin!</p>
-        
-        <h2>WORDPRESS THEME CUSTOMIZATION AND DEVELOPMENT</h2>
-        
-        <p>We also have extensive experience customizing themes to add new functionality. Whether it's a modification or a complete theme build from scratch, we know exactly what it takes to get your site working how you want it to. Eventually, your theme will be a fully custom work of art!</p>
-        
-        <p>We can add almost any features using WordPress to build tools like custom forms, calculators and other advanced functionality.</p>
-        
-        <p>We've helped Dallas-based businesses built on WordPress grow their organic sales from zero customers per month to thousands of consumers each month – give us a call now at (972) 538-0260 to discuss further!</p>
-      </div>
+    <div class="prose dark:prose-invert max-w-none relative z-10">
+      <h2>Local DFW Wordpress Experts</h2>
+      <p>
+        Struggling with WordPress and need the help from an Expert Dallas
+        WordPress developer? I am here to help! My team based in North Texas has
+        countless years of building, fixing and maintaining WordPress websites
+        under our belt.
+      </p>
+
+      <p>
+        My team of WordPress devs is the right choice when it comes to getting
+        your website back up in running in no time. Whether you are looking for
+        Dallas WordPress development servicing or Dallas WordPress support, we
+        are here for you at all times!
+      </p>
+
+      <p>
+        A Dallas WordPress developer company that helps you get your site's
+        problems fixed immediately may be just what you need. We care about all
+        of our clients and strive to get them the help they need with their
+        websites.
+      </p>
+
+      <p>
+        Our Dallas WordPress developers have been working online since 2000, so
+        they definitely have enough experience behind them to know how an
+        efficient website should look like and operate. If you want a Dallas
+        WordPress development service company who truly cares about its
+        customers, then you've come to the right place.
+      </p>
+
+      <h2>WORDPRESS THEME DESIGN AND DEVELOPMENT</h2>
+
+      <p>
+        If you need a custom WordPress theme than do not hesitate and our team
+        of developers today. Our Dallas-based team will take care of your
+        WordPress website's front and backend.
+      </p>
+
+      <p>
+        We have experience building responsive websites utilizing
+        HTML5/CSS3/Javascript on the frontend and PHP and MySQL on backend
+        customization.
+      </p>
+
+      <p>
+        Having a custom theme designed and developed for your website will give
+        you a fresh, unique look that matches your brand. We also focus on
+        building an SEO optimized theme in order to get you ranked in search
+        engines quickly.
+      </p>
+
+      <p>
+        My Dallas-based Dallas WordPress development team has extensive
+        experience handling any customizations or modifications needed for your
+        WordPress website. We use tools like Advanced Custom Fields, Gutenberg
+        and Tailwinds to build state of the art websites with perfect pagespeed
+        scores.
+      </p>
+
+      <p>
+        When working on your project, I will always work closely with you.
+        You'll always know what is going on every step of the way so there are
+        no surprises along the way – from designs to the final website going
+        live!
+      </p>
+
+      <h2>CUSTOM WORDPRESS DEVELOPMENT</h2>
+
+      <p>
+        Not every business can fit into a pre-built WordPress theme. Sometimes a
+        client needs a specific design or layout that is not going to be quick
+        and easy to find. In these cases I offer custom WordPress development
+        services tailored for your business!
+      </p>
+
+      <p>
+        Our Dallas WordPress developers will work closely with you to build a
+        website that fits your brand and style while also being SEO optimized
+        and including all of the functionality your business needs to succeed
+        online.
+      </p>
+
+      <h2>WORDPRESS MIGRATIONS</h2>
+
+      <p>
+        Migrating your website to WordPress? We know how to make it happen for
+        any type or size of website!
+      </p>
+
+      <p>
+        We help you get your site's problems fixed immediately may be just what
+        you need. We care about all of our clients and strive to get them the
+        help they need with their websites.
+      </p>
+
+      <p>
+        Our Dallas WordPress developers have been working online since 2000, so
+        they definitely have enough experience behind them to know how an
+        efficient website should look like and operate. If you want a Dallas
+        WordPress development service company who truly cares about its
+        customers, then you've come to the right place!
+      </p>
+
+      <h2>WORDPRESS THEME DESIGN AND DEVELOPMENT</h2>
+
+      <p>
+        If you need a custom WordPress theme than do not hesitate and our team
+        of developers today! A successful site starts with design and
+        development. We create stunning, responsive WordPress themes that will
+        grab your visitors' attention and keep them on your site longer.
+      </p>
+
+      <p>
+        Our Dallas-based team will take care of your WordPress website's
+        frontend and backend. Once you have a handle on how the content is going
+        to be displayed, we'll make it look good with a professional theme
+        design.
+      </p>
+
+      <h2>WORDPRESS MAINTENANCE & WHY HIRING AN EXPERT MATTERS</h2>
+
+      <p>
+        Keeping your WordPress site healthy is just as important as building it.
+        <a href="/wordpress-maintenance-plans/">Regular Wordpress maintenance</a> ensures your website stays secure, runs smoothly,
+        and continues to deliver a great user experience. Without proper upkeep,
+        you risk outdated plugins, broken functionality, slow load times, and
+        security vulnerabilities that could harm your business.
+      </p>
+
+      <p>
+        Hiring an experienced WordPress expert means you’ll have someone who
+        understands best practices for updates, backups, performance
+        optimization, and security hardening. We monitor your site, apply
+        updates safely, troubleshoot issues before they become major problems,
+        and keep your site optimized for search engines. This allows you to
+        focus on running your business while we keep your website in peak
+        condition.
+      </p>
+
+      <h2>GUTENBERG AND OTHER PAGE BUILDERS</h2>
+
+      <p>
+        We specialize in working with Gutenberg and other page builders like
+        Elementor, Visual Composer and Divi. Gutenberg provides a fresh, new
+        take on how you handle your content – and is our preferred choice for
+        building full custom websites – but we can work with almost any plugin!
+      </p>
+
+      <h2>WORDPRESS THEME CUSTOMIZATION AND DEVELOPMENT</h2>
+
+      <p>
+        We also have extensive experience customizing themes to add new
+        functionality. Whether it's a modification or a complete theme build
+        from scratch, we know exactly what it takes to get your site working how
+        you want it to. Eventually, your theme will be a fully custom work of
+        art!
+      </p>
+
+      <p>
+        We can add almost any features using WordPress to build tools like
+        custom forms, calculators and other advanced functionality.
+      </p>
+
+      <p>
+        We've helped Dallas-based businesses built on WordPress grow their
+        organic sales from zero customers per month to thousands of consumers
+        each month – give us a call now at (972) 538-0260 to discuss further!
+      </p>
     </div>
   </div>
 </RootLayout>
-
