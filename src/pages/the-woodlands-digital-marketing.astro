@@ -1,0 +1,170 @@
+---
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from "@/assets/seo-orange.png";
+import OrangeAlert from "@/components/OrangeAlert.astro";
+const t = useTranslations();
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "The Woodlands Digital Marketing Agency",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "AJ Dichmann",
+    areaServed: "Texas",
+  },
+  serviceType: "The Woodlands Digital Marketing Agency",
+};
+---
+
+<RootLayout
+  title="The Woodlands Digital Marketing Agency | AJ Dichmann"
+  description="Get started with the top rated Wordpress experts in Houston for SEO and Web Development"
+>
+  <schema item={schema}></schema>
+  <ServicesHero
+    title="The Woodlands Digital Marketing Agency"
+    description="Get started with the top rated WordPress team in The Woodlands. Our team has countless years of building, fixing and maintaining WordPress websites under our belt."
+    blogLink={{
+      text: "What's new in SEO",
+      url: "/tags/seo/",
+    }}
+    image={{
+      src: featuredImage,
+      alt: "The Woodlands Digital Marketing",
+      width: 400,
+      height: 534,
+    }}
+    breadcrumbsText="The Woodlands Digital Marketing"
+  />
+
+  <!-- Rest of the content -->
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+    <div class="prose dark:prose-invert max-w-none relative z-10">
+      <h2>Houston Digital Marketing That Drives Real Growth</h2>
+      <p>
+        Looking for a dependable digital marketing partner in Houston that delivers real results? You've found us. Our team of sharp strategists, inventive creatives, and data-driven analysts works closely with businesses across South Texas to build smart, customized campaigns that fuel growth. Whether you're just getting started or aiming to level up, we're here to guide and support every step of the journey.      </p>
+      <p>
+        Because we're local to Harris and Montgomery counties, we understand the people you're trying to reach—and the competition you're up against. We don't sell cookie-cutter solutions. Instead, we take time to learn your business and craft a strategy that fits. Our services cover <a href="/the-woodlands-seo/">SEO</a>, PPC, social media, web design, and everything in between.
+      </p>
+      <p>
+        If you want a marketing partner who cares about your success and backs it up with real work and real results, let's chat. We're all about honest communication, measurable outcomes, and relationships that last.
+      </p>
+  
+      <h2>SEO Services Built for Houston Businesses</h2>
+      <p>
+        Great SEO puts your business in front of the right people—right when they need you. Our Houston SEO services are focused on visibility, relevance, and real growth. We use proven methods to get your site ranking higher, attracting more organic traffic that's ready to convert.
+      </p>
+      <p>
+        We handle everything from technical optimization and keyword targeting to local search and quality link building. Google's always evolving, and we stay ahead of those changes to keep your site competitive. Our job is to help your ideal customers find you and choose you.
+      </p>
+      <p>
+        Whether you're just starting out or looking to dominate your market, our SEO strategies are designed to deliver. We grow alongside your business—because your wins are our wins.
+      </p>
+  
+      <ul>
+        <li>In-depth keyword targeting & content strategy</li>
+        <li>Technical SEO fixes and speed improvements</li>
+        <li>Hyper-local SEO to rank in Houston neighborhoods</li>
+      </ul>
+  
+      <h2>Performance-Driven Google Ads</h2>
+      <p>
+        When you need fast, trackable results, Google Ads can deliver. Our PPC experts build smart campaigns that connect you with high-intent customers right away. Whether it's search, display, or remarketing, we create ads that speak directly to your audience.
+      </p>
+      <p>
+        We don't run your ads on autopilot. Every campaign is monitored daily, adjusted for performance, and tested to boost ROI. You'll get clear reports and real insights, so you always know what's happening and why.
+      </p>
+      <p>
+        If you've tried paid ads in the past without success, we're here to change that. Our focus is on strategy, optimization, and transparency—so you can actually see your investment paying off.
+      </p>
+  
+      <h2>Social Media Marketing & Facebook Ads</h2>
+      <p>
+        Social platforms are where your audience is already spending time. We help you meet them there with content that resonates and ads that convert. Our Houston social media team builds thoughtful campaigns that make your brand memorable.
+      </p>
+      <p>
+        Whether you're aiming for more leads, better engagement, or stronger brand recognition, we've got you. We create Facebook and Instagram ads, handle creative production, and map out organic strategies tailored to your business goals.
+      </p>
+      <p>
+        With clear performance metrics and a full-service creative team, you'll always know what's working—and we'll keep refining your presence to make sure your brand stands out in every scroll.
+      </p>
+  
+      <h2>Custom Web Design & Development</h2>
+      <p>
+        Your website is often your first impression—and we make sure it's a great one. Our Houston-based design and development team builds high-performing sites that look amazing and convert visitors into customers.
+      </p>
+      <p>
+        Whether you're launching a new site or improving what you already have, we offer tailored solutions built on <a href="/houston-wordpress/">WordPress</a>, <a href="/conroe-the-woodlands-shopify/">Shopify</a>, or custom code. Every site is responsive, fast-loading, and designed with your goals in mind.
+      </p>
+      <p>
+        Beyond just aesthetics, we optimize for search engines, accessibility, and user experience. From design to development, we're focused on creating a site that grows your business.
+      </p>
+  
+      <h2>Compare Our Digital Marketing Services</h2>
+      <table border="1" cellpadding="10">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Focus</th>
+            <th>Benefits</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SEO Services</td>
+            <td>Search Visibility</td>
+            <td>More traffic, better rankings, long-term growth</td>
+          </tr>
+          <tr>
+            <td>Google Ads</td>
+            <td>Paid Search</td>
+            <td>Fast results, targeted clicks, clear ROI</td>
+          </tr>
+          <tr>
+            <td>Facebook Ads & Social Media</td>
+            <td>Engagement & Awareness</td>
+            <td>Stronger branding, lead gen, community building</td>
+          </tr>
+          <tr>
+            <td>Web Design & Development</td>
+            <td>Digital Presence</td>
+            <td>Custom look, mobile-friendly, built to convert</td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <h2>Why Houston Businesses Trust Us</h2>
+      <p>
+        We're more than just a digital agency—we're part of the Houston community. We've helped local businesses in all kinds of industries build their online presence and grow their bottom line with targeted, data-backed strategies.
+      </p>
+      <p>
+        Our team is focused on outcomes—not empty metrics. We tailor every campaign to your business, back our work with data, and communicate clearly every step of the way. Whether you need help with one service or a full-scale strategy, we're in your corner.
+      </p>
+      <p>
+        We believe in being accessible, honest, and proactive. No confusing jargon or guesswork—just a team that cares about your success as much as you do.
+      </p>
+  
+      <ul>
+        <li>Seasoned team with local market expertise</li>
+        <li>Tailored plans with measurable results</li>
+        <li>Dedicated, responsive support you can count on</li>
+      </ul>
+  
+      <h2>Let's Kick Off Your Next Marketing Project</h2>
+      <p>
+        Whether you're opening your doors for the first time or scaling up an established business, we're ready to help you grow. Our The Woodlands based marketing team will evaluate your current efforts and build a clear, effective strategy that aligns with your goals and budget.
+      </p>
+      <p>
+        Let's start with a quick, pressure-free call. We'll learn about your business, identify opportunities, and give you real insights you can use. When you're ready, we'll be here to move forward—together.
+      </p>
+      <p>
+        Call us at (972) 538-0260 to speak with someone from our team. We'd love to hear your vision and help bring it to life!
+      </p>
+    </div>
+  </div>
+  
+  
+ </RootLayout>
