@@ -1,0 +1,170 @@
+---
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from "@/assets/seo-orange.png";
+import OrangeAlert from "@/components/OrangeAlert.astro";
+const t = useTranslations();
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Plano TX Digital Marketing Agency",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "AJ Dichmann",
+    areaServed: "Texas",
+  },
+  serviceType: "Plano Digital Marketing Agency",
+};
+---
+
+<RootLayout
+  title="Plano Digital Marketing Agency | AJ Dichmann"
+  description="Get started with the top rated digital marketing agency in Plano TX"
+>
+  <schema item={schema}></schema>
+  <ServicesHero
+    title="Plano Digital Marketing Agency"
+    description="Get started with the top rated WordPress team in The Woodlands. Our team has countless years of building, fixing and maintaining WordPress websites under our belt."
+    blogLink={{
+      text: "What's new in SEO",
+      url: "/tags/seo/",
+    }}
+    image={{
+      src: featuredImage,
+      alt: "Plano Digital Marketing",
+      width: 400,
+      height: 534,
+    }}
+    breadcrumbsText="Plano Digital Marketing"
+  />
+
+  <!-- Rest of the content -->
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+    <div class="prose dark:prose-invert max-w-none relative z-10">
+      <h2>Plano Digital Marketing Experts Who Actually Deliver</h2>
+      <p>
+        Looking for a trustworthy digital marketing partner in Plano that drives real, measurable growth? You’re in the right place. Our local team of savvy strategists, creative thinkers, and performance-focused analysts partners with businesses across North Texas to craft customized campaigns that move the needle. Whether you're launching a new business or scaling up, we’ll walk with you every step of the way.
+      </p>
+      <p>
+        Since we’re based in Collin and Denton counties, we know the audience you’re trying to reach—and the competitors you’re up against. We don’t offer one-size-fits-all packages. Instead, we dig deep to understand your business and build a strategy that fits your goals. From <a href="/plano-seo/">SEO</a> and PPC to social media and custom websites, we’ve got you covered.
+      </p>
+      <p>
+        If you want a digital marketing partner that’s committed to your success—and proves it with action—let’s connect. We're all about honest strategies, transparent reporting, and partnerships that last.
+      </p>
+    
+      <h2>SEO Solutions for Plano-Based Businesses</h2>
+      <p>
+        Effective SEO connects your brand with the right customers at the right moment. Our Plano SEO services focus on increasing visibility, building relevance, and sparking long-term growth. We use time-tested strategies and smart innovation to help your website climb the rankings and attract traffic that’s ready to convert.
+      </p>
+      <p>
+        From site structure and technical cleanup to content strategy and local listings, we handle it all. Google’s algorithm never stops changing, and neither do we. Our mission? Make sure your best customers can find you—and choose you—first.
+      </p>
+      <p>
+        No matter your size or stage, our SEO plans are built to scale with your success.
+      </p>
+      <ul>
+        <li>Keyword research and strategic content planning</li>
+        <li>Site speed optimization and technical SEO fixes</li>
+        <li>Local SEO that targets Plano and nearby communities</li>
+      </ul>
+    
+      <h2>ROI-Focused Google Ads Campaigns</h2>
+      <p>
+        Need fast visibility and results you can measure? Our Google Ads specialists build and manage high-performance campaigns that bring in high-intent leads—fast. From search and shopping ads to display and remarketing, we craft ads that match your goals and speak to your audience.
+      </p>
+      <p>
+        We don’t "set and forget." Every campaign is actively monitored, adjusted daily, and fine-tuned for better performance. You’ll always know what’s working, what’s changing, and what’s next—because we believe in full transparency.
+      </p>
+      <p>
+        If PPC hasn’t worked for you in the past, we’re ready to change that narrative. Our process is built on data, insights, and real-world results.
+      </p>
+    
+      <h2>Social Media Marketing & Facebook Ads for Plano Brands</h2>
+      <p>
+        Your audience is already active on social—so let’s meet them there with content that engages and ads that convert. Our social team designs and launches tailored campaigns that amplify your brand and connect with your audience in a meaningful way.
+      </p>
+      <p>
+        Whether you’re focused on brand awareness, lead generation, or community engagement, we help you show up and stand out. From Facebook and Instagram ads to organic content planning, we’re your full-service social growth partner.
+      </p>
+      <p>
+        We offer full creative support, ongoing testing, and clear performance metrics—so you always know what’s working.
+      </p>
+    
+      <h2>Custom Web Design & Development Services</h2>
+      <p>
+        First impressions matter, and your website should make a great one. Our Plano-based designers and developers build beautiful, high-performing websites that are tailored to your goals and optimized for conversion.
+      </p>
+      <p>
+        Whether you're starting from scratch or redesigning an existing site, we offer custom solutions on <a href="/plano-wordpress/">WordPress</a>, <a href="/plano-shopify/">Shopify</a>, or fully custom platforms. All sites are responsive, fast-loading, and SEO-friendly from the ground up.
+      </p>
+      <p>
+        We focus on function, usability, and growth—because your site isn’t just a brochure. It’s a business tool.
+      </p>
+    
+      <h2>Plano Digital Marketing Services at a Glance</h2>
+      <table border="1" cellpadding="10">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Primary Focus</th>
+            <th>What You Get</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SEO</td>
+            <td>Search Engine Rankings</td>
+            <td>More traffic, higher visibility, long-term ROI</td>
+          </tr>
+          <tr>
+            <td>Google Ads</td>
+            <td>Paid Search</td>
+            <td>Immediate leads, measurable results, increased ROI</td>
+          </tr>
+          <tr>
+            <td>Social Media</td>
+            <td>Engagement & Growth</td>
+            <td>More followers, stronger brand, better conversions</td>
+          </tr>
+          <tr>
+            <td>Web Design</td>
+            <td>Online Presence</td>
+            <td>Modern design, mobile-ready, built for growth</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <h2>Why Plano Businesses Work With Us</h2>
+      <p>
+        We’re more than a digital agency—we’re part of the Plano business community. We’ve helped local companies across industries boost their online presence, grow revenue, and win in competitive markets.
+      </p>
+      <p>
+        We focus on real outcomes, not vanity metrics. Every plan is personalized, backed by data, and executed with care. Whether you need support in one area or a full-stack strategy, our team is ready to help.
+      </p>
+      <p>
+        We pride ourselves on being accessible, proactive, and results-driven. No fluff, no runaround—just a dedicated team committed to your success.
+      </p>
+      <ul>
+        <li>Deep understanding of the local Plano market</li>
+        <li>Clear strategies with measurable impact</li>
+        <li>Responsive support and real communication</li>
+      </ul>
+    
+      <h2>Ready to Start Your Next Project?</h2>
+      <p>
+        Whether you're a new business owner or scaling a thriving company, we're here to help you grow in Plano and beyond. Our team will assess your current efforts, find areas for improvement, and create a strategic roadmap that fits your goals and budget.
+      </p>
+      <p>
+        It all starts with a quick discovery call. No pressure, no pitch—just real insight from real experts. When you're ready to grow, we’re here to lead the way.
+      </p>
+      <p>
+        Call me at (972) 538-0260 to talk today. We’d love to hear your story and help you reach the next level!
+      </p>
+    </div>
+    
+  </div>
+  
+  
+ </RootLayout>
