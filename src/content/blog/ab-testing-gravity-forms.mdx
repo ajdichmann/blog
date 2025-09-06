@@ -74,7 +74,7 @@ Add this function to your `functions.php` file or your site's custom plugin:
  */
 if ( ! function_exists( 'gf_ab_test_shortcode' ) ) {
     function gf_ab_test_shortcode( $atts ) {
-        // Parse “formid” attribute, e.g. formid="1|5|9"
+        // Parse "formid” attribute, e.g. formid="1|5|9"
         $atts    = shortcode_atts( array( 'formid' => '' ), $atts );
         $ids     = array_filter( array_map( 'trim', explode( '|', $atts['formid'] ) ) );
         $count   = count( $ids );
