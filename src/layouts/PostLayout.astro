@@ -11,6 +11,7 @@ import ScrollTopAndComments from "@/solid/ScrollTopAndComments.tsx";
 import PostCover from "../components/PostCover.astro";
 import DetailsSummary from "../components/DetailsSummary.astro";
 import SocialShareButtons from "../components/social-icons/SocialShareButtons.astro";
+import AuthorBlock from "../components/AuthorBlock.astro";
 import { POST_METADATA } from "@/consts";
 import { useTranslations } from "@/i18n";
 
@@ -179,15 +180,14 @@ const { Content, headings } = await post.render();
               )
             }
 
-            <div class="prose dark:prose-invert prose-lg max-w-none pb-8 pt-10">
+            <div class="prose dark:prose-invert prose-lg max-w-none pb-2 pt-10">
               <slot />
               <Content />
             </div>
-            {
-              ['bottom', 'both'].includes(POST_METADATA.showShareButtons) ? (
-                <SocialShareButtons title={post.data.title} description={post.data.summary} />
-              ) : null
-            }
+            <!-- Author Block -->
+            {authors.length > 0 && (
+              <AuthorBlock author={authors[0]} />
+            )}
             <!--    <div class="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">-->
             <!--        <Link href={discussUrl(path)} rel="nofollow">-->
             <!--            Discuss on Twitter-->
