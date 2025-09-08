@@ -1,0 +1,166 @@
+---
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from "@/assets/seo-orange.png";
+import OrangeAlert from "@/components/OrangeAlert.astro";
+const t = useTranslations();
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "San Antonio TX Digital Marketing Agency",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "AJ Dichmann",
+    areaServed: "Texas",
+  },
+  serviceType: "San Antonio Digital Marketing Agency",
+};
+---
+
+<RootLayout
+  title="San Antonio Digital Marketing Agency | AJ Dichmann"
+  description="Grow your brand with a top-rated digital marketing agency in San Antonio, TX"
+>
+  <schema item={schema}></schema>
+  <ServicesHero
+    title="San Antonio Digital Marketing Agency"
+    description="Build a smarter online presence with our expert team in San Antonio. From SEO and PPC to stunning websites, we help businesses grow with confidence."
+    blogLink={{
+      text: "Explore SEO Strategies",
+      url: "/tags/seo/",
+    }}
+    image={{
+      src: featuredImage,
+      alt: "San Antonio Digital Marketing",
+      width: 400,
+      height: 534,
+    }}
+    breadcrumbsText="San Antonio Digital Marketing"
+  />
+
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+    <div class="prose dark:prose-invert max-w-none relative z-10">
+      <h2>San Antonio Marketing Experts You Can Rely On</h2>
+      <p>
+        Ready to grow your business in San Antonio? Our local digital marketing agency delivers real results backed by strategy, data, and years of experience. Whether you're a startup or an established brand, we tailor our approach to fit your goals.
+      </p>
+      <p>
+        Located right here in Bexar County, we understand the market dynamics, customer behavior, and competitive landscape of San Antonio. We don’t use plug-and-play packages—every solution we build is based on your unique needs.
+      </p>
+      <p>
+        We value clear communication, measurable impact, and long-term partnerships that help our clients win online.
+      </p>
+
+      <h2>SEO Services Designed for San Antonio Businesses</h2>
+      <p>
+        Our SEO strategies help local businesses connect with real customers who are ready to engage. From technical audits to high-quality content creation, our team ensures your website climbs in the search rankings and stays there.
+      </p>
+      <p>
+        Whether you're targeting local neighborhoods or the broader Texas region, our SEO campaigns are designed to scale with your business and meet your KPIs.
+      </p>
+      <p>
+        Stay ahead of your competition with expert-level search optimization.
+      </p>
+      <ul>
+        <li>Comprehensive keyword research and clustering</li>
+        <li>Technical SEO audits and on-page improvements</li>
+        <li>Google Business Profile and map pack visibility</li>
+      </ul>
+
+      <h2>Google Ads Campaigns With Proven ROI</h2>
+      <p>
+        If you're looking to drive leads fast, our Google Ads specialists have you covered. We manage campaigns that convert—from targeted search ads to remarketing funnels that bring customers back.
+      </p>
+      <p>
+        Each campaign is customized, constantly refined, and monitored daily. You’ll get regular updates, clear reporting, and full transparency.
+      </p>
+      <p>
+        Paid search shouldn’t feel like a gamble. We make sure it delivers.
+      </p>
+
+      <h2>San Antonio Social Media Marketing & Advertising</h2>
+      <p>
+        Your brand should feel alive and engaging on social media. That’s where we come in. We build and run social media campaigns that connect with real people and turn them into loyal customers.
+      </p>
+      <p>
+        From paid ads to organic content calendars, we do it all. Our strategies are platform-specific, audience-driven, and performance-focused.
+      </p>
+      <p>
+        You’ll stand out in crowded feeds—and grow your audience in the process.
+      </p>
+
+      <h2>Professional Website Design & Development</h2>
+      <p>
+        Your website is the foundation of your digital strategy. We design and build custom websites that are modern, responsive, fast-loading, and built to convert.
+      </p>
+      <p>
+        Our developers work with <a href="/san-antonio-wordpress/">WordPress</a>, <a href="/san-antonio-shopify/">Shopify</a>, and custom frameworks to meet your exact needs. All of our websites are built with SEO and user experience in mind.
+      </p>
+      <p>
+        From sleek landing pages to complex eCommerce builds, we’ve done it all—and we’ll do it for you.
+      </p>
+
+      <h2>San Antonio Digital Marketing Services Overview</h2>
+      <table border="1" cellpadding="10">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Main Focus</th>
+            <th>What You Gain</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SEO</td>
+            <td>Search Engine Optimization</td>
+            <td>Higher rankings, increased traffic, better visibility</td>
+          </tr>
+          <tr>
+            <td>Google Ads</td>
+            <td>Paid Campaigns</td>
+            <td>Faster lead generation, optimized spend, strong ROI</td>
+          </tr>
+          <tr>
+            <td>Social Media</td>
+            <td>Brand Awareness</td>
+            <td>More followers, increased engagement, conversions</td>
+          </tr>
+          <tr>
+            <td>Web Design</td>
+            <td>Digital Foundation</td>
+            <td>Custom design, fast performance, mobile-first UX</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>What Sets Our San Antonio Team Apart</h2>
+      <p>
+        We're not just an agency—we're part of the San Antonio business community. Our clients stay with us because we’re dependable, approachable, and always focused on the bottom line.
+      </p>
+      <p>
+        With us, you’ll get a responsive team, clear deliverables, and strategies grounded in experience and performance.
+      </p>
+      <p>
+        No guesswork—just real results from people who care.
+      </p>
+      <ul>
+        <li>Deep knowledge of San Antonio's local market</li>
+        <li>Flexible strategies for growing businesses</li>
+        <li>Ongoing communication and hands-on support</li>
+      </ul>
+
+      <h2>Let’s Kick Off Your Next Digital Project</h2>
+      <p>
+        Whether you’re launching a new brand or scaling an established business, we’re ready to help you grow in San Antonio and beyond. Our process starts with a no-obligation consultation to explore your goals and challenges.
+      </p>
+      <p>
+        We’ll share actionable insights and outline a custom strategy that fits your vision—and your budget.
+      </p>
+      <p>
+        Give us a call at (972) 538-0260. We’re excited to meet you and help your business thrive.
+      </p>
+    </div>
+  </div>
+</RootLayout>

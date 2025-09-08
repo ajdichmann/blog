@@ -1,0 +1,166 @@
+---
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from "@/assets/seo-orange.png";
+import OrangeAlert from "@/components/OrangeAlert.astro";
+const t = useTranslations();
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Galveston TX Digital Marketing Agency",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "AJ Dichmann",
+    areaServed: "Texas",
+  },
+  serviceType: "Galveston Digital Marketing Agency",
+};
+---
+
+<RootLayout
+  title="Galveston Digital Marketing Agency | AJ Dichmann"
+  description="Partner with a results-driven digital marketing agency in Galveston TX"
+>
+  <schema item={schema}></schema>
+  <ServicesHero
+    title="Galveston Digital Marketing Agency"
+    description="Launch your success with Galveston's trusted digital experts. Our team specializes in building, optimizing, and maintaining high-converting websites that perform."
+    blogLink={{
+      text: "See our latest SEO tips",
+      url: "/tags/seo/",
+    }}
+    image={{
+      src: featuredImage,
+      alt: "Galveston Digital Marketing",
+      width: 400,
+      height: 534,
+    }}
+    breadcrumbsText="Galveston Digital Marketing"
+  />
+
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+    <div class="prose dark:prose-invert max-w-none relative z-10">
+      <h2>Galveston Marketing Pros You Can Count On</h2>
+      <p>
+        Searching for a marketing partner in Galveston who actually understands your goals and delivers results? You're in good hands. We’re a local team of forward-thinking marketers, designers, and analysts dedicated to helping businesses in Galveston and the Gulf Coast thrive online.
+      </p>
+      <p>
+        We don’t sell cookie-cutter plans. We get to know your business, your audience, and your competition—then build a custom roadmap to success. From <a href="/galveston-seo/">SEO</a> and paid ads to social content and websites, every strategy is crafted with precision.
+      </p>
+      <p>
+        We're committed to your success, not just clicks. Transparent reporting, thoughtful planning, and measurable growth—that’s what you can expect from us.
+      </p>
+
+      <h2>Galveston SEO Services That Drive Growth</h2>
+      <p>
+        Showing up in Google searches is key to growth—and we know how to make that happen. Our SEO services for Galveston businesses are designed to help your site rank higher, earn more traffic, and convert more leads.
+      </p>
+      <p>
+        From on-page structure and content planning to technical audits and local optimization, we cover it all. As search engines evolve, we stay ahead of the curve—so your visibility keeps rising.
+      </p>
+      <p>
+        Whether you're just getting started or want to improve your rankings, we build scalable plans tailored to your success.
+      </p>
+      <ul>
+        <li>Data-driven keyword strategy</li>
+        <li>Technical optimization and mobile performance</li>
+        <li>Local search targeting across Galveston County</li>
+      </ul>
+
+      <h2>High-Performance Google Ads Management</h2>
+      <p>
+        Need leads fast? We create and manage Google Ads campaigns that generate real, measurable ROI. Whether you’re promoting products, services, or special offers, our ad experts make sure every click counts.
+      </p>
+      <p>
+        We monitor campaigns daily and optimize them continuously to ensure you get maximum return. You’ll never be in the dark—we report results clearly and regularly.
+      </p>
+      <p>
+        If you're tired of underperforming ads, let’s turn things around with smarter targeting and better execution.
+      </p>
+
+      <h2>Social Media Marketing That Builds Brand Buzz</h2>
+      <p>
+        Your customers are scrolling—are they seeing your brand? With tailored social media strategies, we help Galveston businesses show up, stand out, and grow their following.
+      </p>
+      <p>
+        We manage everything from ad creatives to content calendars for platforms like Facebook and Instagram. Whether your goal is visibility, engagement, or conversions, we’re here to make social media work for you.
+      </p>
+      <p>
+        We test, optimize, and analyze every post and campaign to maximize impact and return.
+      </p>
+
+      <h2>Website Design & Development Built for Business</h2>
+      <p>
+        Your website is your digital storefront—and it should impress. We design and build modern, mobile-friendly websites that load fast, convert visitors, and support long-term growth.
+      </p>
+      <p>
+        Whether you’re starting from zero or upgrading an outdated site, we provide full support on <a href="/galveston-wordpress/">WordPress</a>, <a href="/galveston-shopify/">Shopify</a>, or fully custom platforms. Every site is SEO-optimized from day one.
+      </p>
+      <p>
+        We combine design, performance, and strategy—so your website becomes your strongest marketing asset.
+      </p>
+
+      <h2>Our Galveston Services Overview</h2>
+      <table border="1" cellpadding="10">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Focus Area</th>
+            <th>Client Benefits</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SEO</td>
+            <td>Organic Visibility</td>
+            <td>Stronger rankings, more traffic, increased trust</td>
+          </tr>
+          <tr>
+            <td>Google Ads</td>
+            <td>Immediate Reach</td>
+            <td>Leads fast, clear ROI, targeted exposure</td>
+          </tr>
+          <tr>
+            <td>Social Media</td>
+            <td>Brand Growth</td>
+            <td>Better engagement, larger audience, more sales</td>
+          </tr>
+          <tr>
+            <td>Web Design</td>
+            <td>Online Presence</td>
+            <td>Beautiful, fast, mobile-optimized websites</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Why Galveston Companies Choose Us</h2>
+      <p>
+        We're more than an agency—we’re invested in the success of Galveston’s business community. Our clients span retail, service, medical, hospitality, and beyond—and they stick with us because we get results.
+      </p>
+      <p>
+        Our approach is simple: custom strategies, honest communication, and clear results. Whether you need a little help or a full-service partner, we’re ready to grow with you.
+      </p>
+      <p>
+        We’re known for being responsive, strategic, and totally focused on your goals.
+      </p>
+      <ul>
+        <li>Local expertise in Galveston and surrounding areas</li>
+        <li>Custom marketing plans backed by data</li>
+        <li>Real support from a team that cares</li>
+      </ul>
+
+      <h2>Let’s Grow Together</h2>
+      <p>
+        If you're a business owner in Galveston looking for a strategic digital marketing partner, we’d love to meet you. We’ll review your current efforts, identify opportunities, and create a plan tailored to your growth.
+      </p>
+      <p>
+        It starts with a no-pressure discovery call. We’ll listen, give insight, and let you decide when you're ready to take the next step.
+      </p>
+      <p>
+        Call (972) 538-0260 today to get started. We can’t wait to hear your story and help you grow.
+      </p>
+    </div>
+  </div>
+</RootLayout>
