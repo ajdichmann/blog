@@ -14,7 +14,9 @@ export default defineConfig({
   trailingSlash: "always",
   integrations: [
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !/\/blog\/\d+\/$/.test(page) && !/\/tags\/[^/]+\/\d+\/$/.test(page),
+    }),
     tailwind(),
     solidJs(),
     robotsTxt(),
