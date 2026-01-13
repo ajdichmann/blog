@@ -1,0 +1,176 @@
+---
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from "@/assets/shopify-orange.png";
+
+const t = useTranslations();
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Houston Magento Development Agency",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "AJ Dichmann",
+    areaServed: "Texas",
+  },
+  serviceType: "Magento Development",
+};
+---
+
+<RootLayout
+  title="Houston Magento Development Agency | AJ Dichmann"
+  description="Get started with the top rated Magento developers in Houston for Magento ecommerce development"
+>
+  <schema item={schema}></schema>
+  <ServicesHero
+    title="Houston Magento Development"
+    description="Get started with a Houston Texas Magento development company that builds, fixes, and scales high-performing online stores. Our Magento developers bring years of ecommerce development, web development, and optimization experience to every build—so your store loads fast, feels great, and converts."
+    blogLink={{
+      text: "What's new in Ecomm",
+      url: "/tags/shopify/",
+    }}
+    image={{
+      src: featuredImage,
+      alt: "Houston Magento Development Services",
+      width: 400,
+      height: 534,
+    }}
+    breadcrumbsText="Houston Magento Agency Experts"
+  />
+
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+    <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
+      <!-- Content section with prose -->
+      <div class="prose dark:prose-invert max-w-none relative z-10">
+        <h2>Houston Magento Development &amp; Magento Ecommerce Development</h2>
+        <p>
+          <strong>Want a powerful online store built for serious growth in Houston Texas?</strong>
+          We specialize in Magento development for Houston brands that need flexible ecommerce development,
+          clean web development, and a store experience that can scale with your ecommerce business.
+          If you're looking for a Magento development company that does the work the right way—strategy,
+          build, and long-term performance—you’re in the right place.
+        </p>
+        <p>
+          Magento (Adobe Commerce) is an ecommerce platform built for complexity: large catalogs, advanced
+          merchandising, multi-store setups, and custom integrations. Our Magento developers help you
+          turn that power into a fast, dependable experience with better user experience, stronger
+          conversion, and cleaner operations.
+        </p>
+
+        <h2>Houston Magento Web Development That Prioritizes User Experience</h2>
+        <p>
+          First impressions matter. Our Magento ecommerce development approach starts with the buyer journey:
+          fast pages, intuitive navigation, and a checkout that removes friction. We focus on user experience
+          and performance so your online store feels modern and easy to use on every device.
+        </p>
+        <ul>
+          <li>Conversion-focused, mobile-first layouts for online stores</li>
+          <li>Clear product discovery, filters, and intuitive navigation</li>
+          <li>Speed, accessibility, and SEO best practices baked in</li>
+          <li>Theme customization aligned to brand identity</li>
+          <li>Reusable content blocks for landing pages and campaigns</li>
+        </ul>
+
+        <h2>Houston Magento Development Services</h2>
+        <p>
+          Our Houston Magento development services cover everything from new builds to stabilizing existing
+          sites. Whether you need custom features, extensions, performance fixes, or complex integrations,
+          we build scalable solutions that keep your ecommerce platform dependable as you grow.
+        </p>
+
+        <table>
+          <tr>
+            <th>Service</th>
+            <th>What You Get</th>
+          </tr>
+          <tr>
+            <td>Magento Theme Development</td>
+            <td>Branded storefronts built for speed, usability, and conversion</td>
+          </tr>
+          <tr>
+            <td>Magento Ecommerce Development</td>
+            <td>Custom functionality for complex catalogs, pricing rules, and promotions</td>
+          </tr>
+          <tr>
+            <td>Integrations &amp; API Connections</td>
+            <td>Connect ERPs, CRMs, POS, inventory, shipping, and fulfillment tools</td>
+          </tr>
+          <tr>
+            <td>Performance &amp; Technical SEO</td>
+            <td>Faster load times, cleaner architecture, and better search visibility</td>
+          </tr>
+          <tr>
+            <td>Checkout &amp; Payments Optimization</td>
+            <td>Streamlined carts, trust signals, and reduced abandonment</td>
+          </tr>
+          <tr>
+            <td>Post-Launch Support</td>
+            <td>Ongoing improvements, monitoring, and growth sprints</td>
+          </tr>
+        </table>
+
+        <h2>Why Magento for Your Ecommerce Platform?</h2>
+        <p>
+          Magento is one of the best Magento options for brands that need flexibility and control.
+          It’s built for customization—ideal when your ecommerce business has unique workflows, advanced
+          product logic, or multiple online stores under one roof.
+        </p>
+        <ul>
+          <li>Scalable architecture for growing catalogs and traffic</li>
+          <li>Advanced merchandising, pricing, and promotions</li>
+          <li>Multi-store and multi-language capabilities</li>
+          <li>Headless-ready with strong API support</li>
+          <li>Enterprise-grade security and extensibility</li>
+        </ul>
+
+        <h2>Magento Developers in Houston Texas Who Build for Growth</h2>
+        <p>
+          Not every development company understands what it takes to run a revenue-driving online store.
+          Our Magento developers blend ecommerce development with practical web development and rollout
+          discipline—so you get a stable build, clean releases, and a plan for what comes next.
+        </p>
+        <p>
+          We also make the handoff easy. You’ll know what’s being built, why it matters, and how to manage
+          it after launch. If you want to loop in your team, we can coordinate documentation, training, and
+          ongoing support.
+        </p>
+
+        <h2>Ecommerce Development + Digital Marketing</h2>
+        <p>
+          Build it right—and keep it growing. We pair Magento ecommerce development with digital marketing
+          support to help you drive qualified traffic and increase revenue over time.
+        </p>
+        <ul>
+          <li>Technical &amp; on-page SEO for online stores</li>
+          <li>PPC &amp; shopping feeds (Google, Microsoft, social)</li>
+          <li>Email lifecycle flows (welcome, abandon, win-back) and list growth</li>
+          <li>Content strategy, landing pages, and seasonal campaigns</li>
+        </ul>
+        <p>
+          If you’re ready to start, share your goals and the best email address to reach you, and we’ll
+          map out the next steps.
+        </p>
+
+        <h2>Migrations &amp; Rebuilds: Magento Ecommerce Done Right</h2>
+        <p>
+          Moving platforms or upgrading Adobe Commerce? We handle Magento ecommerce development migrations
+          with no drama—preserving products, customers, orders, and SEO while improving performance and
+          user experience from day one.
+        </p>
+
+        <h2>Work With a Houston Magento Development Company</h2>
+        <p>
+          We’re a Houston Texas partner for Magento development—from launch to ongoing optimization.
+          Whether you're building new online stores or improving an existing Magento ecommerce setup,
+          we’ll help you move faster and sell more with development services that support real growth.
+        </p>
+        <p>
+          <strong>Ready to launch or scale?</strong> Get a free consultation with our Houston Magento
+          experts today.
+        </p>
+      </div>
+    </div>
+  </div>
+</RootLayout>
