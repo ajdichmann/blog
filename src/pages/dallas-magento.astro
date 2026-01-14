@@ -1,0 +1,174 @@
+---
+import { useTranslations } from "@/i18n";
+import RootLayout from "@/layouts/RootLayout.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import featuredImage from "@/assets/magento-development.png";
+
+const t = useTranslations();
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Dallas Magento Development Agency",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "AJ Dichmann",
+    areaServed: "Texas",
+  },
+  serviceType: "Magento Development",
+};
+---
+
+<RootLayout
+  title="Dallas Magento Development Agency | AJ Dichmann"
+  description="Work with experienced Magento developers in Dallas to build, improve, and scale your ecommerce store"
+>
+  <schema item={schema}></schema>
+  <ServicesHero
+    title="Dallas Magento Development"
+    description="Partner with a Dallas Magento development company that understands real ecommerce growth. We design, build, and optimize high-performing Magento stores that are fast, flexible, and built to convert—without cutting corners."
+    blogLink={{
+      text: "Ecommerce insights",
+      url: "/tags/shopify/",
+    }}
+    image={{
+      src: featuredImage,
+      alt: "Dallas Magento Development Services",
+      width: 400,
+      height: 534,
+    }}
+    breadcrumbsText="Dallas Magento Development Specialists"
+  />
+
+  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+    <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
+      <div class="prose dark:prose-invert max-w-none relative z-10">
+        <h2>Dallas Magento Development &amp; Magento Ecommerce Solutions</h2>
+        <p>
+          <strong>Need a Magento store that can actually support growth?</strong>
+          We help Dallas-based businesses build Magento ecommerce platforms that are reliable,
+          scalable, and built for long-term performance. From clean development to thoughtful
+          architecture, our work is focused on one thing—helping your online store generate revenue
+          without technical headaches.
+        </p>
+        <p>
+          Magento (Adobe Commerce) is designed for businesses with complex needs: large product catalogs,
+          custom pricing rules, multi-location inventory, and deep integrations. Our Dallas Magento
+          developers make sure all of that power translates into a smooth customer experience and a
+          backend your team can trust.
+        </p>
+
+        <h2>Dallas Magento Web Development Focused on Performance</h2>
+        <p>
+          Your store has seconds to make an impression. Our Magento ecommerce development process
+          prioritizes speed, clarity, and usability—from the first page view to checkout. Every build
+          is optimized for real shoppers, not just technical specs.
+        </p>
+        <ul>
+          <li>Mobile-first Magento storefronts designed to convert</li>
+          <li>Simple navigation and intuitive product discovery</li>
+          <li>Performance, accessibility, and SEO built in from day one</li>
+          <li>Custom Magento themes that reflect your brand</li>
+          <li>Flexible content sections for promotions and campaigns</li>
+        </ul>
+
+        <h2>Dallas Magento Development Services</h2>
+        <p>
+          Our Dallas Magento development services support both new builds and existing stores.
+          Whether you’re launching from scratch or fixing a Magento site that’s underperforming,
+          we deliver solutions that scale with your business.
+        </p>
+
+        <table>
+          <tr>
+            <th>Service</th>
+            <th>What’s Included</th>
+          </tr>
+          <tr>
+            <td>Magento Theme Development</td>
+            <td>Custom storefronts built for speed, usability, and conversions</td>
+          </tr>
+          <tr>
+            <td>Magento Ecommerce Development</td>
+            <td>Advanced functionality for pricing, catalogs, and promotions</td>
+          </tr>
+          <tr>
+            <td>Integrations &amp; APIs</td>
+            <td>ERP, CRM, shipping, inventory, and fulfillment connections</td>
+          </tr>
+          <tr>
+            <td>Performance &amp; SEO Optimization</td>
+            <td>Improved site speed, crawlability, and search visibility</td>
+          </tr>
+          <tr>
+            <td>Checkout Optimization</td>
+            <td>Reduced friction, better UX, and higher completion rates</td>
+          </tr>
+          <tr>
+            <td>Ongoing Support</td>
+            <td>Maintenance, enhancements, and growth-focused improvements</td>
+          </tr>
+        </table>
+
+        <h2>Why Choose Magento for Ecommerce?</h2>
+        <p>
+          Magento is a strong fit for businesses that need flexibility and control over their ecommerce
+          platform. When off-the-shelf solutions fall short, Magento provides the customization and
+          scalability required for more advanced operations.
+        </p>
+        <ul>
+          <li>Handles large catalogs and high traffic with ease</li>
+          <li>Advanced pricing, promotions, and merchandising tools</li>
+          <li>Support for multiple stores, regions, and languages</li>
+          <li>API-first architecture for headless builds</li>
+          <li>Enterprise-level security and extensibility</li>
+        </ul>
+
+        <h2>Dallas Magento Developers Who Think Beyond Launch</h2>
+        <p>
+          Building the site is only part of the job. Our Dallas Magento developers focus on clean
+          implementation, clear documentation, and stable releases—so your store doesn’t become
+          fragile the moment traffic grows.
+        </p>
+        <p>
+          We work transparently with internal teams and stakeholders, making sure everyone understands
+          what’s being built and how to manage it after launch. No mystery code. No unnecessary complexity.
+        </p>
+
+        <h2>Magento Ecommerce Development Paired With Marketing</h2>
+        <p>
+          A strong Magento build sets the foundation—but growth comes from consistent visibility.
+          We support ecommerce development with marketing strategies designed to drive qualified traffic
+          and increase conversions over time.
+        </p>
+        <ul>
+          <li>Technical and on-page SEO for Magento stores</li>
+          <li>Paid search and shopping campaigns</li>
+          <li>Email automation for retention and lifecycle marketing</li>
+          <li>Landing pages and content designed to convert</li>
+        </ul>
+        <p>
+          Tell us what you’re trying to accomplish and how to reach you—we’ll outline a clear plan forward.
+        </p>
+
+        <h2>Magento Migrations &amp; Rebuilds Without the Stress</h2>
+        <p>
+          Upgrading Adobe Commerce or moving from another platform? We handle Magento migrations with
+          careful planning—protecting your data, customers, and SEO while delivering a faster, cleaner
+          experience.
+        </p>
+
+        <h2>Partner With a Dallas Magento Development Company</h2>
+        <p>
+          We work with Dallas businesses that need Magento development done right—from strategy to
+          execution and beyond. Whether you’re launching a new ecommerce store or improving an existing
+          Magento setup, we help you move faster with fewer risks.
+        </p>
+        <p>
+          <strong>Ready to move forward?</strong> Schedule a free consultation with our Dallas Magento
+          experts and let’s talk next steps. Need help in Houston, our <a href="/houston-magento/">Houston Magento development team</a> has you covered.
+        </p>
+      </div>
+    </div>
+  </div>
+</RootLayout>
