@@ -1,10 +1,9 @@
 ---
-import { Picture } from "astro:assets";
-import type { CollectionEntry } from "astro:content";
 import { POST_METADATA } from "../consts";
+import type { CmsPost } from "@/lib/emdash";
 
 type Props = {
-  post: CollectionEntry<"blog">;
+  post: CmsPost;
   full?: boolean;
 };
 
@@ -20,16 +19,17 @@ const full = POST_METADATA.showFullWidthCover;
     }}
     class="relative mt-6 overflow-hidden rounded-lg shadow-lg"
   >
-    <div class="relative aspect-[2/1] w-full">
-      <Picture
-        widths={[300, 600, 1000, 2000, 3000, 4000]}
-        sizes="100vw"
-        src={post.data.cover!}
-        alt={post.data.title}
-        formats={["avif", "webp"]}
-        loading="eager"
-      />
-    </div>
+    {
+      post.data.cover?.src && (
+        <div class="relative aspect-[2/1] w-full">
+          <img
+            src={post.data.cover.src}
+            alt={post.data.cover.alt ?? post.data.title}
+            loading="eager"
+          />
+        </div>
+      )
+    }
   </div>
 </div>
 

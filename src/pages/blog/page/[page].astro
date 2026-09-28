@@ -1,44 +1,35 @@
 ---
 import ListWithTagsLayout from "@/layouts/ListWithTagsLayout.astro";
 import { useTranslations } from "@/i18n";
-import { getAllTagsWithCounts, getPostPage } from "@/lib/emdash";
+import { getPostPage } from "@/lib/emdash";
 
 export const prerender = false;
 
 const t = useTranslations();
 
-const tagSlug = Astro.params.slug;
 const pageParam = Astro.params.page;
 const currentPage = pageParam ? Number(pageParam) : 1;
-if (!tagSlug || !Number.isInteger(currentPage) || currentPage < 1) {
+if (!Number.isInteger(currentPage) || currentPage < 1) {
   return Astro.redirect("/404");
 }
 
-const [{ tags }, { page, cacheHint }] = await Promise.all([
-  getAllTagsWithCounts(),
-  getPostPage(currentPage, tagSlug),
-]);
+const { page, cacheHint } = await getPostPage(currentPage);
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
-const entry = tags.find((tag) => tag.slug === tagSlug);
-if (!entry) {
-  return Astro.redirect("/404");
-}
-
-let robots;
 let titleTemplate = "";
+let robots;
+
 if (page?.currentPage > 1) {
-  robots = "noindex, follow";
   titleTemplate = t("seo.pagination.page", { page: `${page.currentPage}` });
+  robots = "noindex, follow";
 }
 ---
 
+<!-- <ListLayout title={t('pages.blog.title')} description={t('pages.blog.description')} page={page} {robots} {titleTemplate}/> -->
 <ListWithTagsLayout
-  title={entry.name}
-  description={entry.description ?? ""}
+  title={t('pages.blog.title')}
+  description={t('pages.blog.description')}
   page={page}
   {robots}
   {titleTemplate}
->
-  {entry.description}
-</ListWithTagsLayout>
+/>

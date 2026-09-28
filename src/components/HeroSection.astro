@@ -1,8 +1,7 @@
 ---
 import Announcement from './Announcement.astro';
 import { SITE_METADATA } from '../consts';
-import { getCollection } from "astro:content";
-import { excludeDrafts, sortBlogPosts } from "@/functions";
+import { getAllPosts } from "@/lib/emdash";
 
 // Add props for better component reusability
 interface Props {
@@ -18,9 +17,7 @@ interface Props {
 }
 
 // Get the latest blog post
-const latestPost = await getCollection("blog", excludeDrafts)
-  .then(sortBlogPosts)
-  .then((posts: any[]) => posts[0]);
+const latestPost = await getAllPosts(1).then(({ posts }) => posts[0]);
 
 const { 
   title = "AJ Dichmann",
@@ -29,7 +26,7 @@ const {
   calendly = SITE_METADATA.calendly,
   blogPost = latestPost ? {
     title: "Read my newest blog post!",
-    url: `/blog/${latestPost.slug}/`,
+    url: `/blog/${latestPost.id}/`,
     ctatext: "Read blog"
   } : undefined
 } = Astro.props;

@@ -2,33 +2,53 @@
   "name": "aj-dichmann-blog",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro build && astro preview",
+    "seed:emdash": "tsx scripts/mdx-to-emdash-seed.ts",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.6",
-    "@astrojs/cloudflare": "^11.2.0",
-    "@astrojs/mdx": "^2.1.1",
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/cloudflare": "^13.7.0",
+    "@astrojs/mdx": "^5.0.6",
     "@astrojs/partytown": "^2.1.2",
+    "@astrojs/react": "^5.0.7",
     "@astrojs/rss": "^4.0.5",
     "@astrojs/sitemap": "^3.0.5",
-    "@astrojs/solid-js": "^4.0.1",
-    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/solid-js": "^6.0.1",
+    "@emdash-cms/auth-atproto": "^0.2.8",
+    "@emdash-cms/cloudflare": "^1.0.1",
     "@fontsource/onest": "^5.0.2",
-    "astro": "^4.3.5",
-    "astro-meta-tags": "^0.2.1",
+    "@tailwindcss/postcss": "^4.3.3",
+    "astro": "^6.4.8",
     "astro-robots-txt": "^1.0.0",
     "astro-seo": "^0.8.4",
-    "solid-js": "^1.8.14",
-    "tailwindcss": "^3.3.5",
-    "typescript": "^5.3.3"
+    "emdash": "^1.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "solid-js": "^1.9.10",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.0"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "^0.5.7",
-    "@tailwindcss/typography": "^0.5.10"
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.22",
+    "gray-matter": "^4.0.3",
+    "postcss": "^8.5.6",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "tsx": "^4.20.6",
+    "unified": "^11.0.5",
+    "wrangler": "^4.143.0"
   }
 }

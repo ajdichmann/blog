@@ -1,0 +1,14 @@
+---
+import OrangeAlert from "@/components/OrangeAlert.astro";
+
+const props = Astro.props as {
+  node?: { title?: string; message?: string };
+  title?: string;
+  message?: string;
+};
+const node = props.node ?? props;
+const title = node.title ?? "Note";
+const message = node.message ?? "";
+---
+
+<OrangeAlert {title} {message} />

@@ -1,18 +1,18 @@
 ---
 import Link from "./Link.astro";
-import { type CollectionEntry, getEntry } from "astro:content";
+import { getEntry } from "astro:content";
+import type { CmsTag } from "@/lib/emdash";
 
 interface Props {
   slug: string;
-  tag?: CollectionEntry<"tags">;
+  tag?: CmsTag | { id?: string; slug?: string; data?: { name?: string } };
 }
 
-// Use destructuring for cleaner props access
 const { tag: providedTag, slug: propSlug } = Astro.props;
-
-// Rename variable to be more descriptive and use const
-const tag = (providedTag ?? await getEntry("tags", propSlug))!;
-const { slug, data } = tag;
+const legacyTag = providedTag ? undefined : await getEntry("tags", propSlug);
+const tag = providedTag ?? legacyTag;
+const slug = ("slug" in tag! && tag!.slug) || ("id" in tag! && tag!.id) || propSlug;
+const name = "name" in tag! ? tag!.name : tag?.data?.name ?? slug;
 ---
 
 <Link
@@ -27,5 +27,5 @@ const { slug, data } = tag;
     "dark:hover:text-primary-400"
   ]}
 >
-  {data.name}
+  {name}
 </Link>

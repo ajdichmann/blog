@@ -1,10 +1,10 @@
 ---
 import "@/styles/global.css";
 import { SITE_METADATA } from "@/consts";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import "@fontsource/onest";
 import { SEO } from "astro-seo";
-import { getEntry, type CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
 import Favicon from "@/assets/favicon.svg";
 import { getImage } from "astro:assets";
 import Analytics from "./Analytics.astro";
@@ -21,7 +21,7 @@ interface Props {
     authors: string[];
     authorTwitter?: string;
     tags: string[];
-    cover?: CollectionEntry<"blog">["data"]["cover"];
+    cover?: { src?: string; alt?: string; width?: number; height?: number };
   };
 }
 
@@ -44,12 +44,15 @@ const favicon16 = await getImage({ src: Favicon, width: 16, height: 16 });
 
 // Optimize open graph image
 let openGraphImage;
-if (article?.cover) {
-  openGraphImage = await getImage({
-    src: article.cover,
-    width: 1200,
-    height: 630,
-  });
+if (article?.cover?.src) {
+  openGraphImage = {
+    src: article.cover.src,
+    options: {
+      format: "png",
+      width: article.cover.width ?? 1200,
+      height: article.cover.height ?? 630,
+    },
+  };
 } else {
   const importedOgImage = await import(`../assets/og-image.png`).then(
     (m) => m.default
@@ -145,5 +148,5 @@ const isProduction = import.meta.env.PROD;
     }}
   />
   {isProduction && <Analytics />}
-  <ViewTransitions />
+  <ClientRouter />
 </head>

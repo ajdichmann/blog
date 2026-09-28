@@ -2,6 +2,15 @@
 dist/
 # generated types
 .astro/
+.emdash/*
+!.emdash/seed.json
+.wrangler/
+uploads/
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
 
 # dependencies
 node_modules/

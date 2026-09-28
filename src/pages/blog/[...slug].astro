@@ -1,19 +1,27 @@
 ---
-import {getCollection} from 'astro:content';
-import {excludeDrafts} from "@/functions";
 import PostLayout from "@/layouts/PostLayout.astro";
 import SimpleLayout from "@/layouts/SimplePostLayout.astro";
-export const prerender = true;
-export async function getStaticPaths() {
-  const posts = await getCollection('blog', excludeDrafts);
-  if (!posts) return [];
-  return posts.map((post, index) => ({
-    params: {slug: post.slug},
-    props: {post, next: posts[index + 1], prev: posts[index - 1]},
-  }));
+import { decodeSlug } from "emdash";
+import { getPostBySlug, getPostNeighbors } from "@/lib/emdash";
+
+export const prerender = false;
+
+const slug = decodeSlug(Astro.params.slug);
+if (!slug) {
+  return Astro.redirect("/404");
 }
 
-const postLayout = Astro.props.post.data.postLayout;
+const [{ post, cacheHint }, { next, prev }] = await Promise.all([
+  getPostBySlug(slug),
+  getPostNeighbors(slug),
+]);
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+const postLayout = post.data.post_layout;
 ---
 
-{postLayout === 'simple' ?<SimpleLayout {...Astro.props}/> :<PostLayout {...Astro.props}/>}
+{postLayout === 'simple' ? <SimpleLayout {post} {next} {prev} /> : <PostLayout {post} {next} {prev} />}
