@@ -1,35 +1,17 @@
 ---
 import Announcement from './Announcement.astro';
-import { SITE_METADATA } from '../consts';
-import { getAllPosts } from "@/lib/emdash";
+import { HOMEPAGE_DEFAULTS, type CmsHomepage, type CmsPost } from "@/lib/emdash";
 
-// Add props for better component reusability
 interface Props {
-  title?: string;
-  subtitle?: string;
-  showAnnouncement?: boolean;
-  calendly?: string;
-  blogPost?: {
-    title: string;
-    url: string;
-    ctatext: string;
-  };
+  homepage?: CmsHomepage;
+  latestPost?: CmsPost;
 }
 
-// Get the latest blog post
-const latestPost = await getAllPosts(1).then(({ posts }) => posts[0]);
-
-const { 
-  title = "AJ Dichmann",
-  subtitle = "Digital Marketing and SEO Consulting in Texas with Globe Runner",
-  showAnnouncement = true,
-  calendly = SITE_METADATA.calendly,
-  blogPost = latestPost ? {
-    title: "Read my newest blog post!",
-    url: `/blog/${latestPost.id}/`,
-    ctatext: "Read blog"
-  } : undefined
-} = Astro.props;
+const { homepage = HOMEPAGE_DEFAULTS, latestPost } = Astro.props;
+const announcementUrl =
+  homepage.announcementUrl || (latestPost ? `/blog/${latestPost.id}/` : undefined);
+const titleWords = homepage.title.trim().split(/\s+/);
+const [titleFirst, titleSecond, ...titleRest] = titleWords;
 ---
 
 <section class="bg-white dark:bg-gray-900 dark:text-white relative" aria-label="Hero section">
@@ -40,11 +22,11 @@ const {
         </div>
         
         <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-24">
-            {showAnnouncement && blogPost && 
+            {homepage.showAnnouncement && announcementUrl && 
                 <Announcement 
-                    blogTitle={blogPost.title}
-                    url={blogPost.url}
-                    ctatext={blogPost.ctatext}
+                    blogTitle={homepage.announcementTitle}
+                    url={announcementUrl}
+                    ctatext={homepage.announcementCta}
                     className="bg-primary-600/10 text-primary-600 dark:text-primary-400 ring-primary-600/10"
                 />
             }
@@ -52,21 +34,21 @@ const {
             <div class="text-center">
                 <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white">
                     <span class="sr-only">Welcome to the website of </span>
-                    {title.split(' ')[0]} <span class="text-orange-600 dark:text-orange-500">{title.split(' ')[1]}</span>
+                    {titleFirst}{titleSecond && <> <span class="text-orange-600 dark:text-orange-500">{titleSecond}</span></>}{titleRest.length > 0 && ` ${titleRest.join(" ")}`}
                 </h1>
-                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-white">{subtitle}</p>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-white">{homepage.subtitle}</p>
                 
                 <div class="mt-10 flex items-center justify-center gap-x-6">
                     <a 
-                        href="/schedule/" 
+                        href={homepage.primaryCtaUrl} 
                         class="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600" 
-                        aria-label="Schedule a call with AJ Dichmann">
-                        Schedule Call
+                        aria-label={homepage.primaryCtaLabel}>
+                        {homepage.primaryCtaLabel}
                     </a>
                     <a 
-                        href="/blog/" 
+                        href={homepage.secondaryCtaUrl} 
                         class="text-sm font-semibold leading-6 text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400">
-                        Blog<span aria-hidden="true">→</span>
+                        {homepage.secondaryCtaLabel}<span aria-hidden="true">→</span>
                     </a>
                 </div>
             </div>
