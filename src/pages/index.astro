@@ -6,30 +6,31 @@ import ListPostCover from "@/components/ListPostCover.astro";
 import Tag from "@/components/Tag.astro";
 import { useTranslations } from "@/i18n";
 import HeroSection from "@/components/HeroSection.astro";
-import { getAllPosts, type CmsPost } from "@/lib/emdash";
+import { getAllPosts, getHomepage, mergeCacheHints, type CmsPost } from "@/lib/emdash";
 
 export const prerender = false;
 
 const t = useTranslations();
 
-const { posts, cacheHint } = await getAllPosts(ITEMS_PER_PAGE);
-if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+const [{ posts, cacheHint: postsHint }, { homepage, cacheHint: homepageHint }] =
+  await Promise.all([getAllPosts(ITEMS_PER_PAGE), getHomepage()]);
+if (Astro.cache?.enabled) Astro.cache.set(mergeCacheHints(postsHint, homepageHint));
 ---
 
 <RootLayout
-  title={t("siteMetadata.title")}
-  description={t("siteMetadata.description")}
+  title={homepage.seoTitle}
+  description={homepage.seoDescription}
 >
   <div class="divide-y divide-gray-200 dark:divide-gray-700">
    
-    <HeroSection/>
+    <HeroSection homepage={homepage} latestPost={posts[0]} />
 
     <div class="space-y-2 pb-8 pt-6 md:space-y-5 relative z-10">
       <h2 class="text-lg font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl md:leading-14">
-        {t("pages.home.latestPosts")}
+        {homepage.latestHeading}
       </h2>
       <p class="text-lg leading-7 text-gray-600 dark:text-gray-400">
-        {t("siteMetadata.description")}
+        {homepage.latestDescription}
       </p>
     </div>
 

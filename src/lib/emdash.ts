@@ -41,7 +41,18 @@ export type CmsPage<T> = {
 };
 
 function asString(value: unknown, fallback = "") {
-  return typeof value === "string" ? value : fallback;
+  return typeof value === "string" && value.trim() ? value : fallback;
+}
+
+function asOptionalString(value: unknown) {
+  return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+function asBoolean(value: unknown, fallback: boolean) {
+  if (typeof value === "boolean") return value;
+  if (value === 1 || value === "1" || value === "true") return true;
+  if (value === 0 || value === "0" || value === "false") return false;
+  return fallback;
 }
 
 function asDate(value: unknown) {
@@ -107,6 +118,90 @@ export function normalizePost(entry: any): CmsPost {
       tags: terms,
       draft: false,
     },
+  };
+}
+
+export type CmsHomepage = {
+  title: string;
+  subtitle: string;
+  showAnnouncement: boolean;
+  announcementTitle: string;
+  announcementCta: string;
+  announcementUrl?: string;
+  primaryCtaLabel: string;
+  primaryCtaUrl: string;
+  secondaryCtaLabel: string;
+  secondaryCtaUrl: string;
+  latestHeading: string;
+  latestDescription: string;
+  seoTitle: string;
+  seoDescription: string;
+};
+
+export const HOMEPAGE_DEFAULTS: CmsHomepage = {
+  title: "AJ Dichmann",
+  subtitle: "Digital Marketing and SEO Consulting in Texas with Globe Runner",
+  showAnnouncement: true,
+  announcementTitle: "Read my newest blog post!",
+  announcementCta: "Read blog",
+  primaryCtaLabel: "Schedule Call",
+  primaryCtaUrl: "/schedule/",
+  secondaryCtaLabel: "Blog",
+  secondaryCtaUrl: "/blog/",
+  latestHeading: "Latest posts",
+  latestDescription: "Writing about digital marketing",
+  seoTitle: "AJ Dichmann",
+  seoDescription: "Writing about digital marketing",
+};
+
+export async function getHomepage() {
+  try {
+    const { entry, error, cacheHint } = await getEmDashEntry("homepage", "home");
+    if (error || !entry) {
+      return { homepage: HOMEPAGE_DEFAULTS, cacheHint };
+    }
+
+    const data = entry.data ?? {};
+    return {
+      homepage: {
+        title: asString(data.title, HOMEPAGE_DEFAULTS.title),
+        subtitle: asString(data.subtitle, HOMEPAGE_DEFAULTS.subtitle),
+        showAnnouncement: asBoolean(data.show_announcement, HOMEPAGE_DEFAULTS.showAnnouncement),
+        announcementTitle: asString(data.announcement_title, HOMEPAGE_DEFAULTS.announcementTitle),
+        announcementCta: asString(data.announcement_cta, HOMEPAGE_DEFAULTS.announcementCta),
+        announcementUrl: asOptionalString(data.announcement_url),
+        primaryCtaLabel: asString(data.primary_cta_label, HOMEPAGE_DEFAULTS.primaryCtaLabel),
+        primaryCtaUrl: asString(data.primary_cta_url, HOMEPAGE_DEFAULTS.primaryCtaUrl),
+        secondaryCtaLabel: asString(data.secondary_cta_label, HOMEPAGE_DEFAULTS.secondaryCtaLabel),
+        secondaryCtaUrl: asString(data.secondary_cta_url, HOMEPAGE_DEFAULTS.secondaryCtaUrl),
+        latestHeading: asString(data.latest_heading, HOMEPAGE_DEFAULTS.latestHeading),
+        latestDescription: asString(data.latest_description, HOMEPAGE_DEFAULTS.latestDescription),
+        seoTitle: asString(data.seo_title, HOMEPAGE_DEFAULTS.seoTitle),
+        seoDescription: asString(data.seo_description, HOMEPAGE_DEFAULTS.seoDescription),
+      },
+      cacheHint,
+    };
+  } catch {
+    return { homepage: HOMEPAGE_DEFAULTS, cacheHint: undefined };
+  }
+}
+
+export function mergeCacheHints(
+  ...hints: Array<{ tags?: string[]; lastModified?: Date } | undefined>
+) {
+  const tags = new Set<string>();
+  let lastModified: Date | undefined;
+
+  for (const hint of hints) {
+    for (const tag of hint?.tags ?? []) tags.add(tag);
+    if (hint?.lastModified && (!lastModified || hint.lastModified > lastModified)) {
+      lastModified = hint.lastModified;
+    }
+  }
+
+  return {
+    ...(tags.size > 0 ? { tags: [...tags] } : {}),
+    ...(lastModified ? { lastModified } : {}),
   };
 }
 
