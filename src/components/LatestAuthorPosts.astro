@@ -1,6 +1,5 @@
 ---
-import { getCollection } from "astro:content";
-import { sortBlogPosts } from "../functions";
+import { getAllPosts } from "@/lib/emdash";
 import { ITEMS_PER_PAGE } from "../consts";
 import Link from "./Link.astro";
 import { useTranslations } from "@/i18n";
@@ -21,17 +20,12 @@ const t = useTranslations();
 // Extract post fetching logic to a separate async function
 async function getAuthorPosts(authorSlug: string): Promise<BlogPost[]> {
   try {
-    const posts = await getCollection(
-      "blog",
-      ({ data: { authors, draft } }) => 
-        !draft && authors.some((author: { slug: string }) => author.slug === authorSlug)
-    );
-    
-    return sortBlogPosts(posts)
+    const { posts } = await getAllPosts();
+    return posts
       .slice(0, ITEMS_PER_PAGE)
       .map((post) => ({
         title: post.data.title,
-        slug: post.slug
+        slug: post.id
       }));
   } catch (error) {
     console.error(`Failed to fetch posts for author ${authorSlug}:`, error);

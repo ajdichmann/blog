@@ -1,0 +1,40 @@
+---
+import { mediaSrc } from "@/lib/emdash";
+
+type MediaAsset = {
+  src?: string;
+  url?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  id?: string;
+  meta?: { storageKey?: string };
+};
+
+const props = Astro.props as {
+  node?: { asset?: MediaAsset; alt?: string; caption?: string };
+  asset?: MediaAsset;
+  alt?: string;
+  caption?: string;
+};
+const node = props.node ?? props;
+const src = mediaSrc(node.asset);
+const alt = node.alt || node.asset?.alt || "";
+const caption = node.caption ?? "";
+---
+
+{
+  src && (
+    <figure>
+      <img
+        src={src}
+        alt={alt}
+        width={node.asset?.width}
+        height={node.asset?.height}
+        class="rounded-lg"
+        loading="lazy"
+      />
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
+  )
+}

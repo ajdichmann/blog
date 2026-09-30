@@ -1,13 +1,12 @@
 ---
-import { Image } from "astro:assets";
 import FormattedDate from "./FormattedDate.astro";
-import type { CollectionEntry } from "astro:content";
 import { useTranslations } from "@/i18n";
+import type { CmsPost } from "@/lib/emdash";
 
 const t = useTranslations();
 
 type Props = {
-  post: CollectionEntry<"blog">;
+  post: CmsPost;
   class?: string;
 };
 
@@ -18,13 +17,12 @@ const {
 
 <div class="relative h-[200px] overflow-hidden bg-primary-50 dark:bg-opacity-10 rounded-lg" class:list={Astro.props.class}>
   {
-    cover && (
-      <Image
-        src={cover}
-        alt={title}
-        widths={[300, 600, 1000]}
-        sizes="(max-width: 767px) 100vw, 300px"
+    cover?.src && (
+      <img
+        src={cover.src}
+        alt={cover.alt ?? title}
         class="absolute inset-0 w-full h-full z-0"
+        loading="lazy"
       />
     )
   }

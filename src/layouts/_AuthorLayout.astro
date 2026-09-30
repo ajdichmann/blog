@@ -1,13 +1,13 @@
 ---
 import { Image } from "astro:assets";
-import { type CollectionEntry, getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 import SocialIcon from "@/components/social-icons/index.astro";
 import RootLayout from "./RootLayout.astro";
 import Link from "../components/Link.astro";
-import { sortBlogPosts } from "../functions";
 import { ITEMS_PER_PAGE } from "../consts";
 import { useTranslations } from "@/i18n";
+import { getAllPosts } from "@/lib/emdash";
 
 const t = useTranslations();
 
@@ -29,18 +29,9 @@ const {
 } = Astro.props.content;
 
 // Get the author's posts
-const authorPosts = await getCollection(
-  "blog",
-  ({ data: { authors, draft } }) => {
-    return !draft && authors.some((author) => author.slug === Astro.props.slug);
-  }
-)
-  .then(sortBlogPosts)
-  .then((posts) => {
-    return posts.slice(0, ITEMS_PER_PAGE).map((post) => {
-      return { title: post.data.title, slug: post.slug };
-    });
-  });
+const authorPosts = await getAllPosts()
+  .then(({ posts }) => posts.slice(0, ITEMS_PER_PAGE))
+  .then((posts) => posts.map((post) => ({ title: post.data.title, slug: post.id })));
 ---
 
 <RootLayout title={name} description={shortBio}>

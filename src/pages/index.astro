@@ -1,40 +1,42 @@
 ---
-import { getCollection } from "astro:content";
 import { ITEMS_PER_PAGE } from "@/consts";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Link from "@/components/Link.astro";
 import ListPostCover from "@/components/ListPostCover.astro";
 import Tag from "@/components/Tag.astro";
-import { excludeDrafts, sortBlogPosts } from "@/functions";
 import { useTranslations } from "@/i18n";
 import HeroSection from "@/components/HeroSection.astro";
-import type { CollectionEntry } from "astro:content";
+import { getAllPosts, getHomepage, mergeCacheHints, type CmsPost } from "@/lib/emdash";
+
+export const prerender = false;
 
 const t = useTranslations();
 
-const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
+const [{ posts, cacheHint: postsHint }, { homepage, cacheHint: homepageHint }] =
+  await Promise.all([getAllPosts(ITEMS_PER_PAGE), getHomepage()]);
+if (Astro.cache?.enabled) Astro.cache.set(mergeCacheHints(postsHint, homepageHint));
 ---
 
 <RootLayout
-  title={t("siteMetadata.title")}
-  description={t("siteMetadata.description")}
+  title={homepage.seoTitle}
+  description={homepage.seoDescription}
 >
   <div class="divide-y divide-gray-200 dark:divide-gray-700">
    
-    <HeroSection/>
+    <HeroSection homepage={homepage} latestPost={posts[0]} />
 
     <div class="space-y-2 pb-8 pt-6 md:space-y-5 relative z-10">
       <h2 class="text-lg font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl md:leading-14">
-        {t("pages.home.latestPosts")}
+        {homepage.latestHeading}
       </h2>
       <p class="text-lg leading-7 text-gray-600 dark:text-gray-400">
-        {t("siteMetadata.description")}
+        {homepage.latestDescription}
       </p>
     </div>
 
     <ul class="divide-y divide-gray-200 dark:divide-gray-700">
       {!posts.length && t("pages.home.noPosts")}
-      {posts.slice(0, ITEMS_PER_PAGE).map((post: CollectionEntry<'blog'>) => (
+      {posts.slice(0, ITEMS_PER_PAGE).map((post: CmsPost) => (
         <li class="py-12">
           <article class="space-y-2 xl:grid xl:grid-cols-4 xl:gap-x-4 xl:space-y-0 xl:items-stretch">
             <ListPostCover {post} class="xl:col-span-1" />
@@ -43,15 +45,15 @@ const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
                 <div>
                   <h2 class="text-2xl font-bold leading-8 tracking-tight">
                     <Link
-                      href={`/blog/${post.slug}/`}
+                      href={`/blog/${post.id}/`}
                       class="text-gray-900 dark:text-gray-100"
                     >
                       {post.data.title}
                     </Link>
                   </h2>
                   <div class="flex flex-wrap">
-                    {post.data.tags.map((tag: { slug: string }) => (
-                      <Tag slug={tag.slug} />
+                    {post.data.tags.map((tag) => (
+                      <Tag tag={tag} slug={tag.slug} />
                     ))}
                   </div>
                 </div>
@@ -61,7 +63,7 @@ const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
               </div>
               <div class="text-base font-medium leading-6">
                 <Link
-                  href={`/blog/${post.slug}/`}
+                  href={`/blog/${post.id}/`}
                   class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                   aria-label={t('pages.home.readMoreAbout', {title: post.data.title})}
                 >

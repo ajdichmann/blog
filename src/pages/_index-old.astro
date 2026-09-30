@@ -1,19 +1,17 @@
 ---
-import { getCollection } from "astro:content";
-
 import { ITEMS_PER_PAGE } from "@/consts";
 import RootLayout from "@/layouts/RootLayout.astro";
 import Link from "@/components/Link.astro";
 import ListPostCover from "@/components/ListPostCover.astro";
 import Tag from "@/components/Tag.astro";
-import { excludeDrafts, sortBlogPosts } from "@/functions";
 import { useTranslations } from "@/i18n";
 import Announcement from "@/components/Announcement.astro";
 import ClientLogos from "@/components/ClientLogos.astro"
+import { getAllPosts } from "@/lib/emdash";
 
 const t = useTranslations();
 
-const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
+const { posts } = await getAllPosts();
 ---
 
 <RootLayout
@@ -70,15 +68,15 @@ const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
                       <div>
                         <h2 class="text-2xl font-bold leading-8 tracking-tight">
                           <Link
-                            href={`/blog/${post.slug}/`}
+                            href={`/blog/${post.id}/`}
                             class="text-gray-900 dark:text-gray-100"
                           >
                             {title}
                           </Link>
                         </h2>
                         <div class="flex flex-wrap">
-                          {tags.map(({ slug }) => (
-                            <Tag slug={slug} />
+                          {tags.map((tag) => (
+                            <Tag tag={tag} slug={tag.slug} />
                           ))}
                         </div>
                       </div>
@@ -88,7 +86,7 @@ const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
                     </div>
                     <div class="text-base font-medium leading-6">
                       <Link
-                        href={`/blog/${post.slug}/`}
+                        href={`/blog/${post.id}/`}
                         class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                         aria-label={t('pages.home.readMoreAbout', {title})}
                       >

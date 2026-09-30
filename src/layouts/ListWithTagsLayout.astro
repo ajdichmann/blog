@@ -1,14 +1,11 @@
 ---
-import { getCollection } from "astro:content";
-import { type CollectionEntry } from "astro:content";
-
 import Link from "../components/Link.astro";
 import Pagination from "../components/Pagination.astro";
 import RootLayout from "./RootLayout.astro";
 import Tag from "../components/Tag.astro";
 import FormattedDate from "../components/FormattedDate.astro";
-import type { Page } from "astro";
 import { useTranslations } from "@/i18n";
+import { getAllTagsWithCounts, type CmsPage, type CmsPost } from "@/lib/emdash";
 
 const t = useTranslations();
 
@@ -16,18 +13,12 @@ interface Props {
   title: string;
   description: string;
   titleTemplate?: string;
-  page: Page<CollectionEntry<"blog">>;
+  page: CmsPage<CmsPost>;
   robots?: string;
 }
 
-const tags = await getCollection("tags");
-const posts = await getCollection("blog");
-
-function tagCount(slug: CollectionEntry<"tags">["slug"]) {
-  if (!posts) return 0;
-  return posts.filter((post) => post.data.tags.some((tag) => tag.slug === slug))
-    .length;
-}
+const { tags, cacheHint } = await getAllTagsWithCounts();
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 function isSamePath(path: string) {
   return Astro.url.pathname === path;
@@ -73,19 +64,19 @@ const isBlogPage = Astro.url.pathname.startsWith("/blog");
           }
           <ul>
             {
-              tags.map(({ slug, data }) => (
+              tags.map((tag) => (
                 <li class="my-3">
-                  {isSamePath(`/tag/${slug}`) ? (
+                  {isSamePath(`/tags/${tag.slug}/`) ? (
                     <h3 class="inline py-2 px-3 uppercase text-sm font-bold text-primary-500">
-                      {`${data.name} (${tagCount(slug)})`}
+                      {`${tag.name} (${tag.count ?? 0})`}
                     </h3>
                   ) : (
                     <Link
-                      href={`/tags/${slug}/`}
+                      href={`/tags/${tag.slug}/`}
                       class="py-2 px-3 uppercase text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500"
-                      aria-label={`View posts tagged ${data.name}`}
+                      aria-label={`View posts tagged ${tag.name}`}
                     >
-                      {`${data.name} (${tagCount(slug)})`}
+                      {`${tag.name} (${tag.count ?? 0})`}
                     </Link>
                   )}
                 </li>
@@ -97,7 +88,7 @@ const isBlogPage = Astro.url.pathname.startsWith("/blog");
       <div>
         <ul>
           {
-            page.data.map(({ slug, data: { date, title, summary, tags } }) => (
+            page.data.map(({ id, data: { date, title, summary, tags } }) => (
               <li class="py-5">
                 <article class="space-y-2 flex flex-col xl:space-y-0">
                   <dl>
@@ -110,15 +101,15 @@ const isBlogPage = Astro.url.pathname.startsWith("/blog");
                     <div>
                       <h3 class="text-2xl font-bold leading-8 tracking-tight">
                         <Link
-                          href={`/blog/${slug}/`}
+                          href={`/blog/${id}/`}
                           class="text-gray-900 dark:text-gray-100"
                         >
                           {title}
                         </Link>
                       </h3>
                       <div class="flex flex-wrap">
-                        {tags.map(({ slug }) => (
-                          <Tag slug={slug} />
+                        {tags.map((tag) => (
+                          <Tag tag={tag} slug={tag.slug} />
                         ))}
                       </div>
                     </div>

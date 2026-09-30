@@ -1,28 +1,21 @@
 ---
-import { getCollection } from "astro:content";
-// import ListLayout from "@/layouts/ListLayout.astro";
-import { ITEMS_PER_PAGE } from "@/consts";
-import { sortBlogPosts, excludeDrafts } from "@/functions";
 import ListWithTagsLayout from "@/layouts/ListWithTagsLayout.astro";
-import type { Page, PaginateFunction } from "astro";
 import { useTranslations } from "@/i18n";
+import { getPostPage } from "@/lib/emdash";
 
-export const prerender = true;
+export const prerender = false;
 
 const t = useTranslations();
 
-interface Props {
-  page: Page;
+const pageParam = Astro.params.page;
+const currentPage = pageParam ? Number(pageParam) : 1;
+if (!Number.isInteger(currentPage) || currentPage < 1) {
+  return Astro.redirect("/404");
 }
 
-export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
-  const posts = await getCollection("blog", excludeDrafts).then(sortBlogPosts);
-  return paginate(posts, { 
-    pageSize: ITEMS_PER_PAGE
-  });
-}
+const { page, cacheHint } = await getPostPage(currentPage);
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
-const { page } = Astro.props;
 let titleTemplate = "";
 let robots;
 

@@ -1,12 +1,10 @@
 ---
 import { Image } from "astro:assets";
-import { type CollectionEntry, getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 import SocialIcon from "@/components/social-icons/index.astro";
 import RootLayout from "./RootLayout.astro";
 import Link from "../components/Link.astro";
-import { sortBlogPosts } from "../functions";
-import { ITEMS_PER_PAGE } from "../consts";
 import { useTranslations } from "@/i18n";
 import LatestAuthorPosts from "@/components/LatestAuthorPosts.astro";
 
@@ -30,20 +28,6 @@ const {
 } = Astro.props.content;
 
 const { slug } = Astro.props;
-
-// Get the author's posts
-const authorPosts = await getCollection(
-  "blog",
-  ({ data: { authors, draft } }) => {
-    return !draft && authors.some((author: { slug: string }) => author.slug === Astro.props.slug);
-  }
-)
-  .then(sortBlogPosts)
-  .then((posts) => {
-    return posts.slice(0, ITEMS_PER_PAGE).map((post) => {
-      return { title: post.data.title, slug: post.slug };
-    });
-  });
 ---
 
 <RootLayout title={name} description={shortBio}>

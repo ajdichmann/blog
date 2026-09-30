@@ -1,7 +1,5 @@
-import type { CollectionEntry } from "astro:content";
-
-type BlogPost = CollectionEntry<'blog'>;
 type SortDirection = 'asc' | 'desc';
+type SortablePost = { data: Record<string, unknown> };
 
 /**
  * Filter blog posts by published date and order them.
@@ -12,10 +10,10 @@ type SortDirection = 'asc' | 'desc';
  * @returns Collection of blog posts sorted by the specified criteria
  */
 export const sortBlogPosts = (
-    posts: BlogPost[] | null,
+    posts: SortablePost[] | null,
     direction: SortDirection = 'desc',
-    sortBy: keyof BlogPost['data'] = 'date'
-): BlogPost[] => {
+    sortBy: string = 'date'
+): SortablePost[] => {
     if (!posts?.length) return [];
 
     return [...posts].sort((a, b) => {
@@ -44,7 +42,7 @@ export const sortBlogPosts = (
  * @returns True if the post should be included
  */
 export const excludeDrafts = (
-    { data }: BlogPost,
+    { data }: SortablePost,
     includeDrafts: boolean = true
 ): boolean => {
     if (import.meta.env.PROD) {
@@ -52,17 +50,4 @@ export const excludeDrafts = (
     }
     return includeDrafts || !data.draft;
 };
-
-// Example usage:
-const posts: BlogPost[] = []; // Replace with your actual posts data
-const newestFirst = sortBlogPosts(posts);
-
-// Sort posts by date (ascending)
-const oldestFirst = sortBlogPosts(posts, 'asc');
-
-// Sort posts by title
-const byTitle = sortBlogPosts(posts, 'desc', 'title');
-
-// Filter drafts in development
-const publishedPosts = posts.filter(post => excludeDrafts(post, false));
 

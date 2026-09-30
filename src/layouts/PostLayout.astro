@@ -4,7 +4,7 @@ import SectionContainer from "../components/SectionContainer.astro";
 import PageTitle from "../components/PageTitle.astro";
 import Link from "../components/Link.astro";
 import RootLayout from "./RootLayout.astro";
-import { type CollectionEntry, getEntries } from "astro:content";
+import { getEntry } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
 import Tag from "../components/Tag.astro";
 import ScrollTopAndComments from "@/solid/ScrollTopAndComments.tsx";
@@ -14,32 +14,57 @@ import SocialShareButtons from "../components/social-icons/SocialShareButtons.as
 import AuthorBlock from "../components/AuthorBlock.astro";
 import { POST_METADATA } from "@/consts";
 import { useTranslations } from "@/i18n";
+import { PortableText } from "emdash/ui";
+import type { CmsPost } from "@/lib/emdash";
+import PortableFigure from "@/components/portable/PortableFigure.astro";
+import PortableOrangeAlert from "@/components/portable/PortableOrangeAlert.astro";
+import PortableCode from "@/components/portable/PortableCode.astro";
+import PortableBreak from "@/components/portable/PortableBreak.astro";
 
 const t = useTranslations();
 
 interface Props {
-  post: CollectionEntry<"blog">;
-  next?: CollectionEntry<"blog">;
-  prev?: CollectionEntry<"blog">;
+  post: CmsPost;
+  next?: CmsPost;
+  prev?: CmsPost;
 }
 
 const { post, next, prev } = Astro.props as Props;
-const authors: CollectionEntry<"authors">[] = await getEntries(
-  post.data.authors
-);
-const tags: CollectionEntry<"tags">[] = await getEntries(post.data.tags);
-const related: CollectionEntry<"blog">[] = await getEntries(post.data.related);
+const defaultAuthor = await getEntry("authors", "default");
+const authors = defaultAuthor ? [defaultAuthor] : [];
+const tags = post.data.tags;
+const related: CmsPost[] = [];
+
+const headings = post.data.content
+  .filter((block) => block._type === "block" && /^h[2-6]$/.test(String(block.style)))
+  .map((block) => {
+    const text = Array.isArray(block.children)
+      ? block.children.map((child: any) => child.text ?? "").join("")
+      : "";
+    return {
+      text,
+      depth: Number(String(block.style).replace("h", "")),
+      slug: text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+    };
+  });
+
+const portableComponents = {
+  type: {
+    figure: PortableFigure,
+    orangeAlert: PortableOrangeAlert,
+    code: PortableCode,
+    break: PortableBreak,
+  },
+};
 
 const articleOgDetails = {
   publishedTime: post.data.date,
   modifiedTime: post.data.lastmod,
   authors: authors.map(({ data }) => data.name),
   authorTwitter: authors.map(({ data }) => data.twitter).at(0),
-  tags: tags.map(({ data }) => data.name),
+  tags: tags.map((tag) => tag.name),
   cover: post.data.cover,
 };
-
-const { Content, headings } = await post.render();
 ---
 
 <RootLayout
@@ -182,7 +207,7 @@ const { Content, headings } = await post.render();
 
             <div class="prose dark:prose-invert prose-lg max-w-none pb-2 pt-10">
               <slot />
-              <Content />
+              <PortableText value={post.data.content} components={portableComponents} />
             </div>
             <!-- Author Block -->
             {authors.length > 0 && (
@@ -231,7 +256,7 @@ const { Content, headings } = await post.render();
                           {t('layouts.postLayout.previousPost')}
                         </h2>
                         <div class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${prev.slug}/`}>
+                          <Link href={`/blog/${prev.id}/`}>
                             {prev.data.title}
                           </Link>
                         </div>
@@ -243,7 +268,7 @@ const { Content, headings } = await post.render();
                           {t('layouts.postLayout.nextPost')}
                         </h2>
                         <div class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${next.slug}/`}>
+                          <Link href={`/blog/${next.id}/`}>
                             {next.data.title}
                           </Link>
                         </div>
@@ -261,7 +286,7 @@ const { Content, headings } = await post.render();
                     <ul class="flex flex-wrap gap-2 xl:space-x-0 xl:space-y-0">
                       {related.map((post) => (
                         <li class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${post.slug}/`}>
+                          <Link href={`/blog/${post.id}/`}>
                             {post.data.title}
                           </Link>
                         </li>

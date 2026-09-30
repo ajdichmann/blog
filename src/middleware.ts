@@ -1,26 +1,22 @@
 import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  // Temporarily disabled middleware
-  return next();
-  
-  /*
   const url = new URL(context.request.url);
-  
-  // If URL has a trailing slash and it's not the root path
-  if (url.pathname.length > 1 && url.pathname.endsWith('/')) {
-    // Remove the trailing slash
-    url.pathname = url.pathname.slice(0, -1);
-    
-    // Return a redirect to the non-trailing slash version
-    return new Response(null, {
-      status: 301,
-      headers: {
-        'Location': url.toString()
-      }
-    });
+  const { pathname } = url;
+  const method = context.request.method.toUpperCase();
+
+  const isEmDashPath = pathname.startsWith("/_emdash/");
+  const isFile = !isEmDashPath && (pathname.split("/").pop()?.includes(".") ?? false);
+  if (pathname.length > 1 && !pathname.endsWith("/") && !isFile) {
+    url.pathname = `${pathname}/`;
+    // 301 is fine for GET, but browsers convert POST+301 into GET and drop
+    // the body. EmDash's setup wizard POSTs /_emdash/api/setup without a
+    // trailing slash, so rewrite those requests internally instead.
+    if (method === "GET" || method === "HEAD") {
+      return context.redirect(url.toString(), 301);
+    }
+    return next(new Request(url, context.request));
   }
-  
+
   return next();
-  */
-}); 
+});

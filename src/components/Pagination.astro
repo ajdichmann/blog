@@ -1,12 +1,12 @@
 ---
-import type { Page } from "astro";
 import Link from "./Link.astro";
 import { useTranslations } from "@/i18n";
+import type { CmsPage } from "@/lib/emdash";
 
 const t = useTranslations();
 
 type Props = {
-  page: Page;
+  page: Pick<CmsPage<unknown>, "currentPage" | "lastPage" | "url">;
 };
 
 const {

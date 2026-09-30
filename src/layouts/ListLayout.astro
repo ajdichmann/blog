@@ -1,18 +1,16 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import type { Page } from "astro";
-
 import ListPostCover from "@/components/ListPostCover.astro";
 import Link from "../components/Link.astro";
 import Pagination from "../components/Pagination.astro";
 import RootLayout from "./RootLayout.astro";
 import Tag from "../components/Tag.astro";
+import type { CmsPage, CmsPost } from "@/lib/emdash";
 
 interface Props {
   title: string;
   description: string;
   titleTemplate?: string;
-  page: Page<CollectionEntry<"blog">>;
+  page: CmsPage<CmsPost>;
   robots?: string;
 }
 
@@ -41,7 +39,7 @@ const hasDefaultSlot = Astro.slots.has("default");
       {
         page.data.map((post) => {
           const {
-            slug,
+            id,
             data: { title, summary, tags },
           } = post;
           return (
@@ -52,15 +50,15 @@ const hasDefaultSlot = Astro.slots.has("default");
                   <div>
                     <h3 class="text-2xl font-bold leading-8 tracking-tight">
                       <Link
-                        href={`/blog/${slug}/`}
+                        href={`/blog/${id}/`}
                         class="text-gray-900 dark:text-gray-100"
                       >
                         {title}
                       </Link>
                     </h3>
                     <div class="flex flex-wrap">
-                      {tags.map(({ slug }) => (
-                        <Tag slug={slug} />
+                      {tags.map((tag) => (
+                        <Tag tag={tag} slug={tag.slug} />
                       ))}
                     </div>
                   </div>
