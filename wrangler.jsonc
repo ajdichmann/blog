@@ -7,8 +7,8 @@
   "workers_dev": true,
   "routes": [
     {
-      "pattern": "www.ajdichmann.com",
-      "custom_domain": true
+      "pattern": "www.ajdichmann.com/*",
+      "zone_name": "ajdichmann.com"
     }
   ],
   "d1_databases": [
