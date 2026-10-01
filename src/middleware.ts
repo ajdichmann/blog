@@ -1,21 +1,23 @@
 import { defineMiddleware } from "astro:middleware";
 
-export const onRequest = defineMiddleware(async (context, next) => {
-  const url = new URL(context.request.url);
-  const { pathname } = url;
-  const method = context.request.method.toUpperCase();
+// Astro runs with trailingSlash: "ignore" so EmDash's admin and API routes
+// (/_emdash/*) match however the admin client calls them. Public pages are
+// still canonicalized to a trailing slash here, for GET/HEAD only, so form and
+// API POSTs are never redirected (browsers turn POST+301 into a body-less GET).
+export const onRequest = defineMiddleware((context, next) => {
+  const { pathname, search } = context.url;
+  const method = context.request.method;
 
-  const isEmDashPath = pathname.startsWith("/_emdash/");
-  const isFile = !isEmDashPath && (pathname.split("/").pop()?.includes(".") ?? false);
-  if (pathname.length > 1 && !pathname.endsWith("/") && !isFile) {
-    url.pathname = `${pathname}/`;
-    // 301 is fine for GET, but browsers convert POST+301 into GET and drop
-    // the body. EmDash's setup wizard POSTs /_emdash/api/setup without a
-    // trailing slash, so rewrite those requests internally instead.
-    if (method === "GET" || method === "HEAD") {
-      return context.redirect(url.toString(), 301);
-    }
-    return next(new Request(url, context.request));
+  const isInternal = pathname.startsWith("/_"); // /_emdash, /_astro, /_image, /_actions
+  const isFile = pathname.split("/").pop()?.includes(".") ?? false;
+
+  if (
+    (method === "GET" || method === "HEAD") &&
+    !isInternal &&
+    !isFile &&
+    !pathname.endsWith("/")
+  ) {
+    return context.redirect(`${pathname}/${search}`, 301);
   }
 
   return next();

@@ -13,7 +13,9 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   prefetch: true,
   site: SITE_METADATA.siteUrl,
-  trailingSlash: "always",
+  // "ignore" so EmDash's injected /_emdash routes match with or without a
+  // trailing slash; public pages are normalized to "/" in src/middleware.ts.
+  trailingSlash: "ignore",
   integrations: [
     mdx(),
     sitemap({
