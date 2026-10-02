@@ -39,7 +39,7 @@ const [titleFirst, titleSecond, ...titleRest] = titleWords;
                     <span class="sr-only">Welcome to the website of </span>
                     <span {...edit.title}>{titleFirst}{titleSecond && <> <span class="text-orange-600 dark:text-orange-500">{titleSecond}</span></>}{titleRest.length > 0 && ` ${titleRest.join(" ")}`}</span>
                 </h1>
-                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-white" {...edit.subtitle}>{homepage.subtitle}</p>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-white" {...edit.intro}>{homepage.subtitle}</p>
                 
                 <div class="mt-10 flex items-center justify-center gap-x-6">
                     <a 

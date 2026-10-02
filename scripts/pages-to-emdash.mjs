@@ -322,6 +322,17 @@ export const PAGES_COLLECTION = {
     { slug: "image_alt", label: "Hero image alt text", type: "string" },
     { slug: "cta_label", label: "Button label", type: "string" },
     { slug: "content", label: "Content", type: "portableText", searchable: true },
+    // Homepage ("home" entry) only.
+    { slug: "show_announcement", label: "Show announcement (homepage)", type: "boolean", defaultValue: true },
+    { slug: "announcement_title", label: "Announcement text (homepage)", type: "string" },
+    { slug: "announcement_cta", label: "Announcement button (homepage)", type: "string" },
+    { slug: "announcement_url", label: "Announcement URL (homepage)", type: "string" },
+    { slug: "primary_cta_label", label: "Primary button label (homepage)", type: "string" },
+    { slug: "primary_cta_url", label: "Primary button URL (homepage)", type: "string" },
+    { slug: "secondary_cta_label", label: "Secondary button label (homepage)", type: "string" },
+    { slug: "secondary_cta_url", label: "Secondary button URL (homepage)", type: "string" },
+    { slug: "latest_heading", label: "Latest posts heading (homepage)", type: "string" },
+    { slug: "latest_description", label: "Latest posts description (homepage)", type: "text" },
     { slug: "faq_title", label: "FAQ heading", type: "string" },
     { slug: "faqs", label: "FAQs (list of {question, answer})", type: "json" },
     { slug: "seo_title", label: "SEO title", type: "string", required: true },
@@ -329,10 +340,27 @@ export const PAGES_COLLECTION = {
   ],
 };
 
+// The homepage lives in the same collection as the "home" entry.
+const HOME_PAGE = {
+  title: "AJ Dichmann",
+  intro: "Digital Marketing and SEO Consulting in Texas with Globe Runner",
+  show_announcement: true,
+  announcement_title: "Read my newest blog post!",
+  announcement_cta: "Read blog",
+  primary_cta_label: "Schedule Call",
+  primary_cta_url: "/schedule/",
+  secondary_cta_label: "Blog",
+  secondary_cta_url: "/blog/",
+  latest_heading: "Latest posts",
+  latest_description: "Writing about digital marketing",
+  seo_title: "AJ Dichmann",
+  seo_description: "Writing about digital marketing",
+};
+
 async function main() {
   const dry = process.argv.includes("--dry");
   const i18n = await loadI18n();
-  const pages = {};
+  const pages = { home: HOME_PAGE };
   for (const slug of PAGE_SLUGS) {
     pages[slug] = await extractPage(slug, i18n);
     const blocks = pages[slug].content ?? [];
@@ -345,7 +373,8 @@ async function main() {
   await writeFile(dataPath, JSON.stringify(pages, null, 2) + "\n");
 
   const seed = JSON.parse(await readFile(seedPath, "utf8"));
-  seed.collections = seed.collections.filter((c) => c.slug !== "pages");
+  seed.collections = seed.collections.filter((c) => c.slug !== "pages" && c.slug !== "homepage");
+  delete seed.content.homepage;
   seed.collections.push(PAGES_COLLECTION);
   seed.content.pages = Object.entries(pages).map(([slug, data]) => ({
     id: `page-${slug}`,

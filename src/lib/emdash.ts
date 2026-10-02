@@ -129,6 +129,7 @@ export type CmsHomepage = {
   /** Field-level edit annotations, keyed by CMS field name. Empty outside edit mode. */
   edit?: Record<string, EditAttrs | undefined>;
   title: string;
+  /** Stored in the "intro" field. */
   subtitle: string;
   showAnnouncement: boolean;
   announcementTitle: string;
@@ -162,7 +163,8 @@ export const HOMEPAGE_DEFAULTS: CmsHomepage = {
 
 export async function getHomepage() {
   try {
-    const { entry, error, cacheHint } = await getEmDashEntry("homepage", "home");
+    // The homepage is the "home" entry in the pages collection.
+    const { entry, error, cacheHint } = await getEmDashEntry("pages", "home");
     if (error || !entry) {
       return { homepage: HOMEPAGE_DEFAULTS, cacheHint };
     }
@@ -172,7 +174,7 @@ export async function getHomepage() {
       homepage: {
         edit: entry.edit,
         title: asString(data.title, HOMEPAGE_DEFAULTS.title),
-        subtitle: asString(data.subtitle, HOMEPAGE_DEFAULTS.subtitle),
+        subtitle: asString(data.intro, HOMEPAGE_DEFAULTS.subtitle),
         showAnnouncement: asBoolean(data.show_announcement, HOMEPAGE_DEFAULTS.showAnnouncement),
         announcementTitle: asString(data.announcement_title, HOMEPAGE_DEFAULTS.announcementTitle),
         announcementCta: asString(data.announcement_cta, HOMEPAGE_DEFAULTS.announcementCta),

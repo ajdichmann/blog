@@ -298,8 +298,20 @@ async function blogEntries() {
   );
 }
 
+async function existingPagesSeed() {
+  try {
+    const seed = JSON.parse(await readFile(seedPath, "utf8"));
+    return {
+      collections: (seed.collections ?? []).filter((c: { slug: string }) => c.slug === "pages"),
+      content: seed.content?.pages ? { pages: seed.content.pages } : {},
+    };
+  } catch {
+    return { collections: [], content: {} };
+  }
+}
+
 async function main() {
-  const [terms, posts] = await Promise.all([tagTerms(), blogEntries()]);
+  const [terms, posts, existingPages] = await Promise.all([tagTerms(), blogEntries(), existingPagesSeed()]);
   const seed = {
     $schema: "https://emdashcms.com/seed.schema.json",
     version: "1",
@@ -346,33 +358,9 @@ async function main() {
           { slug: "content", label: "Content", type: "portableText" },
         ],
       },
-      {
-        slug: "homepage",
-        label: "Homepage",
-        labelSingular: "Homepage",
-        description: "Copy and calls to action shown on the site homepage.",
-        icon: "home",
-        sortOrder: 0,
-        supports: ["drafts", "revisions", "preview"],
-        routable: false,
-        titleField: "title",
-        fields: [
-          { slug: "title", label: "Hero title", type: "string", required: true },
-          { slug: "subtitle", label: "Hero subtitle", type: "text", required: true },
-          { slug: "show_announcement", label: "Show announcement", type: "boolean", defaultValue: true },
-          { slug: "announcement_title", label: "Announcement text", type: "string" },
-          { slug: "announcement_cta", label: "Announcement button", type: "string" },
-          { slug: "announcement_url", label: "Announcement URL", type: "string" },
-          { slug: "primary_cta_label", label: "Primary button label", type: "string", required: true },
-          { slug: "primary_cta_url", label: "Primary button URL", type: "string", required: true },
-          { slug: "secondary_cta_label", label: "Secondary button label", type: "string", required: true },
-          { slug: "secondary_cta_url", label: "Secondary button URL", type: "string", required: true },
-          { slug: "latest_heading", label: "Latest posts heading", type: "string", required: true },
-          { slug: "latest_description", label: "Latest posts description", type: "text" },
-          { slug: "seo_title", label: "SEO title", type: "string", required: true },
-          { slug: "seo_description", label: "SEO description", type: "text" },
-        ],
-      },
+      // The "pages" collection (pages + homepage) is maintained by
+      // scripts/pages-to-emdash.mjs and carried over from the existing seed.
+      ...existingPages.collections,
     ],
     taxonomies: [
       {
@@ -385,28 +373,7 @@ async function main() {
       },
     ],
     content: {
-      homepage: [
-        {
-          id: "homepage-home",
-          slug: "home",
-          status: "published",
-          data: {
-            title: "AJ Dichmann",
-            subtitle: "Digital Marketing and SEO Consulting in Texas with Globe Runner",
-            show_announcement: true,
-            announcement_title: "Read my newest blog post!",
-            announcement_cta: "Read blog",
-            primary_cta_label: "Schedule Call",
-            primary_cta_url: "/schedule/",
-            secondary_cta_label: "Blog",
-            secondary_cta_url: "/blog/",
-            latest_heading: "Latest posts",
-            latest_description: "Writing about digital marketing",
-            seo_title: "AJ Dichmann",
-            seo_description: "Writing about digital marketing",
-          },
-        },
-      ],
+      ...existingPages.content,
       posts,
     },
   };
