@@ -1,5 +1,6 @@
 import { getEmDashCollection, getEmDashEntry } from "emdash";
 import { ITEMS_PER_PAGE } from "@/consts";
+import pageDefaults from "@/data/pages.json";
 
 export type CmsTag = {
   slug: string;
@@ -189,6 +190,87 @@ export async function getHomepage() {
     };
   } catch {
     return { homepage: HOMEPAGE_DEFAULTS, cacheHint: undefined };
+  }
+}
+
+export type CmsFaq = { question: string; answer: string };
+
+export type CmsPageEntry = {
+  slug: string;
+  /** Field-level edit annotations, keyed by CMS field name. Empty outside edit mode. */
+  edit: Record<string, EditAttrs | undefined>;
+  title: string;
+  highlight: string;
+  intro: string;
+  breadcrumb: string;
+  blogLinkText?: string;
+  blogLinkUrl?: string;
+  imageAlt?: string;
+  ctaLabel?: string;
+  content: CmsPost["data"]["content"];
+  faqTitle?: string;
+  faqs: CmsFaq[];
+  seoTitle: string;
+  seoDescription: string;
+};
+
+type PageDefaults = Record<string, Record<string, unknown>>;
+
+function normalizeFaqs(value: unknown): CmsFaq[] {
+  const list = typeof value === "string" ? safeJson(value) : value;
+  if (!Array.isArray(list)) return [];
+  return list
+    .filter((faq) => faq && typeof faq === "object")
+    .map((faq) => ({ question: asString(faq.question), answer: asString(faq.answer) }))
+    .filter((faq) => faq.question);
+}
+
+function safeJson(value: string) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return undefined;
+  }
+}
+
+function normalizePage(slug: string, data: Record<string, any>, edit: CmsPageEntry["edit"]): CmsPageEntry {
+  return {
+    slug,
+    edit,
+    title: asString(data.title, slug),
+    highlight: asString(data.highlight),
+    intro: asString(data.intro),
+    breadcrumb: asString(data.breadcrumb),
+    blogLinkText: asOptionalString(data.blog_link_text),
+    blogLinkUrl: asOptionalString(data.blog_link_url),
+    imageAlt: asOptionalString(data.image_alt),
+    ctaLabel: asOptionalString(data.cta_label),
+    // Keep the original array: in edit mode EmDash tags it for inline editing.
+    content: Array.isArray(data.content) ? data.content : [],
+    faqTitle: asOptionalString(data.faq_title),
+    faqs: normalizeFaqs(data.faqs),
+    seoTitle: asString(data.seo_title, asString(data.title, slug)),
+    seoDescription: asString(data.seo_description),
+  };
+}
+
+/**
+ * Load a page from the EmDash "pages" collection. Falls back to the copy
+ * bundled in src/data/pages.json if the entry is missing or EmDash errors.
+ */
+export async function getPage(slug: string) {
+  const fallback = () => {
+    const data = (pageDefaults as PageDefaults)[slug];
+    if (!data) throw new Error(`No EmDash page or bundled default for "${slug}"`);
+    return normalizePage(slug, data, {});
+  };
+
+  try {
+    const { entry, error, cacheHint } = await getEmDashEntry("pages", slug);
+    if (error || !entry) return { page: fallback(), cacheHint };
+    return { page: normalizePage(slug, entry.data ?? {}, entry.edit), cacheHint };
+  } catch {
+    return { page: fallback(), cacheHint: undefined };
   }
 }
 

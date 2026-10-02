@@ -11,6 +11,7 @@
     "build": "astro build",
     "preview": "astro build && astro preview",
     "seed:emdash": "tsx scripts/mdx-to-emdash-seed.ts",
+    "pages:push": "node scripts/push-pages-to-emdash.mjs",
     "astro": "astro"
   },
   "dependencies": {

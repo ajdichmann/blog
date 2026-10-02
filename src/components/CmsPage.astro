@@ -1,0 +1,105 @@
+---
+/**
+ * Renders a page from the EmDash "pages" collection. Copy comes from the CMS
+ * (editable in place in EmDash edit mode); images and JSON-LD stay in the
+ * page file and are passed in as props / the "before" slot.
+ */
+import RootLayout from "@/layouts/RootLayout.astro";
+import ServicesHero from "@/components/ServicesHero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
+import FAQ from "@/components/FAQ.astro";
+import { PortableText } from "emdash/ui";
+import PortableOrangeAlert from "@/components/portable/PortableOrangeAlert.astro";
+import PortableFigure from "@/components/portable/PortableFigure.astro";
+import PortableCode from "@/components/portable/PortableCode.astro";
+import PortableBreak from "@/components/portable/PortableBreak.astro";
+import { getPage } from "@/lib/emdash";
+
+interface Props {
+  slug: string;
+  /** "services": hero with image; "interior": breadcrumb + two-tone title. */
+  template?: "services" | "interior";
+  /** Wrap the body in Tailwind typography styles. */
+  prose?: boolean;
+  image?: {
+    src: ImageMetadata;
+    alt?: string;
+    width?: number;
+    height?: number;
+  };
+}
+
+const { slug, image, template = "services", prose = true } = Astro.props;
+const { page, cacheHint } = await getPage(slug);
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
+
+const { edit } = page;
+const portableComponents = {
+  type: {
+    figure: PortableFigure,
+    orangeAlert: PortableOrangeAlert,
+    code: PortableCode,
+    break: PortableBreak,
+  },
+};
+const hasFaqs = page.faqs.length > 0;
+---
+
+<RootLayout title={page.seoTitle} description={page.seoDescription}>
+  <slot name="before" />
+
+  {template === "services" ? (
+    <>
+      <ServicesHero
+        title={page.title}
+        description={page.intro}
+        blogLink={page.blogLinkText && page.blogLinkUrl ? { text: page.blogLinkText, url: page.blogLinkUrl } : undefined}
+        image={image ? { ...image, alt: page.imageAlt ?? image.alt ?? "" } : undefined}
+        breadcrumbsText={page.breadcrumb}
+        edit={edit}
+      />
+      <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
+        <div class="prose dark:prose-invert max-w-none relative z-10">
+          <PortableText value={page.content} components={portableComponents} />
+        </div>
+      </div>
+    </>
+  ) : (
+    <div class="divide-y divide-gray-200 dark:divide-gray-700">
+      <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
+        {page.breadcrumb && <Breadcrumbs text={page.breadcrumb} edit={edit.breadcrumb} />}
+        <InteriorPageTitle
+          title={page.title}
+          highlight={page.highlight}
+          titleEdit={edit.title}
+          highlightEdit={edit.highlight}
+        />
+        <slot />
+        {page.content.length > 0 && (
+          <div class={prose ? "prose dark:prose-invert max-w-none" : "space-y-2"}>
+            <PortableText value={page.content} components={portableComponents} />
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  {hasFaqs && (
+    <FAQ title={page.faqTitle} faqs={page.faqs} titleEdit={edit.faq_title} faqsEdit={edit.faqs} />
+  )}
+</RootLayout>
+
+<style is:global>
+  /* EmDash's table block reads these; match the site's gray palette in both themes. */
+  .prose .emdash-table {
+    --color-border: theme(colors.gray.300);
+    --color-surface: theme(colors.gray.100);
+    --color-bg-subtle: theme(colors.gray.50);
+  }
+  .dark .prose .emdash-table {
+    --color-border: theme(colors.gray.700);
+    --color-surface: theme(colors.gray.800);
+    --color-bg-subtle: theme(colors.gray.900);
+  }
+</style>
