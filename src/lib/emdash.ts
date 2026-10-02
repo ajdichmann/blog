@@ -121,7 +121,12 @@ export function normalizePost(entry: any): CmsPost {
   };
 }
 
+/** Spread onto an element to make it editable in EmDash edit mode. */
+export type EditAttrs = Record<string, string>;
+
 export type CmsHomepage = {
+  /** Field-level edit annotations, keyed by CMS field name. Empty outside edit mode. */
+  edit?: Record<string, EditAttrs | undefined>;
   title: string;
   subtitle: string;
   showAnnouncement: boolean;
@@ -164,6 +169,7 @@ export async function getHomepage() {
     const data = entry.data ?? {};
     return {
       homepage: {
+        edit: entry.edit,
         title: asString(data.title, HOMEPAGE_DEFAULTS.title),
         subtitle: asString(data.subtitle, HOMEPAGE_DEFAULTS.subtitle),
         showAnnouncement: asBoolean(data.show_announcement, HOMEPAGE_DEFAULTS.showAnnouncement),
