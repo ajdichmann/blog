@@ -1,4 +1,19 @@
 {
+  "home": {
+    "title": "AJ Dichmann",
+    "intro": "Digital Marketing and SEO Consulting in Texas with Globe Runner",
+    "show_announcement": true,
+    "announcement_title": "Read my newest blog post!",
+    "announcement_cta": "Read blog",
+    "primary_cta_label": "Schedule Call",
+    "primary_cta_url": "/schedule/",
+    "secondary_cta_label": "Blog",
+    "secondary_cta_url": "/blog/",
+    "latest_heading": "Latest posts",
+    "latest_description": "Writing about digital marketing",
+    "seo_title": "AJ Dichmann",
+    "seo_description": "Writing about digital marketing"
+  },
   "404": {
     "title": "404 - Not Found",
     "seo_title": "Not Found",
