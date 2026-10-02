@@ -1,10 +1,6 @@
 ---
-import { useTranslations } from "@/i18n";
-import RootLayout from "@/layouts/RootLayout.astro";
-import ServicesHero from "@/components/ServicesHero.astro";
+import CmsPage from "@/components/CmsPage.astro";
 import featuredImage from '@/assets/seo-orange.png';
-import OrangeAlert from "@/components/OrangeAlert.astro";
-const t = useTranslations();
 
 const schema = {
   "@context": "https://schema.org",
@@ -17,82 +13,8 @@ const schema = {
   },
   "serviceType": "SEO & Digital MarketingExpert Witness Services"
 };
-
 ---
-<RootLayout
-  title="SEO & Digital Marketing Expert Witness Services | AJ Dichmann"
-  description="Retain an experienced SEO expert witness for litigation support, expert witness testimony, and search engine optimization analysis."
->
-<schema item={schema} />
-<ServicesHero 
-  title="SEO Expert Witness Services"
-  description="Need an SEO expert witness who can explain complex search engine optimization issues clearly and credibly? We provide expert witness services, litigation support, and expert testimony for cases involving search engines, website traffic, and digital marketing."
-  blogLink={{
-    text: "Latest SEO insights",
-    url: "/tags/seo/"
-  }}
-  image={{
-    src: featuredImage,
-    alt: "SEO Expert Witness Services",
-    width: 400,
-    height: 534
-  }}
-  breadcrumbsText="SEO Expert Witness"
-/>
 
-  <!-- Rest of the content -->
-  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
-      <div class="prose dark:prose-invert max-w-none relative z-10">
-        <p>If you’re looking for an SEO expert witness to support a dispute, litigation, or investigation, you’re in the right place. We provide clear, defensible analysis and expert witness testimony on search engine optimization, website performance, and digital marketing practices.</p>
-        <p>From ranking loss and website traffic disputes to claims involving trademark infringement, online advertising, or online defamation, we help attorneys and clients understand what happened, what the data supports, and how search engines factor into the case.</p>
-        
-        <h2>Retain an SEO Expert Witness</h2>
-        <p>Search engine optimization is technical, fast-changing, and easy to misunderstand in legal cases. Retaining an experienced seo expert can help clarify what is measurable, what is speculative, and what conclusions are supported by evidence.</p>
-        <p>We work with counsel to provide litigation support, documentation, and analysis that aligns with the facts of the case. When needed, we also provide expert testimony and support preparation for deposition and trial.</p>
-        
-        <h2>SEO Expert Witness Analysis</h2>
-        <p>Our search engine optimization work focuses on forensic-style review and explanation. Depending on the matter, analysis may include historical visibility changes, on-site and technical SEO factors, off-site signals, and competitive context.</p>
-        <p>We can evaluate changes connected to search engine optimization seo work (on-page, technical, content, and link-related), and explain how those factors may correlate with changes in website traffic and lead volume—without overreaching past what the data can prove.</p>
-        
-        <OrangeAlert 
-          title="Pro Tip" 
-          message="Strong expert witness work is evidence-first. Preserve analytics, ad accounts, and website change history early so your SEO expert witness can map timelines and separate correlation from causation." 
-        />
-        
-        <h2>Digital Marketing & Internet Marketing Review</h2>
-        <p>Many disputes aren’t strictly “SEO only.” We review the broader digital marketing and internet marketing ecosystem that can influence performance, including online advertising, tracking configuration, and attribution.</p>
-        <p>We frequently analyze data from google analytics, Google Search Console, server logs, and other web analytics sources to determine what changed, when it changed, and how it relates to business outcomes.</p>
-        
-        <h2>Online Advertising, Google Ads, and Attribution</h2>
-        <p>Paid media can significantly impact traffic and lead generation, and it can also confuse causation in SEO-related claims. We review online advertising performance and account structure to understand whether changes in google ads may explain shifts that appear “SEO-related” at first glance.</p>
-        <p>When relevant, we can assess tracking and reporting integrity (conversion events, UTM parameters, attribution settings) and how that impacts damages arguments or performance claims.</p>
-        
-        <h2>Trademark Infringement, Domain Names, and Search Visibility</h2>
-        <p>Cases involving trademark infringement or confusingly similar domain names often include questions about consumer confusion, search behavior, and whether specific marketing actions influenced search results. We help counsel evaluate what search engines display, how users may encounter content, and what can be validated with data.</p>
-        <p>We also assist with analysis of organic search presence and messaging across web pages, social media, and other online properties that may be relevant to the dispute.</p>
-        
-        <h2>Online Defamation and Online Reputation Management</h2>
-        <p>When cases involve online defamation or online reputation management, search results and brand queries can become a major battleground. We can document SERP conditions, evaluate content visibility, and explain search engine behaviors that affect discovery and amplification.</p>
-        <p>We also review the role of social media marketing and online marketing distribution when it’s relevant to how content spread and how it was found.</p>
-        
-        <h2>E Commerce and Website Performance Disputes</h2>
-        <p>For e commerce matters, search engine optimization intersects with product feeds, site architecture, indexing, and conversion tracking. We review technical and content factors that influence category and product visibility, and we connect those factors to measurable outcomes where possible.</p>
-        <p>When appropriate, we can provide consulting services related to remediation planning while maintaining the integrity of ongoing legal cases.</p>
-        
-        <OrangeAlert 
-          title="Pro Tip" 
-          message="In cases involving search engines, timelines matter. A clean timeline of deployments, content edits, redirects, platform changes, and marketing strategy shifts is often the difference between a strong and weak expert opinion." 
-        />
-        
-        <h2>Expert Witness Services and Expert Testimony</h2>
-        <p>We offer expert witness services for matters involving search visibility, search engines, SEO practices, analytics interpretation, and digital marketing strategies. Our work is designed to be understandable to non-technical audiences while staying grounded in verifiable evidence.</p>
-        <p>If your case needs a search engine optimization expert or engine optimization expert witness to support strategy, report findings, or provide courtroom-ready explanations, we can help.</p>
-        
-        <h2>Let’s Discuss Your Legal Case</h2>
-        <p>If you’re evaluating an SEO dispute or need an expert witness for a matter involving search engine optimization, reach out to discuss scope, timelines, and what materials we’ll need to review.</p>
-        <p>Call us at (972) 538-0260 to discuss your seo expert witness needs.</p>
-       
-      </div>
-    </div>
-  </div>
-</RootLayout> 
+<CmsPage slug="seo-expert-witness" image={{ src: featuredImage, width: 400, height: 534 }}>
+  <schema slot="before" item={schema}></schema>
+</CmsPage>

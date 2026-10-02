@@ -1,10 +1,6 @@
 ---
-import { useTranslations } from "@/i18n";
-import RootLayout from "@/layouts/RootLayout.astro";
-import ServicesHero from "@/components/ServicesHero.astro";
+import CmsPage from "@/components/CmsPage.astro";
 import featuredImage from '@/assets/seo-orange.png';
-import OrangeAlert from "@/components/OrangeAlert.astro";
-const t = useTranslations();
 
 const schema = {
   "@context": "https://schema.org",
@@ -17,75 +13,8 @@ const schema = {
   },
   "serviceType": "Search Engine Optimization"
 };
-
 ---
-<RootLayout
-  title="The Woodlands SEO Services & Consulting | AJ Dichmann"
-  description="Get started with the top rated SEO experts in The Woodlands for local search optimization and digital marketing"
->
-<schema item={schema} />
-<ServicesHero 
-  title="The Woodlands SEO Services & Consulting"
-  description="Get started with the top rated SEO team in The Woodlands. Our local experts help businesses dominate search results and drive qualified traffic to your website."
-  blogLink={{
-    text: "Latest SEO insights",
-    url: "/tags/seo/"
-  }}
-  image={{
-    src: featuredImage,
-    alt: "The Woodlands SEO Services",
-    width: 400,
-    height: 534
-  }}
-  breadcrumbsText="The Woodlands SEO Agency"
-/>
 
-  <!-- Rest of the content -->
-  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
-      <div class="prose dark:prose-invert max-w-none relative z-10">
-        <h1>The Woodlands SEO Services & Consulting</h1>
-        <p>Looking for expert SEO help in The Woodlands? You're in the right place. Our seasoned SEO team has years of experience helping local businesses dominate search results and drive qualified traffic to their websites.</p>
-        <p>From local search optimization to comprehensive digital marketing strategies, we handle it all. If you need a reliable The Woodlands SEO expert who can move fast and deliver results, we're here to help.</p>
-        
-        <h2>Local The Woodlands SEO Experts</h2>
-        <p>Struggling to rank in local search results or get found by customers in The Woodlands area? Our local SEO experts understand the unique challenges and opportunities of the Houston metro market. We know what makes businesses rank in local search and how to get your website in front of the right customers.</p>
-        <p>Whether you need local citation management, Google My Business optimization, or comprehensive SEO strategies—we've got you covered. Our commitment is to fast, friendly support and results that speak for themselves.</p>
-        
-        <h2>Local Search Engine Optimization</h2>
-        <p>Local SEO is different from national SEO. We focus on optimizing your website and online presence to rank for searches like "best restaurants in The Woodlands" or "dentist near me." This includes managing your Google My Business profile, building local citations, and creating location-specific content.</p>
-        <p>Our local SEO strategies help you appear in the coveted "Local Pack" results that appear at the top of Google search results for local queries. We also optimize for voice search, which is increasingly important as more people use Siri, Alexa, and Google Assistant to find local businesses.</p>
-        
-        <OrangeAlert 
-          title="Pro Tip" 
-          message="Local SEO success depends on consistent business information across all platforms, quality local citations, and positive customer reviews. Focus on these three areas for the best results." 
-        />
-        
-        <h2>Technical SEO Services</h2>
-        <p>Technical SEO is the foundation of any successful search optimization campaign. We audit your website's technical health, fix issues that hurt rankings, and optimize for search engine crawlers. This includes improving page speed, fixing broken links, optimizing site structure, and ensuring mobile-friendliness.</p>
-        <p>We use advanced tools like Screaming Frog, Google Search Console, and custom analytics to identify and fix technical issues that could be holding your rankings back.</p>
-        
-        <h2>Content Marketing & SEO</h2>
-        <p>Great content is essential for SEO success. We create high-quality, keyword-optimized content that answers your customers' questions and positions your business as an authority in your industry. This includes blog posts, service pages, local landing pages, and other content that drives organic traffic.</p>
-        <p>Our content strategy focuses on local keywords and topics that matter to your The Woodlands audience, helping you rank for the searches that actually drive business.</p>
-        
-        <h2>E-commerce SEO</h2>
-        <p>If you're running an online store on <a href="/conroe-the-woodlands-shopify/">Shopify</a>, WooCommerce, or another e-commerce platform, e-commerce SEO requires specialized expertise. We optimize product pages, category pages, and the overall site structure to help your products rank in search results. This includes optimizing for long-tail keywords, improving product descriptions, and implementing structured data markup.</p>
-        <p>We also focus on conversion optimization, ensuring that the traffic we drive to your site actually converts into sales.</p>
-        
-        <h2>SEO Audits & Strategy</h2>
-        <p>Not sure where to start with SEO and digital marketing? We provide comprehensive SEO audits that identify opportunities and issues with your current website. Our audits include technical analysis, content evaluation, competitive research, and actionable recommendations for improvement.</p>
-        <p>We then develop a customized SEO strategy based on your business goals, target audience, and competitive landscape. This roadmap guides all our optimization efforts and ensures we're working toward your specific objectives.</p>
-        
-        <OrangeAlert 
-          title="Pro Tip" 
-          message="SEO is a long-term investment. While it may take 3-6 months to see significant results, the traffic and leads you generate can continue growing for years." 
-        />
-        
-        <h2>Let's Talk About Your SEO Project</h2>
-        <p>If you're ready to get more from your website and dominate search results in The Woodlands, reach out today. We've helped local businesses grow from zero visibility to thousands of monthly site visitors—through smart SEO strategies, local optimization, and content marketing that actually works.</p>
-        <p>Call us at (972) 538-0260 to discuss your SEO needs.</p>
-       
-      </div>
-    </div>
-  </div>
-</RootLayout> 
+<CmsPage slug="the-woodlands-seo" image={{ src: featuredImage, width: 400, height: 534 }}>
+  <schema slot="before" item={schema}></schema>
+</CmsPage>

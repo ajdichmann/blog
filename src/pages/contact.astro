@@ -2,6 +2,10 @@
 import RootLayout from "@/layouts/RootLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import InteriorPageTitle from "@/components/InteriorPageTitle.astro";
+import { getPage } from "@/lib/emdash";
+
+const { page, cacheHint } = await getPage("contact");
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
 
 const schema = {
   "@context": "https://schema.org",
@@ -18,15 +22,17 @@ const schema = {
 
 
 <RootLayout
-  title="Contact AJ Dichmann | Schedule a Meeting or Send a Message"
-  description="Get in touch with AJ Dichmann. Schedule a meeting through Calendly or send a message through our contact form."
+  title={page.seoTitle}
+  description={page.seoDescription}
 >
   <div class="divide-y divide-gray-200 dark:divide-gray-700">
     <div class="pb-8 pt-6 md:space-y-5">
-      <Breadcrumbs text="Contact" />
-      <InteriorPageTitle 
-        title="Let's"
-        highlight="Connect"
+      <Breadcrumbs text={page.breadcrumb} edit={page.edit.breadcrumb} />
+      <InteriorPageTitle
+        title={page.title}
+        highlight={page.highlight}
+        titleEdit={page.edit.title}
+        highlightEdit={page.edit.highlight}
       />
       
       <div class="contact-container">

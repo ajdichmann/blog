@@ -1,10 +1,6 @@
 ---
-import { useTranslations } from "@/i18n";
-import RootLayout from "@/layouts/RootLayout.astro";
-import ServicesHero from "@/components/ServicesHero.astro";
+import CmsPage from "@/components/CmsPage.astro";
 import featuredImage from '@/assets/shopify-orange.png';
-
-const t = useTranslations();
 
 const schema = {
   "@context": "https://schema.org",
@@ -17,95 +13,8 @@ const schema = {
   },
   "serviceType": "Shopify Development"
 };
-
 ---
 
-<RootLayout
-  title="Houston Shopify Development Agency Service | AJ Dichmann"
-  description="Get started with the top rated Shopify experts in Houston Shopify Development"
->
-  <schema item={schema} />
-  <ServicesHero 
-    title="Houston Shopify Development & Consulting"
-    description="Get started with the top rated Shopify dev team in Houston. Our team based in South Texas has countless years of building, fixing and maintaining Shopify websites under our belt."
-    blogLink={{
-      text: "What's new in Shopify",
-      url: "/tags/shopify/"
-    }}
-    image={{
-      src: featuredImage,
-      alt: "Houston Shopify Development Services",
-      width: 400,
-      height: 534
-    }}
-    breadcrumbsText="Houston Shopify Agency"
-  />
-
-  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
-    <div class="pb-8 pt-6 md:space-y-5 text-gray-900 dark:text-gray-100">
-      <!-- Content section with prose -->
-      <div class="prose dark:prose-invert max-w-none relative z-10">
-        <h2>Shopify Experts in Houston</h2>
-        <p><strong>Looking to grow your e commerce business in Houston?</strong> Our team of certified Shopify experts specializes in helping local businesses create high-performing Shopify stores through custom website development, web design, and digital marketing strategies tailored to your goals.</p>
-        <p>Whether you're launching your first Shopify store or migrating an existing one, we provide all the development services you need to succeed. From theme customization to SEO and user experience enhancements, we ensure your online store stands out in a competitive market like Houston.</p>
-        
-        <h2>Shopify Design and Development</h2>
-        <p>First impressions matter. That's why our Shopify web design and development services focus on creating an intuitive, mobile-friendly user experience that reflects your brand and drives conversions. We offer complete design and development services to help you build an online store that performs as great as it looks.</p>
-        <ul>
-          <li>Custom Shopify theme customization</li>
-          <li>Responsive web design for mobile and desktop</li>
-          <li>SEO optimization and speed improvements</li>
-          <li>User experience-focused layouts and navigation</li>
-          <li>Brand identity development including logo and color palette</li>
-        </ul>
-        
-        <h2>Website Development Services</h2>
-        <p>Our Houston-based Shopify development team brings deep technical knowledge and creativity to every project. Whether you need custom integrations, advanced functionality, or a full redesign, we'll build a powerful Shopify store tailored to your unique needs.</p>
-        <table>
-          <tr>
-            <th>Service</th>
-            <th>Benefit</th>
-          </tr>
-          <tr>
-            <td>Custom Shopify Development</td>
-            <td>Get a unique online store that fits your business goals</td>
-          </tr>
-          <tr>
-            <td>Theme Customization</td>
-            <td>Enhance your design and functionality without starting from scratch</td>
-          </tr>
-          <tr>
-            <td>Conversion Optimization</td>
-            <td>Improve user experience and increase sales</td>
-          </tr>
-          <tr>
-            <td>Third-Party App Integration</td>
-            <td>Connect your store to the tools you use every day</td>
-          </tr>
-          <tr>
-            <td>Post-Launch Support</td>
-            <td>Ensure your store runs smoothly long after go-live</td>
-          </tr>
-        </table>
-        
-        <h2>Digital Marketing for Shopify Stores</h2>
-        <p>We go beyond design to help you grow your traffic and sales. Our digital marketing experts offer full-service monthly campaigns designed to help Houston businesses succeed online. Whether you're looking to scale fast or grow steadily, our digital marketing approach is data-driven and results-focused.</p>
-        <p>Our Shopify digital marketing services include:</p>
-        <ul>
-          <li>Search Engine Optimization (SEO)</li>
-          <li>Pay-Per-Click (PPC) Advertising</li>
-          <li>Social Media Marketing</li>
-          <li>Email Marketing Funnels</li>
-          <li>Content Strategy and Blogging</li>
-        </ul>
-        
-        <h2>Shopify Store Migrations</h2>
-        <p>If you're ready to leave outdated platforms behind, our Shopify development experts can migrate your existing online store to Shopify seamlessly. We specialize in safe, accurate migrations from WooCommerce, Magento, BigCommerce, and more—ensuring your data is preserved and your new site is optimized from day one.</p>
-        
-        <h2>Work With Local Shopify Experts in Houston</h2>
-        <p>We're proud to serve the Houston community with professional Shopify development services, user-focused design, and performance-driven digital marketing. Whether you're just starting out or looking to grow your existing Shopify store, we're here to help every step of the way.</p>
-        <p><strong>Ready to launch or scale your online store?</strong> Contact our Houston Shopify experts today for a free consultation.</p>     
-      </div>
-    </div>
-  </div>
-</RootLayout>
+<CmsPage slug="houston-shopify" image={{ src: featuredImage, width: 400, height: 534 }}>
+  <schema slot="before" item={schema}></schema>
+</CmsPage>

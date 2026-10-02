@@ -8,14 +8,17 @@ interface Props {
   faqs: FAQ[];
   class?: string;
   title?: string;
+  /** EmDash edit annotations for the FAQ heading and list. */
+  titleEdit?: Record<string, string>;
+  faqsEdit?: Record<string, string>;
 }
 
-const { faqs, class: className, title = 'Frequently asked questions' } = Astro.props;
+const { faqs, class: className, title = 'Frequently asked questions', titleEdit, faqsEdit } = Astro.props;
 import DetailsSummary from './DetailsSummary.astro';
 ---
 
-<div class:list={className} class="divide-y divide-gray-200 dark:divide-gray-700 mt-12">
-  <h2 class="text-3xl font-bold mb-6">{title}</h2>
+<div class:list={className} class="divide-y divide-gray-200 dark:divide-gray-700 mt-12" {...faqsEdit}>
+  <h2 class="text-3xl font-bold mb-6" {...titleEdit}>{title}</h2>
   {faqs.map((faq, idx) => (
     <DetailsSummary title={faq.question} class="faq-item">
       <div class="text-gray-600 dark:text-gray-300 mt-2">{faq.answer}</div>

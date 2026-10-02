@@ -1,10 +1,6 @@
 ---
-import { useTranslations } from "@/i18n";
-import RootLayout from "@/layouts/RootLayout.astro";
-import ServicesHero from "@/components/ServicesHero.astro";
+import CmsPage from "@/components/CmsPage.astro";
 import featuredImage from '@/assets/wordpress-orange.png';
-
-const t = useTranslations();
 
 const schema = {
   "@context": "https://schema.org",
@@ -19,77 +15,6 @@ const schema = {
 };
 ---
 
-<RootLayout
-  title="Dallas Javascript Development Agency Services | AJ Dichmann"
-  description="Get started with one of the top rated Javascript teams!"
->
-  <schema item={schema} />
-  <ServicesHero 
-    title="Dallas Javascript Development & Consulting"
-    description="Get started with one of the top rated Javascript teams! Our Dallas based development agency has more than 10 years of experience working with Javascript and is ready to start on your next project."
-    blogLink={{
-      text: "What's new in Javascript",
-      url: "/tags/javascript/"
-    }}
-    image={{
-      src: featuredImage,
-      alt: "Dallas Javascript Development Services",
-      width: 400,
-      height: 534
-    }}
-    breadcrumbsText="Dallas Javascript Agency"
-  />
-
-  <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
-    <div class="prose dark:prose-invert max-w-none relative z-10">
-      <p>Are you looking for local help for a website or app built with Javascript – then you have come to the right place!</p>
-
-<p>My Dallas based development agency has more than 10 years of experience working with Javascript and is ready to start on your next project. We can work on adding additional features and functionality to existing projects – or launching your next website or app.</p>
-
-<p>As one of the top-rated Dallas Javascript development agencies, we can help you solve any issues with your site promptly and on budget. We take great pride in the success of our clients and work hard to ensure that they receive the assistance they require with their websites.</p>
-
-<p>Our Dallas Javascript developers have been working online since 2000, so they are well-versed with vanilla Javascript, React, Vue, and other common JS libraries!</p>
-
-<h2>CUSTOM JAVASCRIPT DEVELOPMENT IN DALLAS</h2>
-
-<p>If you're looking for a custom development agency with a strong focus on Javascript, look no further than my team! Our agency has more than 10 years of experience in the industry and is well-versed in building custom projects. We're committed to providing our clients with the best possible service and work hard to ensure that they're satisfied with the end product.</p>
-
-<p>We have a team of expert developers who are passionate about Javascript and always up for a new challenge. So if you need help with your website or app, please don't hesitate to get in touch – we would be more than happy to assist you!</p>
-
-<h2>DALLAS REACT DEVELOPER</h2>
-
-<p>React is one of the most popular JS libraries in 2022 and has been growing steadily in popularity since its release. It's used by many companies for their frontend and is a great solution if you want to build your project with Javascript.</p>
-
-<p>We have plenty of experience with React and can help you launch a new site or improve an existing one by adding additional features or optimizing the codebase. If you need assistance with React.js development, we're here to help! Please don't hesitate to contact us if you have questions. We can assist you in resolving any problems with your website and laying the groundwork for your company's growth using React.</p>
-
-<h2>DALLAS VUE DEVELOPER</h2>
-
-<p>Vue is another popular JS library that has been gaining traction over the last few years. It allows developers to create interactive user interfaces very easily using HTML templates, Virtual DOM, and an ecosystem of plugins.</p>
-
-<p>My Dallas JavaScript team has been working online since 2000 and has plenty of experience with Vue, so we have the skills to help you with your project! We can work on a new app or add features to an existing one – just let us know what you need and we'll get started ASAP with Vue.js!</p>
-
-<h2>DALLAS JQUERY DEVELOPERS</h2>
-
-<p>If you're looking for a jQuery development agency in Dallas, look no further than my team at Globe Runner! We have more than 10 years of experience in the industry and are well-versed in creating custom projects. We're committed to providing our clients with the best possible service and work hard to ensure that they're satisfied with their website or application.</p>
-
-<p>We have a team of expert developers who are passionate about jQuery and always up for a new challenge. So if you need help with your website or app, please don't hesitate to get in touch – we would be more than happy to assist you!</p>
-
-<h2>CONSULTING OTHER JS LIBRARIES</h2>
-
-<p>Need development help with a library not listed above – no problem! We work with other JavaScript libraries like:</p>
-
-<ul>
-  <li>Alpine.js</li>
-  <li>d3.js</li>
-  <li>Chart.js</li>
-  <li>Moment.js</li>
-  <li>Node.js</li>
-  <li>and many more!</li>
-</ul>
-
-<p>If you're looking for a custom development agency with a strong focus on Javascript, look no further than my team! Our agency has more than 10 years of experience in the industry and is well-versed in building custom projects. We're committed to providing our clients with the best possible service and work hard to ensure that they're satisfied with the end product.</p>
-
-<p>We have a team of expert developers who are passionate about Javascript and always up for a new challenge. So if you need help with your website or app, please don't hesitate to get in touch – we would be more than happy to assist you – give us a call now at (972) 538-0260 to discuss further!</p>
-    </div>
-  </div>
-</RootLayout>
+<CmsPage slug="dallas-javascript" image={{ src: featuredImage, width: 400, height: 534 }}>
+  <schema slot="before" item={schema}></schema>
+</CmsPage>
