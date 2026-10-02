@@ -26,10 +26,10 @@ if (Astro.cache?.enabled) Astro.cache.set(mergeCacheHints(postsHint, homepageHin
     <HeroSection homepage={homepage} latestPost={posts[0]} />
 
     <div class="space-y-2 pb-8 pt-6 md:space-y-5 relative z-10">
-      <h2 class="text-lg font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl md:leading-14">
+      <h2 class="text-lg font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-4xl md:leading-14" {...homepage.edit?.latest_heading}>
         {homepage.latestHeading}
       </h2>
-      <p class="text-lg leading-7 text-gray-600 dark:text-gray-400">
+      <p class="text-lg leading-7 text-gray-600 dark:text-gray-400" {...homepage.edit?.latest_description}>
         {homepage.latestDescription}
       </p>
     </div>
