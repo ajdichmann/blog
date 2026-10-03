@@ -51,11 +51,6 @@ interface PostMetadata {
   showShareButtons: 'top' | 'bottom' | 'both' | 'none';
 }
 
-interface NavigationItem {
-  href: string;
-  title: string;
-}
-
 export const SITE_METADATA: SiteMetadata = {
   theme: "system",
   siteUrl: "https://www.ajdichmann.com",
@@ -93,19 +88,6 @@ export const SITE_METADATA: SiteMetadata = {
  * Default posts per page for pagination.
  */
 export const ITEMS_PER_PAGE = 5;
-
-/**
- * Navigation items.
- If title is not found in the translation file, it will be used as is.
- example: if title is "nav.home", and translation file does not have "nav.home", it will be displayed as "nav.home"
-
- You should add translations for these in src/i18n/ui.ts or use as is.
- */
-export const NAVIGATION: NavigationItem[] = [
-  { href: "/", title: "nav.home" },
-  { href: "/blog/", title: "nav.blog" },
-  { href: "/schedule/", title: "nav.call" },
-];
 
 export const POST_METADATA: PostMetadata = {
   defaultLayout: "column",

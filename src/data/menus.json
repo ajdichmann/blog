@@ -1,0 +1,21 @@
+{
+  "primary": {
+    "label": "Header",
+    "items": [
+      { "label": "Home", "url": "/" },
+      { "label": "Blog", "url": "/blog/" },
+      { "label": "Schedule Call", "url": "/schedule/" }
+    ]
+  },
+  "footer": {
+    "label": "Footer",
+    "items": [
+      { "label": "Conroe", "url": "/conroe-digital-marketing/" },
+      { "label": "Wordpress", "url": "/dallas-wordpress/" },
+      { "label": "Shopify", "url": "/dallas-shopify/" },
+      { "label": "Python", "url": "/dallas-python/" },
+      { "label": "GTM", "url": "/gtm-consultant/" },
+      { "label": "Javascript", "url": "/dallas-javascript/" }
+    ]
+  }
+}

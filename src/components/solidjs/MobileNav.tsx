@@ -1,11 +1,11 @@
 import Link from "@/solid/Link.tsx";
-import { NAVIGATION } from '@/consts';
+import type { NavItem } from "@/lib/emdash";
 import { For } from "solid-js";
 import { useTranslations } from "@/i18n";
 
 const t = useTranslations();
 
-export default function MobileNav() {
+export default function MobileNav(props: { items: NavItem[] }) {
   let buttonRef!: HTMLButtonElement;
   let menuRef!: HTMLDivElement;
 
@@ -40,11 +40,11 @@ export default function MobileNav() {
           </button>
         </div>
         <nav class="fixed mt-8 h-full">
-          <For each={NAVIGATION}>
-            {({ href, title }) => (
+          <For each={props.items}>
+            {({ url, label }) => (
               <div class="px-12 py-4">
-                <Link href={href} class="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100">
-                  {t(title)}
+                <Link href={url} class="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100">
+                  {label}
                 </Link>
               </div>
             )}
