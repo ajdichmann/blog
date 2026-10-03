@@ -1,6 +1,7 @@
-import { getEmDashCollection, getEmDashEntry } from "emdash";
+import { getEmDashCollection, getEmDashEntry, getMenuWithCacheHint, type CacheHint } from "emdash";
 import { ITEMS_PER_PAGE } from "@/consts";
 import pageDefaults from "@/data/pages.json";
+import menuDefaults from "@/data/menus.json";
 
 export type CmsTag = {
   slug: string;
@@ -373,4 +374,25 @@ function makePage<T>(data: T[], currentPage: number, hasMore: boolean, base: str
       next: hasMore ? pagePath(base, currentPage + 1) : undefined,
     },
   };
+}
+
+export type NavItem = { label: string; url: string; target?: string };
+
+type MenuName = keyof typeof menuDefaults;
+
+/**
+ * Load a navigation menu from EmDash. Falls back to the items bundled in
+ * src/data/menus.json if the menu is missing, empty, or EmDash errors.
+ * Only top-level items are returned.
+ */
+export async function getNavMenu(name: MenuName): Promise<{ items: NavItem[]; cacheHint?: CacheHint }> {
+  try {
+    const { data, cacheHint } = await getMenuWithCacheHint(name, { trailingSlash: "always" });
+    const items = (data?.items ?? [])
+      .filter((item) => item.url)
+      .map((item) => ({ label: item.label, url: item.url, target: item.target || undefined }));
+    return { items: items.length ? items : menuDefaults[name].items, cacheHint };
+  } catch {
+    return { items: menuDefaults[name].items, cacheHint: undefined };
+  }
 }

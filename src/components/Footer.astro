@@ -4,17 +4,12 @@ import { useTranslations } from '@/i18n';
 // Uncomment if you plan to use social icons later
 // import SocialIcon from '@/components/social-icons/index.astro'
 import { SITE_METADATA } from '@/consts';
+import { getNavMenu } from '@/lib/emdash';
 
 const t = useTranslations();
 
-const links = [
-  { href: "/conroe-digital-marketing/", text: "Conroe" },
-  { href: "/dallas-wordpress/", text: "Wordpress" },
-  { href: "/dallas-shopify/", text: "Shopify" }, 
-  { href: "/dallas-python/", text: "Python" },
-  { href: "/gtm-consultant/", text: "GTM" },
-  { href: "/dallas-javascript/", text: "Javascript" }
-];
+const { items: links, cacheHint } = await getNavMenu("footer");
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
 ---
 
 <footer class="mt-16" role="contentinfo">
@@ -31,7 +26,7 @@ const links = [
       <ul class="flex flex-wrap justify-center gap-x-2 text-sm text-gray-500 dark:text-gray-400">
         {links.map((link, index) => (
           <li>
-            <Link href={link.href}>{link.text}</Link>
+            <Link href={link.url} target={link.target}>{link.label}</Link>
             {index < links.length - 1 && <span class="ml-2">|</span>}
           </li>
         ))}
