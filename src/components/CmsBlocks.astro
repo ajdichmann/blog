@@ -1,0 +1,15 @@
+---
+/** Renders a "body" blocks field (Rich Text and Orange Alert blocks). */
+import { Blocks } from "emdash/ui";
+import RichTextBlock from "@/components/blocks/RichTextBlock.astro";
+import OrangeAlertBlock from "@/components/blocks/OrangeAlertBlock.astro";
+import type { CmsBlock } from "@/lib/emdash";
+
+const { value } = Astro.props as { value: CmsBlock[] };
+const components = {
+  rich_text: RichTextBlock,
+  orange_alert: OrangeAlertBlock,
+};
+---
+
+{value.length > 0 && <Blocks value={value} components={components} />}

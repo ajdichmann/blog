@@ -15,6 +15,7 @@ import PortableFigure from "@/components/portable/PortableFigure.astro";
 import PortableCode from "@/components/portable/PortableCode.astro";
 import PortableBreak from "@/components/portable/PortableBreak.astro";
 import { getPage } from "@/lib/emdash";
+import CmsBlocks from "@/components/CmsBlocks.astro";
 
 interface Props {
   slug: string;
@@ -62,6 +63,7 @@ const hasFaqs = page.faqs.length > 0;
       <div class="divide-y divide-gray-200 dark:divide-gray-700 relative z-10">
         <div class="prose dark:prose-invert max-w-none relative z-10">
           <PortableText value={page.content} components={portableComponents} />
+          <CmsBlocks value={page.body} />
         </div>
       </div>
     </>
@@ -76,9 +78,10 @@ const hasFaqs = page.faqs.length > 0;
           highlightEdit={edit.highlight}
         />
         <slot />
-        {page.content.length > 0 && (
+        {(page.content.length > 0 || page.body.length > 0) && (
           <div class={prose ? "prose dark:prose-invert max-w-none" : "space-y-2"}>
             <PortableText value={page.content} components={portableComponents} />
+            <CmsBlocks value={page.body} />
           </div>
         )}
       </div>
