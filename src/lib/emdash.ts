@@ -10,6 +10,17 @@ export type CmsTag = {
   count?: number;
 };
 
+export type PortableBlock = { _type: string; _key?: string; [key: string]: unknown };
+
+/** An item in a "body" blocks field. */
+export type CmsBlock = { _type: string; _version: number; _key: string; [key: string]: unknown };
+export type RichTextBlock = CmsBlock & { _type: "rich_text"; content?: PortableBlock[] };
+export type OrangeAlertBlock = CmsBlock & {
+  _type: "orange_alert";
+  heading?: string;
+  text?: PortableBlock[];
+};
+
 export type CmsPost = {
   id: string;
   data: {
@@ -25,7 +36,8 @@ export type CmsPost = {
       height?: number;
       filename?: string;
     };
-    content: Array<{ _type: string; _key?: string; [key: string]: unknown }>;
+    content: PortableBlock[];
+    body: CmsBlock[];
     post_layout: "simple" | "column";
     tags: CmsTag[];
     draft: boolean;
@@ -59,6 +71,35 @@ function asBoolean(value: unknown, fallback: boolean) {
 
 function asDate(value: unknown) {
   return value ? new Date(String(value)) : new Date();
+}
+
+function asBlocks(value: unknown): CmsBlock[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(
+    (block): block is CmsBlock =>
+      Boolean(block) && typeof block._type === "string" && typeof block._key === "string",
+  );
+}
+
+export type Heading = { text: string; depth: number; slug: string };
+
+/** H2-H6 headings in the content field and Rich Text blocks, for a table of contents. */
+export function getHeadings(content: PortableBlock[], body: CmsBlock[]): Heading[] {
+  const richText = body.flatMap((block) =>
+    block._type === "rich_text" && Array.isArray(block.content) ? (block.content as PortableBlock[]) : [],
+  );
+  return [...content, ...richText]
+    .filter((block) => block._type === "block" && /^h[2-6]$/.test(String(block.style)))
+    .map((block) => {
+      const text = Array.isArray(block.children)
+        ? block.children.map((child: any) => child.text ?? "").join("")
+        : "";
+      return {
+        text,
+        depth: Number(String(block.style).replace("h", "")),
+        slug: text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+      };
+    });
 }
 
 export function mediaSrc(value: unknown): string | undefined {
@@ -116,6 +157,7 @@ export function normalizePost(entry: any): CmsPost {
       lastmod: data.lastmod ? asDate(data.lastmod) : undefined,
       cover: normalizeCover(data.cover),
       content: Array.isArray(data.content) ? data.content : [],
+      body: asBlocks(data.body),
       post_layout: data.post_layout === "simple" ? "simple" : "column",
       tags: terms,
       draft: false,
@@ -211,6 +253,7 @@ export type CmsPageEntry = {
   imageAlt?: string;
   ctaLabel?: string;
   content: CmsPost["data"]["content"];
+  body: CmsBlock[];
   faqTitle?: string;
   faqs: CmsFaq[];
   seoTitle: string;
@@ -250,6 +293,7 @@ function normalizePage(slug: string, data: Record<string, any>, edit: CmsPageEnt
     ctaLabel: asOptionalString(data.cta_label),
     // Keep the original array: in edit mode EmDash tags it for inline editing.
     content: Array.isArray(data.content) ? data.content : [],
+    body: asBlocks(data.body),
     faqTitle: asOptionalString(data.faq_title),
     faqs: normalizeFaqs(data.faqs),
     seoTitle: asString(data.seo_title, asString(data.title, slug)),

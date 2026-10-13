@@ -12,7 +12,8 @@ import SocialShareButtons from "../components/social-icons/SocialShareButtons.as
 import { POST_METADATA } from "@/consts";
 import { useTranslations } from "@/i18n";
 import { PortableText } from "emdash/ui";
-import type { CmsPost } from "@/lib/emdash";
+import { getHeadings, type CmsPost } from "@/lib/emdash";
+import CmsBlocks from "@/components/CmsBlocks.astro";
 import PortableFigure from "@/components/portable/PortableFigure.astro";
 import PortableOrangeAlert from "@/components/portable/PortableOrangeAlert.astro";
 import PortableCode from "@/components/portable/PortableCode.astro";
@@ -32,18 +33,7 @@ const authors = defaultAuthor ? [defaultAuthor] : [];
 const tags = post.data.tags;
 // const related: CollectionEntry<'blog'>[] = await getEntries(post.data.related);
 
-const headings = post.data.content
-  .filter((block) => block._type === "block" && /^h[2-6]$/.test(String(block.style)))
-  .map((block) => {
-    const text = Array.isArray(block.children)
-      ? block.children.map((child: any) => child.text ?? "").join("")
-      : "";
-    return {
-      text,
-      depth: Number(String(block.style).replace("h", "")),
-      slug: text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
-    };
-  });
+const headings = getHeadings(post.data.content, post.data.body);
 
 const portableComponents = {
   type: {
@@ -152,6 +142,7 @@ const articleOgDetails = {
           <div class="prose max-w-none pb-8 pt-10 dark:prose-invert">
             <slot />
             <PortableText value={post.data.content} components={portableComponents} />
+            <CmsBlocks value={post.data.body} />
           </div>
         </div>
         {

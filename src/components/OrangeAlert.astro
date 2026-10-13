@@ -1,10 +1,13 @@
 ---
 interface Props {
   title: string;
-  message: string;
+  /** Plain-text body. Omit to render rich text passed in the default slot. */
+  message?: string;
+  /** Unique heading id; needed when a page has more than one alert. */
+  id?: string;
 }
 
-const { title, message } = Astro.props;
+const { title, message, id = "alert-title" } = Astro.props;
 ---
 
 <style>
@@ -16,8 +19,14 @@ const { title, message } = Astro.props;
 <div
   class="bg-primary-100 dark:bg-primary-900/80 border-l-4 border-primary-500 dark:border-primary-400 p-6 text-primary-800 dark:text-primary-50"
   role="alert"
-  aria-labelledby="alert-title"
+  aria-labelledby={id}
 >
-  <h2 id="alert-title" class="font-extrabold text-2xl leading-tight mb-3">{title}</h2>
-  <p class="text-primary-600/90 dark:text-primary-200/90 leading-normal">{message}</p>
+  <h2 id={id} class="font-extrabold text-2xl leading-tight mb-3">{title}</h2>
+  {message ? (
+    <p class="text-primary-600/90 dark:text-primary-200/90 leading-normal">{message}</p>
+  ) : (
+    <div class="text-primary-600/90 dark:text-primary-200/90 leading-normal">
+      <slot />
+    </div>
+  )}
 </div>

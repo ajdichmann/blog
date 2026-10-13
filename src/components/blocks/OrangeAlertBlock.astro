@@ -1,0 +1,12 @@
+---
+import { PortableText } from "emdash/ui";
+import OrangeAlert from "@/components/OrangeAlert.astro";
+import { portableComponents } from "@/components/portable/components";
+import type { OrangeAlertBlock } from "@/lib/emdash";
+
+const { value, blockKey } = Astro.props as { value: OrangeAlertBlock; blockKey: string };
+---
+
+<OrangeAlert title={value.heading ?? ""} id={`alert-${blockKey}`}>
+  <PortableText value={value.text ?? []} components={portableComponents} />
+</OrangeAlert>

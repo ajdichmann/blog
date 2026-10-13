@@ -16,6 +16,52 @@
       "isGuest": false
     }
   ],
+  "blockTypes": [
+    {
+      "slug": "rich_text",
+      "label": "Rich Text",
+      "description": "Regular article copy: paragraphs, headings, lists, images.",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "content",
+              "label": "Content",
+              "type": "portableText",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "orange_alert",
+      "label": "Orange Alert",
+      "description": "Highlighted callout box with a heading and rich text.",
+      "currentVersion": 1,
+      "versions": [
+        {
+          "version": 1,
+          "fields": [
+            {
+              "slug": "heading",
+              "label": "Heading",
+              "type": "string",
+              "required": true
+            },
+            {
+              "slug": "text",
+              "label": "Text",
+              "type": "portableText",
+              "required": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "collections": [
     {
       "slug": "posts",
@@ -89,6 +135,17 @@
           "slug": "content",
           "label": "Content",
           "type": "portableText"
+        },
+        {
+          "slug": "body",
+          "label": "Content blocks",
+          "type": "blocks",
+          "validation": {
+            "allowedTypes": [
+              "rich_text",
+              "orange_alert"
+            ]
+          }
         }
       ]
     },
@@ -157,6 +214,17 @@
           "label": "Content",
           "type": "portableText",
           "searchable": true
+        },
+        {
+          "slug": "body",
+          "label": "Content blocks",
+          "type": "blocks",
+          "validation": {
+            "allowedTypes": [
+              "rich_text",
+              "orange_alert"
+            ]
+          }
         },
         {
           "slug": "show_announcement",
