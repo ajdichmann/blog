@@ -8,6 +8,7 @@ import { d1, r2 } from "@emdash-cms/cloudflare";
 import { SITE_METADATA } from "./src/consts.ts";
 import robotsTxt from "astro-robots-txt";
 import cloudflare from "@astrojs/cloudflare";
+import { orangeAlertPlugin } from "./src/plugins/orange-alert/index.ts";
 
 // https://astro.build/config
 export default defineConfig({
@@ -31,6 +32,7 @@ export default defineConfig({
       database: d1({ binding: "DB" }),
       storage: r2({ binding: "MEDIA" }),
       siteUrl: SITE_METADATA.siteUrl,
+      plugins: [orangeAlertPlugin()],
     }),
     robotsTxt(),
   ],
