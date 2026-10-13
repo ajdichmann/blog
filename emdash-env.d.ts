@@ -18,13 +18,9 @@ export interface Page {
   image_alt?: string;
   cta_label?: string;
   content?: PortableTextBlock[];
-  faq_title?: string;
   show_announcement?: boolean;
-  faqs?: unknown;
   announcement_title?: string;
-  seo_title: string;
   announcement_cta?: string;
-  seo_description?: string;
   announcement_url?: string;
   primary_cta_label?: string;
   primary_cta_url?: string;
@@ -32,6 +28,10 @@ export interface Page {
   secondary_cta_url?: string;
   latest_heading?: string;
   latest_description?: string;
+  faq_title?: string;
+  faqs?: unknown;
+  seo_title: string;
+  seo_description?: string;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
