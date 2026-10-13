@@ -1,14 +1,18 @@
 ---
 import OrangeAlert from "@/components/OrangeAlert.astro";
+import { inlineMarkdownToHtml } from "@/lib/inline-markdown";
 
 const props = Astro.props as {
-  node?: { title?: string; message?: string };
+  node?: { _key?: string; title?: string; message?: string };
+  _key?: string;
   title?: string;
   message?: string;
 };
 const node = props.node ?? props;
 const title = node.title ?? "Note";
-const message = node.message ?? "";
+const paragraphs = inlineMarkdownToHtml(node.message ?? "");
 ---
 
-<OrangeAlert {title} {message} />
+<OrangeAlert {title} id={node._key ? `alert-${node._key}` : undefined}>
+  {paragraphs.map((html) => <p set:html={html} />)}
+</OrangeAlert>
