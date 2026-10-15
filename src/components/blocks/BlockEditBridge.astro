@@ -1,0 +1,127 @@
+---
+/**
+ * Lets EmDash's in-page editors edit fields inside blocks (edit mode only).
+ *
+ * Block fields are annotated with nested paths like "body.<blockKey>.heading"
+ * (see blockFieldEdit / blockPortableText in src/lib/emdash.ts). EmDash's
+ * editors only know top-level fields, so this bridges the two:
+ * - saves (PUT /_emdash/api/content/...) with nested keys are rewritten to
+ *   save the whole blocks field, with the block's field changed, onto the
+ *   latest draft;
+ * - the manifest lists annotated nested fields as plain strings, so the
+ *   toolbar edits them inline instead of opening the admin.
+ *
+ * Runs inline before EmDash's toolbar script, which loads the manifest on start.
+ */
+---
+
+<script is:inline>
+  (() => {
+    if (window.__cmsBlockEditBridge) return;
+    window.__cmsBlockEditBridge = true;
+
+    const NESTED_FIELD = /^([^.]+)\.([^.]+)\.([^.]+)$/;
+    const CONTENT_PATH = /^\/_emdash\/api\/content\/[^/]+\/[^/]+\/?$/;
+    const MANIFEST_PATH = /^\/_emdash\/api\/manifest\/?$/;
+    const nativeFetch = window.fetch.bind(window);
+    // Block saves read then write the whole field, so run them one at a time.
+    let queue = Promise.resolve();
+
+    function jsonResponse(status, body) {
+      return new Response(JSON.stringify(body), {
+        status,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    function parse(text) {
+      try {
+        return JSON.parse(text);
+      } catch {
+        return undefined;
+      }
+    }
+
+    // Nested fields annotated on the page, by collection.
+    function annotatedBlockFields() {
+      const fields = {};
+      for (const el of document.querySelectorAll("[data-emdash-ref]")) {
+        const ref = parse(el.getAttribute("data-emdash-ref"));
+        if (ref && ref.field && NESTED_FIELD.test(ref.field)) {
+          (fields[ref.collection] ??= []).push(ref.field);
+        }
+      }
+      return fields;
+    }
+
+    async function withBlockFields(responsePromise) {
+      const response = await responsePromise;
+      if (!response.ok) return response;
+      const body = await response.clone().json().catch(() => undefined);
+      const manifest = body && body.data ? body.data : body;
+      if (!manifest || !manifest.collections) return response;
+      for (const [collection, fields] of Object.entries(annotatedBlockFields())) {
+        const col = manifest.collections[collection];
+        if (!col || !col.fields) continue;
+        for (const field of fields) col.fields[field] = { kind: "string" };
+      }
+      return new Response(JSON.stringify(body), {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+      });
+    }
+
+    async function saveBlockFields(url, init, payload, nestedKeys) {
+      const current = await nativeFetch(url.pathname + url.search, {
+        credentials: "same-origin",
+        headers: { "X-EmDash-Request": "1" },
+      });
+      if (!current.ok) return current;
+      const item = (await current.json())?.data?.item;
+      const stored = item?.data ?? {};
+
+      const data = { ...payload.data };
+      for (const key of nestedKeys) {
+        const [, field, blockKey, prop] = key.match(NESTED_FIELD);
+        if (!Array.isArray(data[field])) {
+          const value = typeof stored[field] === "string" ? parse(stored[field]) : stored[field];
+          data[field] = Array.isArray(value) ? structuredClone(value) : [];
+        }
+        const block = data[field].find((b) => b && b._key === blockKey);
+        if (!block) {
+          return jsonResponse(409, {
+            error: { code: "BLOCK_NOT_FOUND", message: `Block ${blockKey} is no longer in ${field}. Reload the page.` },
+          });
+        }
+        block[prop] = data[key];
+        delete data[key];
+      }
+      return nativeFetch(url.href, { ...init, body: JSON.stringify({ ...payload, data }) });
+    }
+
+    window.fetch = function (input, init) {
+      if (typeof input !== "string" && !(input instanceof URL)) return nativeFetch(input, init);
+      const url = new URL(input, location.href);
+      const method = (init?.method ?? "GET").toUpperCase();
+      if (url.origin !== location.origin) return nativeFetch(input, init);
+
+      if (method === "GET" && MANIFEST_PATH.test(url.pathname)) {
+        return withBlockFields(nativeFetch(input, init));
+      }
+
+      if (method === "PUT" && CONTENT_PATH.test(url.pathname) && typeof init?.body === "string") {
+        const payload = parse(init.body);
+        const nestedKeys = Object.keys(payload?.data ?? {}).filter((key) => NESTED_FIELD.test(key));
+        if (nestedKeys.length > 0) {
+          const run = () => saveBlockFields(url, init, payload, nestedKeys);
+          const result = queue.then(run, run);
+          queue = result.catch(() => {});
+          return result;
+        }
+      }
+
+      return nativeFetch(input, init);
+    };
+  })();
+</script>

@@ -1,4 +1,10 @@
-import { getEmDashCollection, getEmDashEntry, getMenuWithCacheHint, type CacheHint } from "emdash";
+import {
+  getEditMeta,
+  getEmDashCollection,
+  getEmDashEntry,
+  getMenuWithCacheHint,
+  type CacheHint,
+} from "emdash";
 import { ITEMS_PER_PAGE } from "@/consts";
 import pageDefaults from "@/data/pages.json";
 import menuDefaults from "@/data/menus.json";
@@ -73,12 +79,51 @@ function asDate(value: unknown) {
   return value ? new Date(String(value)) : new Date();
 }
 
+/** Where a block lives in EmDash, for editing its fields in place. */
+type BlockEditTarget = { collection: string; id: string; field: string };
+const blockEditTargets = new WeakMap<CmsBlock, BlockEditTarget>();
+
+/** EmDash's key for edit metadata on Portable Text arrays (read by getEditMeta). */
+const EMDASH_EDIT = Symbol.for("__emdash");
+
 function asBlocks(value: unknown): CmsBlock[] {
   if (!Array.isArray(value)) return [];
-  return value.filter(
+  const blocks = value.filter(
     (block): block is CmsBlock =>
       Boolean(block) && typeof block._type === "string" && typeof block._key === "string",
   );
+  // In edit mode EmDash tags the field array; keep that per block so block
+  // fields can be edited in place (see BlockEditBridge.astro).
+  const meta = getEditMeta(value);
+  if (meta) for (const block of blocks) blockEditTargets.set(block, meta);
+  return blocks;
+}
+
+function blockFieldRef(block: CmsBlock, prop: string): BlockEditTarget | undefined {
+  const target = blockEditTargets.get(block);
+  return target && { ...target, field: `${target.field}.${block._key}.${prop}` };
+}
+
+/** Whether any block can be edited in place (EmDash edit mode). */
+export function hasEditableBlocks(blocks: CmsBlock[]) {
+  return blocks.some((block) => blockEditTargets.has(block));
+}
+
+/** Spread onto the element showing a block's plain-text field. Empty outside edit mode. */
+export function blockFieldEdit(block: CmsBlock, prop: string): EditAttrs | undefined {
+  const ref = blockFieldRef(block, prop);
+  return ref && { "data-emdash-ref": JSON.stringify(ref) };
+}
+
+/**
+ * A block's Portable Text field. In edit mode it is tagged like a top-level
+ * Portable Text field, so <PortableText> renders EmDash's inline editor.
+ */
+export function blockPortableText(block: CmsBlock, prop: string): PortableBlock[] {
+  const value = Array.isArray(block[prop]) ? (block[prop] as PortableBlock[]) : [];
+  const ref = blockFieldRef(block, prop);
+  if (ref) Object.defineProperty(value, EMDASH_EDIT, { value: ref, enumerable: false, configurable: true });
+  return value;
 }
 
 export type Heading = { text: string; depth: number; slug: string };

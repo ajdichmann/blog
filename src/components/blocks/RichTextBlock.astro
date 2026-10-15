@@ -1,9 +1,9 @@
 ---
 import { PortableText } from "emdash/ui";
 import { portableComponents } from "@/components/portable/components";
-import type { RichTextBlock } from "@/lib/emdash";
+import { blockPortableText, type RichTextBlock } from "@/lib/emdash";
 
 const { value } = Astro.props as { value: RichTextBlock };
 ---
 
-<PortableText value={value.content ?? []} components={portableComponents} />
+<PortableText value={blockPortableText(value, "content")} components={portableComponents} />
