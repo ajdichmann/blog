@@ -3,7 +3,8 @@
 import { Blocks } from "emdash/ui";
 import RichTextBlock from "@/components/blocks/RichTextBlock.astro";
 import OrangeAlertBlock from "@/components/blocks/OrangeAlertBlock.astro";
-import type { CmsBlock } from "@/lib/emdash";
+import BlockEditBridge from "@/components/blocks/BlockEditBridge.astro";
+import { hasEditableBlocks, type CmsBlock } from "@/lib/emdash";
 
 const { value } = Astro.props as { value: CmsBlock[] };
 const components = {
@@ -12,4 +13,5 @@ const components = {
 };
 ---
 
+{hasEditableBlocks(value) && <BlockEditBridge />}
 {value.length > 0 && <Blocks value={value} components={components} />}

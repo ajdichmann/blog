@@ -5,9 +5,11 @@ interface Props {
   message?: string;
   /** Unique heading id; needed when a page has more than one alert. */
   id?: string;
+  /** EmDash edit annotation for the title. */
+  titleEdit?: Record<string, string>;
 }
 
-const { title, message, id = "alert-title" } = Astro.props;
+const { title, message, id = "alert-title", titleEdit } = Astro.props;
 ---
 
 <style>
@@ -21,7 +23,7 @@ const { title, message, id = "alert-title" } = Astro.props;
   role="alert"
   aria-labelledby={id}
 >
-  <h2 id={id} class="font-extrabold text-2xl leading-tight mb-3">{title}</h2>
+  <h2 id={id} class="font-extrabold text-2xl leading-tight mb-3" {...titleEdit}>{title}</h2>
   {message ? (
     <p class="text-primary-600/90 dark:text-primary-200/90 leading-normal">{message}</p>
   ) : (
