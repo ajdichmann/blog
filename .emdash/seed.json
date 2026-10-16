@@ -200,6 +200,11 @@
           "type": "string"
         },
         {
+          "slug": "featured_image",
+          "label": "Hero image",
+          "type": "image"
+        },
+        {
           "slug": "image_alt",
           "label": "Hero image alt text",
           "type": "string"

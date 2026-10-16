@@ -319,6 +319,7 @@ export const PAGES_COLLECTION = {
     { slug: "breadcrumb", label: "Breadcrumb text", type: "string" },
     { slug: "blog_link_text", label: "Hero pill text", type: "string" },
     { slug: "blog_link_url", label: "Hero pill URL", type: "string" },
+    { slug: "featured_image", label: "Hero image", type: "image" },
     { slug: "image_alt", label: "Hero image alt text", type: "string" },
     { slug: "cta_label", label: "Button label", type: "string" },
     { slug: "content", label: "Content", type: "portableText", searchable: true },
