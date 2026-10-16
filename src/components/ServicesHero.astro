@@ -10,7 +10,8 @@ interface Props {
     url: string;
   };
   image?: {
-    src: ImageMetadata;
+    /** A bundled asset, or a URL for media picked in the CMS. */
+    src: ImageMetadata | string;
     alt: string;
     width?: number;
     height?: number;
@@ -47,13 +48,26 @@ const { title, description, blogLink, image, breadcrumbsText, edit = {} } = Astr
     </div>
     {image && (
       <div class="mx-auto mt-16 flex max-w-2xl items-start justify-center sm:mt-24 lg:mx-0 lg:mt-0 lg:w-2/5 lg:max-w-[400px] lg:flex-none lg:pt-8">
-        <Image
-          src={image.src}
-          alt={image.alt}
-          width={image.width || 400}
-          height={image.height || 267}
-          class="h-auto w-full max-w-[400px] rounded-md"
-        />
+        {typeof image.src === "string" ? (
+          <img
+            src={image.src}
+            alt={image.alt}
+            width={image.width || 400}
+            height={image.height || 267}
+            class="h-auto w-full max-w-[400px] rounded-md"
+            loading="eager"
+            {...edit.featured_image}
+          />
+        ) : (
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={image.width || 400}
+            height={image.height || 267}
+            class="h-auto w-full max-w-[400px] rounded-md"
+            {...edit.featured_image}
+          />
+        )}
       </div>
     )}
   </div>

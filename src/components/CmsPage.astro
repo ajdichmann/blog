@@ -1,8 +1,9 @@
 ---
 /**
  * Renders a page from the EmDash "pages" collection. Copy comes from the CMS
- * (editable in place in EmDash edit mode); images and JSON-LD stay in the
- * page file and are passed in as props / the "before" slot.
+ * (editable in place in EmDash edit mode). The hero image comes from the
+ * page's "featured_image" field, falling back to the `image` prop; JSON-LD
+ * stays in the page file and is passed in via the "before" slot.
  */
 import RootLayout from "@/layouts/RootLayout.astro";
 import ServicesHero from "@/components/ServicesHero.astro";
@@ -23,6 +24,7 @@ interface Props {
   template?: "services" | "interior";
   /** Wrap the body in Tailwind typography styles. */
   prose?: boolean;
+  /** Default hero image, used until one is picked in the CMS. */
   image?: {
     src: ImageMetadata;
     alt?: string;
@@ -36,6 +38,16 @@ const { page, cacheHint } = await getPage(slug);
 if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
 
 const { edit } = page;
+const heroImage = page.featuredImage
+  ? {
+      src: page.featuredImage.src,
+      alt: page.imageAlt ?? page.featuredImage.alt ?? "",
+      width: page.featuredImage.width,
+      height: page.featuredImage.height,
+    }
+  : image
+    ? { ...image, alt: page.imageAlt ?? image.alt ?? "" }
+    : undefined;
 const portableComponents = {
   type: {
     figure: PortableFigure,
@@ -56,7 +68,7 @@ const hasFaqs = page.faqs.length > 0;
         title={page.title}
         description={page.intro}
         blogLink={page.blogLinkText && page.blogLinkUrl ? { text: page.blogLinkText, url: page.blogLinkUrl } : undefined}
-        image={image ? { ...image, alt: page.imageAlt ?? image.alt ?? "" } : undefined}
+        image={heroImage}
         breadcrumbsText={page.breadcrumb}
         edit={edit}
       />

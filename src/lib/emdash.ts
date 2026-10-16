@@ -295,6 +295,8 @@ export type CmsPageEntry = {
   breadcrumb: string;
   blogLinkText?: string;
   blogLinkUrl?: string;
+  /** Hero image picked in the CMS; overrides the page file's default image. */
+  featuredImage?: ReturnType<typeof normalizeCover>;
   imageAlt?: string;
   ctaLabel?: string;
   content: CmsPost["data"]["content"];
@@ -334,6 +336,7 @@ function normalizePage(slug: string, data: Record<string, any>, edit: CmsPageEnt
     breadcrumb: asString(data.breadcrumb),
     blogLinkText: asOptionalString(data.blog_link_text),
     blogLinkUrl: asOptionalString(data.blog_link_url),
+    featuredImage: normalizeCover(data.featured_image),
     imageAlt: asOptionalString(data.image_alt),
     ctaLabel: asOptionalString(data.cta_label),
     // Keep the original array: in edit mode EmDash tags it for inline editing.
